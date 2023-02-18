@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: refactor-nrepl:3.6.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/refactor-nrepl/refactor-nrepl/3.6.0/refactor-nrepl-3.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

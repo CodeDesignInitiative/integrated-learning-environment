@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: org.rocksdb/rocksdbjni:7.7.3">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/rocksdb/rocksdbjni/7.7.3/rocksdbjni-7.7.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: com.cognitect.aws/api:0.8.539">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/cognitect/aws/api/0.8.539/api-0.8.539.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

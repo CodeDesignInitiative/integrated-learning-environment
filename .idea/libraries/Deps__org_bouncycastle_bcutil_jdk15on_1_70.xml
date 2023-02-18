@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: org.bouncycastle/bcutil-jdk15on:1.70">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/bouncycastle/bcutil-jdk15on/1.70/bcutil-jdk15on-1.70.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

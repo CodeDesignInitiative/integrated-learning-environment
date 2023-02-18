@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Deps: rum:0.12.8">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/rum/rum/0.12.8/rum-0.12.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
