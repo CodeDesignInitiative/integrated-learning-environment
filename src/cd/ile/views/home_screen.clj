@@ -13,8 +13,7 @@
          (date-util/format-date date)
          [:h4 heading]
          [:p msg]])
-      notifications)]]
-  )
+      notifications)]])
 
 (defn home-screen []
   [:div.bg-gradient-to-b.min-h-screen.text-white

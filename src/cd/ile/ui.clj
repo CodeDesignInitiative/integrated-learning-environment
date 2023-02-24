@@ -21,7 +21,8 @@
         (update :base/head (fn [head]
                              (concat [[:link {:rel "stylesheet" :href (css-path)}]
                                       [:script {:src "https://unpkg.com/htmx.org@1.8.4"}]
-                                      [:script {:src "https://unpkg.com/hyperscript.org@0.9.3"}]]
+                                      [:script {:src "https://unpkg.com/hyperscript.org@0.9.3"}]
+                                      [:script {:src "/js/refresh.js"}]]
                                      head))))
     body))
 

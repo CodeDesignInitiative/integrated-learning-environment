@@ -30,7 +30,7 @@
 
 (defn generate-assets! [sys]
   (biff/export-rum static-pages "target/resources/public")
-  (biff/delete-old-files {:dir "target/resources/public"
+  (biff/delete-old-files {:dir  "target/resources/public"
                           :exts [".html"]}))
 
 (defn on-save [sys]
@@ -49,19 +49,19 @@
    biff/use-jetty
    biff/use-chime
    (biff/use-when
-    :cd.ile/enable-beholder
-    biff/use-beholder)])
+     :cd.ile/enable-beholder
+     biff/use-beholder)])
 
 (defn start []
   (let [ctx (biff/start-system
-             {:cd.ile/chat-clients (atom #{})
-              :biff/features #'features
-              :biff/after-refresh `start
-              :biff/handler #'handler
-              :biff/malli-opts #'malli-opts
-              :biff.beholder/on-save #'on-save
-              :biff.xtdb/tx-fns biff/tx-fns
-              :biff/components components})]
+              {:cd.ile/chat-clients   (atom #{})
+               :biff/features         #'features
+               :biff/after-refresh    `start
+               :biff/handler          #'handler
+               :biff/malli-opts       #'malli-opts
+               :biff.beholder/on-save #'on-save
+               :biff.xtdb/tx-fns      biff/tx-fns
+               :biff/components       components})]
     (generate-assets! ctx)
     (log/info "Go to" (:biff/base-url ctx))))
 
