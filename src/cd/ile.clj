@@ -7,7 +7,9 @@
             [cd.ile.schema :refer [malli-opts]]
             [clojure.test :as test]
             [clojure.tools.logging :as log]
-            [nrepl.cmdline :as nrepl-cmd]))
+            [nrepl.cmdline :as nrepl-cmd]
+            [ring.middleware.refresh :as
+             refresh]))
 
 (def features
   [app/features
@@ -21,7 +23,8 @@
               (keep :api-routes features)]])
 
 (def handler (-> (biff/reitit-handler {:routes routes})
-                 biff/wrap-base-defaults))
+                 biff/wrap-base-defaults
+                 refresh/wrap-refresh))
 
 (def static-pages (apply biff/safe-merge (map :static features)))
 

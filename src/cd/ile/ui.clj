@@ -28,7 +28,7 @@
 (defn page [opts & body]
   (base
     opts
-    [:.p-3.mx-auto.max-w-screen-sm.w-full
+    [:div
      (when (bound? #'csrf/*anti-forgery-token*)
        {:hx-headers (cheshire/generate-string
                       {:x-csrf-token csrf/*anti-forgery-token*})})
@@ -37,8 +37,4 @@
        "code "
        [:span.text-red-700 "//"]
        " editor"]]
-     [:.bg-orange-50.flex.flex-col.flex-grow
-      [:.grow]
-      [:.p-3.mx-auto.max-w-screen-sm.w-full
-       body]
-      [:div {:class "grow-[2]"}]]]))
+     body]))
