@@ -20,14 +20,6 @@
                                 :user/email
                                 :user/joined-at]
 
-   :project/id                 :uuid
-   :project/name               :string
-   :project/tags               [:vector keyword?]
-   ; project wich represents a programming tutorial
-   :project                    [:map {:closed true}
-                                [:xt/id :project/id]
-                                :project/name
-                                :project/tags]
 
    :code/lang                  keyword?
    :code/base                  :string
@@ -40,7 +32,17 @@
                                 :code/snippet
                                 :code/line]
 
-   :story/person               [or :uuid :keyword]
+   :person/id                  :uuid
+   :person/name                :string
+   :person/organisation        :string
+   ; person which can appear in a story
+   :person                     [:map {:closed true}
+                                [:xt/id :person/id]
+                                :person/name
+                                :person/organisation]
+
+
+   :story/person               [:or :person :keyword]
    :story/message              :string
    :story/video                :string
    ; chat message part of a projects chapter
@@ -50,6 +52,15 @@
                                 [:story/video {:optional true}]]
 
 
+   :project/id                 :uuid
+   :project/name               :string
+   :project/tags               [:vector keyword?]
+   ; project wich represents a programming tutorial
+   :project                    [:map {:closed true}
+                                [:xt/id :project/id]
+                                :project/name
+                                :project/tags]
+
    :project.chapter/id         :uuid
    :project.chapter/name       :string
    :project.chapter/notes      [:vector :string]
@@ -57,7 +68,7 @@
    :project.chapter/code       [:vector :code]
    :project.chapter/story      [:vector :story]
    ; chapter in a project containing something new to learn and a story
-   :project                    [:map {:closed true}
+   :project-chapter            [:map {:closed true}
                                 :project.chapter/id
                                 :project.chapter/name
                                 :project.chapter/notes
@@ -70,10 +81,10 @@
    :wiki/title                 :string
    :wiki/content               :string
    ; short explanation on a programming topic for a certain language
-   :wiki [:map {:closed true}
-          [:xt/id :wiki/id]
-          :wiki/tags
-          :wiki/title
-          :wiki/content]})
+   :wiki                       [:map {:closed true}
+                                [:xt/id :wiki/id]
+                                :wiki/tags
+                                :wiki/title
+                                :wiki/content]})
 
 (def malli-opts {:registry (malr/composite-registry malc/default-registry schema)})
