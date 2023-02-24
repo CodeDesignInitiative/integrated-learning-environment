@@ -32,6 +32,11 @@
      (when (bound? #'csrf/*anti-forgery-token*)
        {:hx-headers (cheshire/generate-string
                       {:x-csrf-token csrf/*anti-forgery-token*})})
+     [:header.bg-zinc-800.py-2.text-white.font-mono.flex.items-center.justify-center
+      [:div
+       "code "
+       [:span.text-red-700 "//"]
+       " editor"]]
      [:.bg-orange-50.flex.flex-col.flex-grow
       [:.grow]
       [:.p-3.mx-auto.max-w-screen-sm.w-full
