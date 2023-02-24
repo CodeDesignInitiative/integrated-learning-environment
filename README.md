@@ -1,6 +1,6 @@
 # Integrated Learning Environment
 
-Based on the [biff template](biffweb.com).
+Based on the [biff template](https://biffweb.com).
 
 
 Run `bb dev` to get started.  
