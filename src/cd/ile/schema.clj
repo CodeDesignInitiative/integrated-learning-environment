@@ -3,13 +3,9 @@
             [malli.registry :as malr]))
 
 (def schema
-  {:progress/current-projects  [:vector :uuid]
-   :progress/finished-projects [:vector :uuid]
-   ; user state of individual projects
-   :progress                   [:map {:closed true}
-                                :progress/current-projects
-                                :progress/finished-projects]
-
+  {; user save state storing active and done projects
+   :user.progress/current-projects  [:vector :uuid]
+   :user.progress/finished-projects [:vector :uuid]
 
    :user/id                    :uuid
    :user/email                 :string
@@ -18,7 +14,10 @@
    :user                       [:map {:closed true}
                                 [:xt/id :user/id]
                                 :user/email
-                                :user/joined-at]
+                                :user/joined-at
+                                [:map {:closed true}
+                                 :user.progress/current-projects
+                                 :user.progress/finished-projects]]
 
 
    :code/lang                  keyword?
