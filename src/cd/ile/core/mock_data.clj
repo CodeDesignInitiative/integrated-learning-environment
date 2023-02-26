@@ -52,6 +52,37 @@
                                    :open-chats     [chat-with-edna]
                                    :previous-chats [chat-with-edna]}])
 
-(comment
-  (get-in (first conversations) [:conversation/with :person/name])
-  )
+
+(def html-project
+  #:project{:id       (random-uuid)
+            :name     "Webseite mit HTML"
+            :tags     [:html :website]
+            :chapters [#:project.chapter{:id                 (random-uuid)
+                                         :name               "Rechtschreibfehler korrigieren"
+                                         :notes              ["Fehler korrigieren"
+                                                              "Witten nicht Wittne"]
+                                         :code               [#:code{:lang    :html
+                                                                     :base    ""
+                                                                     :snippet ""
+                                                                     :line    "<h1>Wittne</h1>"}
+                                                              #:code{:lang    :css
+                                                                     :base    ""
+                                                                     :snippet ""
+                                                                     :line    "body { background: red};"}]
+                                         :story              chat-with-edna
+                                         :story-final-action "/app/editor"}
+                       #:project.chapter{:id                 (random-uuid)
+                                         :name               "Hintergrundfarbe anpassen"
+                                         :notes              ["Hintergrundfarbe anpassen"
+                                                              "lol"]
+                                         :code               [#:code{:lang    :html
+                                                                     :base    ""
+                                                                     :snippet ""
+                                                                     :line    "<h1>Wittne</h1>"}
+                                                              #:code{:lang    :css
+                                                                     :base    ""
+                                                                     :snippet ""
+                                                                     :line    "body { background: red};"}]
+                                         :story              chat-with-edna
+                                         :story-final-action "/app/editor"}]})
+

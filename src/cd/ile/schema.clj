@@ -61,14 +61,6 @@
                                         [:story/video {:optional true}]]
 
 
-   :project/id                         :uuid
-   :project/name                       :string
-   :project/tags                       [:vector keyword?]
-   ; project wich represents a programming tutorial
-   :project                            [:map {:closed true}
-                                        [:xt/id :project/id]
-                                        :project/name
-                                        :project/tags]
 
    :project.chapter/id                 :uuid
    :project.chapter/name               :string
@@ -87,6 +79,16 @@
                                         [:project.chapter/wiki-ref {:optional true}]
                                         :project.chapter/code]
 
+   :project/id                         :uuid
+   :project/name                       :string
+   :project/tags                       [:vector keyword?]
+   :project/chapters                   [:vector :project-chapter]
+   ; project wich represents a programming tutorial
+   :project                            [:map {:closed true}
+                                        [:xt/id :project/id]
+                                        :project/name
+                                        :project/chapters
+                                        :project/tags]
 
    :wiki/id                            :uuid
    :wiki/tags                          [:vector keyword?]
