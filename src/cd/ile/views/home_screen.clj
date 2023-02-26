@@ -25,16 +25,20 @@
      [:.grid.gap-16.grid-cols-2.grid-rows-2
       (components/app-button {:label    "Chat"
                               :href     "/chat"
+                              :icon     "chat"
                               :bg-color "bg-green-400"})
       (components/app-button {:label    "Aufträge"
                               :href     "/auftraege"
+                              :icon     "jobs"
                               :bg-color "bg-orange-600"})
       (components/app-button {:label    "Wiki"
                               :href     "/wiki"
-                              :bg-color "bg-white text-black"})
+                              :icon     "wiki"
+                              :bg-color "bg-fuchsia-400"})
       (components/app-button {:label    "Code Editor"
                               :href     "/editor"
-                              :bg-color "bg-zinc-800"})
+                              :icon     "code"
+                              :bg-color "bg-sky-500"})
       ]
 
      (components/notes-widget mock/notes)]
