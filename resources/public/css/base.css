@@ -21,3 +21,9 @@ main {
 .chat-height {
     height: calc(100vh - 93px - 64px)
 }
+
+.app-grid {
+    display: grid;
+    grid-template-columns: 140px 140px;
+    gap: 48px;
+}

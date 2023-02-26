@@ -2,6 +2,6 @@
 
 
 (defn jobs-screen []
-  [:div.bg-gradient-to-b.min-h-screen.text-white
+  [:main.bg-gradient-to-b.text-white
    [:h1 "Aufträge"]
    "Hello there"])

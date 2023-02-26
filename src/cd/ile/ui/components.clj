@@ -11,8 +11,7 @@
      {:class bg-color}
      [:img.p-4.invert {:src (str "/img/icons/" (or icon "missing") ".svg")}]]
 
-    [:div.text-center.mt-2 label]]
-   ])
+    [:div.text-center.mt-2 label]]])
 
 (defn notes-widget [notes]
   "The widget used to display the current notes & tasks"
