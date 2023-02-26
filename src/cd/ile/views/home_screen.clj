@@ -24,19 +24,19 @@
      {:class "grid-rows-[1fr,320px]"}
      [:.grid.gap-16.grid-cols-2.grid-rows-2
       (components/app-button {:label    "Chat"
-                              :href     "/chat"
+                              :href     "/app/chat"
                               :icon     "chat"
                               :bg-color "bg-green-400"})
       (components/app-button {:label    "Aufträge"
-                              :href     "/auftraege"
+                              :href     "/app/auftraege"
                               :icon     "jobs"
                               :bg-color "bg-orange-600"})
       (components/app-button {:label    "Wiki"
-                              :href     "/wiki"
+                              :href     "/app/wiki"
                               :icon     "wiki"
                               :bg-color "bg-fuchsia-400"})
       (components/app-button {:label    "Code Editor"
-                              :href     "/editor"
+                              :href     "/app/editor"
                               :icon     "code"
                               :bg-color "bg-sky-500"})
       ]

@@ -28,15 +28,15 @@
     body))
 
 (defn page [opts & body]
-  (base
-    opts
-    [:div
-     (when (bound? #'csrf/*anti-forgery-token*)
-       {:hx-headers (cheshire/generate-string
-                      {:x-csrf-token csrf/*anti-forgery-token*})})
-     [:header.bg-zinc-800.py-2.text-white.font-mono.flex.items-center.justify-center
-      [:div
-       "code "
-       [:span.text-red-700 "//"]
-       " editor"]]
-     body]))
+  (base opts
+        [:div
+         (when (bound? #'csrf/*anti-forgery-token*)
+           {:hx-headers (cheshire/generate-string
+                          {:x-csrf-token csrf/*anti-forgery-token*})})
+         [:header.bg-zinc-800.py-2.text-white.font-mono.flex.items-center.justify-center
+          [:a {:href "/app"}
+           [:div
+            "code "
+            [:span.text-red-700 "//"]
+            " editor"]]]
+         body]))
