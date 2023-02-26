@@ -16,3 +16,33 @@
                      :heading "Danke für deine Hilfe bei dem letzten Projekt."
                      :msg     "..."}])
 
+(def person-edna #:person{:id           (random-uuid)
+                          :name         "Edna"
+                          :organization "Ausbruchs GmbH"})
+
+(def chat-with-edna [#:story{:person          person-edna
+                                     :message "Kennst du schon dieses Video?"
+                                     :video   "https://www.youtube.com/watch?v=lXMskKTw3Bc"}
+                             #:story{:person         person-edna
+                                     :message        "Das ist wahre Kunst, findest du nicht auch?"
+                                     :answer-choices ["So was von!"
+                                                      "Total knorke war das!"
+                                                      "Da gebe ich dir voll recht!"]}
+                             #:story{:person         person-edna
+                                     :message        "Jetzt mal was anderes. Kannst du HTML?"
+                                     :answer-choices ["Nein"
+                                                      "Ein bisschen"
+                                                      "Aber hallo!"]}
+                             #:story{:person  person-edna
+                                     :message "Alles klar, ist eigentlich egal, wir brauchen Hilfe und du musst nur Zeit mitbringen."}])
+
+(def conversations [#:conversation{:with           person-edna
+                                   :open-chats     [chat-with-edna]
+                                   :previous-chats [chat-with-edna chat-with-edna chat-with-edna]}
+                    #:conversation{:with           person-edna
+                                   :open-chats     [chat-with-edna]
+                                   :previous-chats [chat-with-edna]}])
+
+(comment
+  (get-in (first conversations) [:conversation/with :person/name])
+  )
