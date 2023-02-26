@@ -15,7 +15,7 @@
     (-> opts
         (merge #:base{:title       "ILE project"
                       :lang        "en-US"
-                      :icon        "/img/glider.png"
+                      :icon        "/img/persons/test.jpg"
                       :description "Spielend Programmieren lernen"
                       :image       "https://clojure.org/images/clojure-logo-120b.png"})
         (update :base/head (fn [head]
