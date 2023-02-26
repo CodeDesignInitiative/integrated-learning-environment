@@ -29,7 +29,7 @@
 
 (defn page [opts & body]
   (base opts
-        [:div
+        [:div.h-full
          (when (bound? #'csrf/*anti-forgery-token*)
            {:hx-headers (cheshire/generate-string
                           {:x-csrf-token csrf/*anti-forgery-token*})})

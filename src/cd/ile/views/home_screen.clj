@@ -16,9 +16,9 @@
       notifications)]])
 
 (defn home-screen []
-  [:div.bg-gradient-to-b.min-h-screen.text-white
+  [:main.bg-gradient-to-b.text-white.p-7
    {:class "from-[#372748] to-[#131424]"}
-   [:div.grid.gap-4.p-8
+   [:div.grid.gap-4
     {:class "grid-cols-[380px,1fr]"}
     [:.grid.gap-4
      {:class "grid-rows-[1fr,320px]"}

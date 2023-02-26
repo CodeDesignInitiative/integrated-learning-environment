@@ -6,6 +6,12 @@
 
 body {
     background-color: #111;
+    display: flex;
+    height: 100vh;
+}
+
+main {
+    height: calc(100vh - 40px);
 }
 
 .caveat {

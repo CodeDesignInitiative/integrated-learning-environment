@@ -3,7 +3,7 @@
 
 (defn chat-screen []
   (let [conversations cd.ile.core.mock-data/conversations]
-    [:div.bg-gradient-to-b.min-h-screen.text-white
+    [:main.bg-gradient-to-b.text-white
      [:h1.text-xl.p-3.text-center.border-b.border-zinc-500.border-solid.bg-zinc-800
       "Chats"]
      [:div.flex.flex-row
