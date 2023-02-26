@@ -4,7 +4,7 @@
             [cd.ile.core.mock-data :as mock]))
 
 (defn- notifications-widget [notifications]
-  [:div
+  [:div.overflow-y-auto
    [:h2 "Benachrichtigungen"]
    [:ul.list-none.pl-0
     (map
