@@ -16,9 +16,9 @@
 
 (defn notes-widget [notes]
   "The widget used to display the current notes & tasks"
-  [:div.bg-yellow-300.shadow-lg.text-black
-   [:h2 "Notizen"]
-   [:ul
+  [:div.bg-yellow-300.shadow-lg.text-black.p-4
+   [:h2.text-3xl.font-bold.caveat "Notizen"]
+   [:ul.pl-4.caveat.text-3xl.list-none.leading-7
     (map
-      (fn [n] [:li n])
+      (fn [n] [:li.leading-loose n])
       notes)]])

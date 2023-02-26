@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Caveat";
+    src: local("Caveat"),
+         url("../fonts/caveat-variable.ttf");
+}
+
 body {
     background-color: #111;
+}
+
+.caveat {
+    font-family: "Caveat", sans-serif;
 }
