@@ -11,3 +11,7 @@ body {
 .caveat {
     font-family: "Caveat", sans-serif;
 }
+
+.chat-height {
+    height: calc(100vh - 93px - 64px)
+}
