@@ -25,7 +25,8 @@
      (components/app-button {:label    "Chat"
                              :href     "/app/chat"
                              :icon     "chat"
-                             :bg-color "bg-green-400"})
+                             :bg-color "bg-green-400"
+                             :notifications 1})
      (components/app-button {:label    "Aufträge"
                              :href     "/app/auftraege"
                              :icon     "jobs"

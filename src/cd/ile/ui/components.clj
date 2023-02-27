@@ -2,16 +2,20 @@
 
 (defn app-button
   "Button Component for the app-like home-screen nav"
-  [{:keys [label href bg-color disabled? icon]}]
-  [:div.flex.flex-col.gap-2
-   [:a
-    {:href     href
-     :disabled (or disabled? false)}
-    [:div.p-2.rounded-3xl.hover:shadow-lg.transition-all.aspect-square
-     {:class bg-color}
-     [:img.p-4.invert {:src (str "/img/icons/" (or icon "missing") ".svg")}]]
+  [{:keys [label href bg-color disabled? icon notifications]}]
+  [:div.relative
+   (when notifications
+     [:span.absolute.-top-3.-right-3.h-8.w-8.rounded-full.bg-red-500.flex.justify-center.items-center.border-2.border-red-700
+      [:span notifications]])
+   [:div.flex.flex-col.gap-2
+    [:a
+     {:href     href
+      :disabled (or disabled? false)}
+     [:div.p-2.rounded-3xl.hover:shadow-lg.transition-all.aspect-square
+      {:class bg-color}
+      [:img.p-4.invert {:src (str "/img/icons/" (or icon "missing") ".svg")}]]
 
-    [:div.text-center.mt-2 label]]])
+     [:div.text-center.mt-2 label]]]])
 
 (defn notes-widget [notes]
   "The widget used to display the current notes & tasks"
