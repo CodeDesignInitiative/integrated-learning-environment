@@ -1,8 +1,9 @@
 (ns cd.ile.views.chat-screen
-  (:require [cd.ile.ui.components :as components]))
+  (:require [cd.ile.ui.components :as components]
+            [cd.ile.core.mock-data :as mock]))
 
 (defn chat-screen []
-  (let [conversations cd.ile.core.mock-data/conversations]
+  (let [conversations mock/conversations]
     [:main.bg-gradient-to-b.text-white
      [:h1.text-xl.p-3.text-center.border-b.border-zinc-500.border-solid.bg-zinc-800
       "Chats"]
