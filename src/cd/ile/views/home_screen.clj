@@ -30,15 +30,18 @@
      (components/app-button {:label    "Aufträge"
                              :href     "/app/auftraege"
                              :icon     "jobs"
-                             :bg-color "bg-orange-600"})
+                             :bg-color "bg-orange-600"
+                             :disabled? true})
      (components/app-button {:label    "Wiki"
                              :href     "/app/wiki"
                              :icon     "wiki"
-                             :bg-color "bg-fuchsia-400"})
+                             :bg-color "bg-fuchsia-400"
+                             :disabled? true})
      (components/app-button {:label    "Code Editor"
                              :href     "/app/editor"
                              :icon     "code"
-                             :bg-color "bg-sky-500"})]
+                             :bg-color "bg-sky-500"
+                             :disabled? true})]
 
     (components/notes-widget mock/notes)]
    (notifications-widget mock/notifications)])

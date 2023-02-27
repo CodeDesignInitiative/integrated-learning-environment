@@ -12,7 +12,7 @@
      {:href     href
       :disabled (or disabled? false)}
      [:div.p-2.rounded-3xl.hover:shadow-lg.transition-all.aspect-square
-      {:class bg-color}
+      {:class (if disabled? "bg-gray-200" bg-color)}
       [:img.p-4.invert {:src (str "/img/icons/" (or icon "missing") ".svg")}]]
 
      [:div.text-center.mt-2 label]]]])
