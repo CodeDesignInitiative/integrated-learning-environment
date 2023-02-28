@@ -36,7 +36,8 @@
     {:class "grid-rows-[1fr,320px] bg-[#212121]"}
     [:div.p-4
      (editor-tabs ["HTML" "CSS"] "HTML")
-     [:textarea.w-full.h-full.rounded-lg.text-black "Editor"]]
+     [:div.w-full.h-full.rounded-lg.text-black.language-html {:id "editor"}
+      "<h1>Helo Paul!</h1>"]]
     (components/notes-widget mock/notes)
     ]
    [:div.p-4
