@@ -7,7 +7,8 @@
             [cd.ile.views.wiki-screen :as wiki-screen]
             [cd.ile.views.jobs-screen :as jobs-screen]
             [cd.ile.views.editor-screen :as editor-screen]
-            [cd.ile.views.home-screen :as home-screen]))
+            [cd.ile.views.home-screen :as home-screen]
+            [cd.ile.views.settings-screen :as settings-screen]))
 
 (defn app [{:keys [session biff/db] :as req}]
   (let [{:user/keys [email]} (xt/entity db (:uid session))]
@@ -28,6 +29,10 @@
   (let [{:user/keys [email]} (xt/entity db (:uid session))]
     (ui/page {} nil (editor-screen/editor-screen))))
 
+(defn settings [{:keys [session biff/db] :as req}]
+  (let [{:user/keys [email]} (xt/entity db (:uid session))]
+    (ui/page {} nil (settings-screen/settings-screen))))
+
 
 (def features
   {:routes ["/app" {:middleware [mid/wrap-signed-in]}
@@ -36,4 +41,5 @@
             ["/wiki" {:get wiki}]
             ["/auftraege" {:get jobs}]
             ["/editor" {:get editor}]
+            ["/settings" {:get settings}]
             ]})
