@@ -28,6 +28,7 @@
               n])
      tabs)])
 
+
 (defn editor-screen []
   [:main.grid.gap-4.text-white.bg-gradient-to-b
    {:class "grid-cols-[380px,1fr] from-[#372748] to-[#131424]"}
@@ -35,7 +36,7 @@
     {:class "grid-rows-[1fr,320px] bg-[#212121]"}
     [:div.p-4
      (editor-tabs ["HTML" "CSS"] "HTML")
-     [:span "Editor"]]
+     [:textarea.w-full.h-full.rounded-lg.text-black "Editor"]]
     (components/notes-widget mock/notes)
     ]
    [:div.p-4

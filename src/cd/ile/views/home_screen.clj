@@ -1,7 +1,8 @@
 (ns cd.ile.views.home-screen
   (:require [cd.ile.ui.components :as components]
             [cd.ile.core.date-util :as date-util]
-            [cd.ile.core.mock-data :as mock]))
+            [cd.ile.core.mock-data :as mock]
+            [com.biffweb :as biff]))
 
 (defn- notifications-widget [notifications]
   [:div.overflow-y-auto
@@ -16,6 +17,22 @@
          [:h4.text-lg heading]
          [:p msg]])
       notifications)]])
+
+(defn- signout-button []
+  (biff/form
+    {:action "/auth/signout"}
+    [:button.px-4.py-2.bg-white.text-black.rounded-full.font-bold
+     {:type "submit"}
+     "Ausloggen"]))
+
+(defn- settings-button []
+  [:a.px-4.py-2.text-black.rounded-full.font-bold
+   {:class "bg-[#6FBFD8]"
+    :href "/settings"}
+   "Einstellungen"])
+(defn- company-logo []
+  [:h2.font-bold
+   "The Good" [:br] "Company Inc."])
 
 (defn home-screen []
   [:main.bg-gradient-to-b.text-white.p-7.flex.flex-row.gap-8
@@ -44,4 +61,9 @@
                              :disabled? true})]
 
     (components/notes-widget mock/notes)]
-   (notifications-widget mock/notifications)])
+   [:.flex.flex-col.items-end.gap-4
+    (notifications-widget mock/notifications)
+    [:.flex.flex-row.gap-8.items-center
+     (company-logo)
+     (settings-button)
+     (signout-button)]]])
