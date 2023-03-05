@@ -27,7 +27,10 @@
 
 (defn editor [{:keys [session biff/db] :as req}]
   (let [{:user/keys [email]} (xt/entity db (:uid session))]
-    (ui/page {} nil (editor-screen/editor-screen))))
+    (ui/page {} nil
+             (editor-screen/editor-screen
+               cd.ile.core.mock-data/html-example
+               cd.ile.core.mock-data/css-example))))
 
 (defn settings [{:keys [session biff/db] :as req}]
   (let [{:user/keys [email]} (xt/entity db (:uid session))]

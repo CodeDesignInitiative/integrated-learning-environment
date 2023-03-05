@@ -27,3 +27,12 @@ main {
     grid-template-columns: 140px 140px;
     gap: 48px;
 }
+
+#editor {
+    color: white;
+    font-size: 16px;
+}
+
+#css-base {
+    display: none;
+}

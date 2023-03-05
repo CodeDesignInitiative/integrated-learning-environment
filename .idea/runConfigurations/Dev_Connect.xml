@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Dev Connect" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false" singleton="true">
-    <module name="integrated-learning-environment" />
+    <module name="ile" />
     <setting name="displayName" value="Dev Connect" />
     <setting name="host" value="" />
     <setting name="port" value="0" />

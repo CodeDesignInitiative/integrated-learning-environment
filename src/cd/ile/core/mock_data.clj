@@ -52,6 +52,9 @@
                                    :open-chats     [chat-with-edna]
                                    :previous-chats [chat-with-edna]}])
 
+(def html-example "<h1>Hallo Luca ❤️</h1>")
+
+(def css-example "body { background: red};")
 
 (def html-project
   #:project{:id       (random-uuid)

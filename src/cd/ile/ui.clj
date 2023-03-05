@@ -20,17 +20,19 @@
                       :image       "https://clojure.org/images/clojure-logo-120b.png"})
         (update :base/head (fn [head]
                              (concat [[:link {:rel "stylesheet" :href (css-path)}]
-                                      [:link {:rel "stylesheet" :href "/css/base.css"}]
+                                      [:link {:rel "stylesheet" :href "/css/base.css?v=1"}]
                                       [:link {:rel "stylesheet" :href "//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css"}]
+                                      ;[:script {:src "/js/editor.js"}]
                                       [:script {:src "https://unpkg.com/htmx.org@1.8.4"}]
                                       [:script {:src "https://unpkg.com/hyperscript.org@0.9.3"}]
                                       [:script {:src "//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"}]
-                                      [:script
-                                       {:type                    "module"
-                                        :dangerouslySetInnerHTML {:__html "import {CodeJar} from \"https://unpkg.com/codejar@3.7.0\"\nconsole.log('heya');\nvar jar = CodeJar(document.querySelector('#editor'), hljs.highlightElement); console.log(jar);"}}]
                                       [:script {:src "/js/refresh.js"}]]
                                      head))))
-    body))
+    [:<> body
+     [:script {:src "/js/src-min-noconflict/ace.js"
+               :type "text/javascript"
+               :charset "utf-9"}]
+     [:script {:src "/js/editor.js"}]]))
 
 (defn page [opts & body]
   (base opts

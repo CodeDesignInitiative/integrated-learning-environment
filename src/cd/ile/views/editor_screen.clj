@@ -16,8 +16,8 @@
     [:.flex.justify-center.items-center.w-full.h-full.bg-gray-600.text-gray-400.rounded-sm
      {:class "text-.25rem"}
      "www.code.editor"]]
-   [:.bg-gray-800.rounded-b-lg
-    body]])
+   [:iframe#output.bg-gray-800.rounded-b-lg.w-full.h-full]
+   ])
 
 (defn- editor-tabs [tabs active]
   "The editor tab bar"
@@ -29,18 +29,21 @@
      tabs)])
 
 
-(defn editor-screen []
+(defn editor-screen [html css]
   [:main.grid.gap-4.text-white.bg-gradient-to-b
    {:class "grid-cols-[380px,1fr] from-[#372748] to-[#131424]"}
    [:aside.grid.gap-4.bg-opacity-60
     {:class "grid-rows-[1fr,320px] bg-[#212121]"}
     [:div.p-4
      (editor-tabs ["HTML" "CSS"] "HTML")
-     [:div.w-full.h-full.rounded-lg.text-black.language-html {:id "editor"}
-      "<h1>Helo Paul!</h1>"]]
+     [:<>
+      [:div.w-full.h-full.rounded-lg.text-black.language-html {:id "editor"}
+       html]
+      [:#css-base
+       css]]]
     (components/notes-widget mock/notes)
     ]
    [:div.p-4
     [:div.bg-purple-400.rounded-lg.w-full.bg-opacity-5.h-full
-     [:span.my-auto.mx-auto
+     [:span.my-auto.mx-auto.h-full
       (browser-chrome [:span "hello!!!"])]]]])
