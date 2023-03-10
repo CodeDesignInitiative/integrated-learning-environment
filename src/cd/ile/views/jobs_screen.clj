@@ -11,6 +11,7 @@
   (let [html-job (:project/chapters cd.ile.core.mock-data/html-project)]
     (get html-job (- step 1))))
 
+
 (defn job-step-screen [params]
   (let [job (get params :job)
         step (-> (get params :step) Integer/parseInt)
@@ -19,4 +20,5 @@
     [:div
      (editor-screen/editor-screen (get-in chapter [:project.chapter/code :html :code/line])
                                   (get-in chapter [:project.chapter/code :css :code/line])
-                                  (:project.chapter/notes chapter))]))
+                                  (:project.chapter/notes chapter)
+                                  (str "/app/auftrag?job=" job "&step=" (+ step 1)))]))

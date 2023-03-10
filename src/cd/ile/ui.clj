@@ -28,11 +28,7 @@
                                       [:script {:src "//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"}]
                                       [:script {:src "/js/refresh.js"}]]
                                      head))))
-    [:<> body
-     [:script {:src "/js/src-min-noconflict/ace.js"
-               :type "text/javascript"
-               :charset "utf-9"}]
-     [:script {:src "/js/editor.js"}]]))
+    body))
 
 (defn page [opts & body]
   (base opts
@@ -46,4 +42,8 @@
             "code "
             [:span.text-red-700 "//"]
             " editor"]]]
-         body]))
+         body
+         [:script {:src "/js/src-min-noconflict/ace.js"
+                   :type "text/javascript"
+                   :charset "utf-9"}]
+         [:script {:src "/js/editor.js"}]]))

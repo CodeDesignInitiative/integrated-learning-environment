@@ -81,8 +81,7 @@
                                          :code               {:html #:code{:lang    :html
                                                                            :base    ""
                                                                            :snippet ""
-                                                                           :line    "<h1>Witten</h1>
-                                                                           <p>Wo ist das Murmeltier?</p>"}
+                                                                           :line    "<h1>Witten</h1>\n<p>Wo ist das Murmeltier?</p>"}
                                                               :css  #:code{:lang    :css
                                                                            :base    ""
                                                                            :snippet ""
