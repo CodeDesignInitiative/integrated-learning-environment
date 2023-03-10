@@ -61,31 +61,32 @@
             :name     "Webseite mit HTML"
             :tags     [:html :website]
             :chapters [#:project.chapter{:id                 (random-uuid)
-                                         :name               "Rechtschreibfehler korrigieren"
+                                         :name                "Rechtschreibfehler korrigieren"
                                          :notes              ["Fehler korrigieren"
                                                               "Witten nicht Wittne"]
-                                         :code               [#:code{:lang    :html
-                                                                     :base    ""
-                                                                     :snippet ""
-                                                                     :line    "<h1>Wittne</h1>"}
-                                                              #:code{:lang    :css
-                                                                     :base    ""
-                                                                     :snippet ""
-                                                                     :line    "body { background: red};"}]
+                                         :code               {:html #:code{:lang    :html
+                                                                           :base    ""
+                                                                           :snippet ""
+                                                                           :line    "<h1>Wittne</h1>"}
+                                                              :css  #:code{:lang    :css
+                                                                           :base    ""
+                                                                           :snippet ""
+                                                                           :line    "body { background: red;}"}}
                                          :story              chat-with-edna
                                          :story-final-action "/app/editor"}
                        #:project.chapter{:id                 (random-uuid)
                                          :name               "Hintergrundfarbe anpassen"
                                          :notes              ["Hintergrundfarbe anpassen"
                                                               "lol"]
-                                         :code               [#:code{:lang    :html
-                                                                     :base    ""
-                                                                     :snippet ""
-                                                                     :line    "<h1>Wittne</h1>"}
-                                                              #:code{:lang    :css
-                                                                     :base    ""
-                                                                     :snippet ""
-                                                                     :line    "body { background: red};"}]
+                                         :code               {:html #:code{:lang    :html
+                                                                           :base    ""
+                                                                           :snippet ""
+                                                                           :line    "<h1>Witten</h1>
+                                                                           <p>Wo ist das Murmeltier?</p>"}
+                                                              :css  #:code{:lang    :css
+                                                                           :base    ""
+                                                                           :snippet ""
+                                                                           :line    "body { background: yellow;}"}}
                                          :story              chat-with-edna
                                          :story-final-action "/app/editor"}]})
 

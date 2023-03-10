@@ -29,7 +29,7 @@
      tabs)])
 
 
-(defn editor-screen [html css]
+(defn editor-screen [html css notes]
   [:main.grid.gap-4.text-white.bg-gradient-to-b
    {:class "grid-cols-[380px,1fr] from-[#372748] to-[#131424]"}
    [:aside.grid.gap-4.bg-opacity-60
@@ -41,7 +41,7 @@
        html]
       [:#css-base
        css]]]
-    (components/notes-widget mock/notes)
+    (components/notes-widget notes)
     ]
    [:div.p-4
     [:div.bg-purple-400.rounded-lg.w-full.bg-opacity-5.h-full
