@@ -39,3 +39,77 @@
 
         [:p.mt-2.p-2.text-center.text-sm.bg-slate-800 "Vorherige Chats"]
         (components/conversation-widget (:conversation/previous-chats (first conversations)))]]]]))
+
+
+(defn chat-interactive-screen [conversation chat-step job job-step]
+  [:main.bg-gradient-to-b.text-white
+   [:div.grow.bg-slate-700.full-height.flex.flex-row
+
+    ; profile header
+
+    [:div.flex.flex-row.bg-zinc-600
+     [:img.m-2.aspect-square.object-cover.w-12.h-12.rounded-full
+      {:src (or (get-in conversation [:conversation/with :person/img])
+                "/img/persons/test.jpg")}]
+     [:div.m-2
+      [:div (get-in conversation [:conversation/with :person/name])]
+      [:div.text-sm (get-in conversation [:conversation/with :person/organization])]]]
+
+    ; messages
+
+    [:div#chat.flex-grow
+
+     [:div.chat-spacer]
+
+     (when (> (count conversation) 1)
+
+       (map
+         (fn [{:story/keys [person message video answer-choices]}]
+           [:<>
+            [:div.chat-bubble
+             [:h3.text-sm (:person/name person)]
+             [:p.m-0 message]]
+            (when answer-choices
+              [:div.chat-user-answers
+               [:div.chat-bubble.user
+                [:p.m-0 (first answer-choices)]]])])
+         (take (- chat-step 1) conversation)))
+
+     ; interactions
+
+     (let [{:story/keys [person message video answer-choices]} (get conversation (- chat-step 1))]
+       [:<>
+
+        ; chat message
+
+        [:div.chat-bubble
+         [:h3 (:person/name person)]
+         [:p.m-0 message]]
+
+        ; answer choices, if present
+
+        (if answer-choices
+          [:div.chat-user-answers
+           (map
+             (fn [answer]
+               [:div.chat-bubble.user
+                [:a {:href (str "/app/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
+                 [:p.m-0 answer]]]
+               )
+             answer-choices)]
+
+          ; when no anser choices either "next" button
+          ; or nothing, when end of conversation
+          (when (not (= (count conversation) chat-step))
+            [:div.p-2.rounded-xl.bg-orange-400.mb-2
+             [:a {:href (str "/app/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
+              [:p.m-0 "Weiter"]]]))])
+
+     ; when end of conversation: next button to next step
+
+     (when (= (count conversation) chat-step)
+       [:div.p-2.rounded-xl.bg-red-400.mb-2
+        [:a {:href (str "/app/auftrag?job=" job "&step=" (+ job-step 1))}
+         [:p.m-0 "Weiter"]]])]
+
+    ]])

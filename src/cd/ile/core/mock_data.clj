@@ -57,7 +57,7 @@
 (def css-example "body { background: red};")
 
 (def html-project
-  #:project{:id       (random-uuid)
+  #:project{:id       "website1"
             :name     "Webseite mit HTML"
             :tags     [:html :website]
             :chapters [#:project.chapter{:id                 (random-uuid)
@@ -89,3 +89,4 @@
                                          :story              chat-with-edna
                                          :story-final-action "/app/editor"}]})
 
+(def projects [html-project])
