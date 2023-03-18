@@ -1,5 +1,6 @@
 (ns cd.ile.views.jobs-screen
   (:require [cd.ile.views.chat-screen :as chat-screen]
+            [cd.ile.courses.html-website :as html-website]
             [cd.ile.views.editor-screen :as editor-screen]))
 
 
@@ -17,7 +18,7 @@
      cd.ile.core.mock-data/projects)])
 
 (defn get-chapter-for-job [job step]
-  (let [html-job (:project/chapters cd.ile.core.mock-data/html-project)]
+  (let [html-job (:project/chapters html-website/html-project)]
     (get html-job (- step 1))))
 
 
@@ -36,7 +37,7 @@
                                               (Integer/parseInt show-chat) 1)
                                             job
                                             step)
-       (editor-screen/editor-screen (get-in chapter [:project.chapter/code :html :code/line])
-                                    (get-in chapter [:project.chapter/code :css :code/line])
+       (editor-screen/editor-screen (get-in chapter [:project.chapter/code :html])
+                                    (get-in chapter [:project.chapter/code :css])
                                     (:project.chapter/notes chapter)
                                     (str "/app/auftrag?job=" job "&step=" step "&chat")))]))

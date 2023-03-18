@@ -61,7 +61,7 @@
             :name     "Webseite mit HTML"
             :tags     [:html :website]
             :chapters [#:project.chapter{:id                 (random-uuid)
-                                         :name                "Rechtschreibfehler korrigieren"
+                                         :name               "Rechtschreibfehler korrigieren"
                                          :notes              ["Fehler korrigieren"
                                                               "Witten nicht Wittne"]
                                          :code               {:html #:code{:lang    :html

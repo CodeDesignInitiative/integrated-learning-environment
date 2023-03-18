@@ -37,9 +37,13 @@
     [:div.p-4
      (editor-tabs ["HTML" "CSS"] "HTML")
      [:div.w-full.h-full.rounded-lg.text-black.language-html {:id "editor"}
-      html]
+      (:code/line html)]
+     [:#html-base
+      (:code/base html)]
+     [:#html-snippet
+      (:code/snippet html)]
      [:#css-base
-      css]
+      (:code/base css)]
      [:div.flex.flex-row.space-between.mt-4
       [:button#help-button "Wiki"]
       [:a#done-button {:href next} "Fertig"]]]

@@ -1,0 +1,119 @@
+/* Webseite Design */
+
+/* body
+   - wirkt sich auf die ganze Seite auf */
+body {
+    /* hintergrund */
+    background-color: #fee6e6;
+    background-attachment: fixed;
+    background-image: url(../../../../resources/public/img/courses/ruhr_hintergrund.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* größe und abstände */
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+
+    /* schrift global */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
+    line-height: 1.5;
+}
+
+/* links
+   - a steht für anchor (deutsch: Anker) */
+a {
+    /* link text farbe */
+    color: #3fa138;
+}
+
+/*
+   ---------------------- navigationsleiste (oben) ----------------------
+*/
+
+nav {
+    /* aussehen */
+    background-color: #c2a07e;
+    box-shadow: 0 4px 12px #0004;
+    padding: 12px 16px;
+
+    /* anordnung */
+    display: flex;
+    gap: 16px;
+    list-style-type: none;
+
+    /* schrift */
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* erstes Element in der Navigationsleiste */
+nav > span:first-child {
+    /* fülle den verfügbaren Platz aus und
+       schiebe die restlichen Elemente nach rechts */
+    flex-grow: 1;
+}
+
+/* alle Links, die in der Navigationsleiste sind */
+nav a {
+    /* sollen weiß sein */
+    color: white;
+    /* und nicht unterstrichen */
+    text-decoration: none;
+}
+
+/*
+   ---------------------- seiten inhalt ----------------------
+*/
+
+main {
+    max-width: 800px;
+    padding: 16px;
+    margin: 0 auto;
+}
+
+/* ein blog artikel */
+article {
+    background-color: rgb(240, 231, 220);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px #0004;
+    padding: 16px;
+    margin-bottom: 64px;
+}
+
+/* alle bilder, die in einem blog artikel sind */
+article img {
+    width: 300px;
+    height: 300px;
+    border-radius: 200px;
+    object-fit: cover;
+    float: right;
+    box-shadow: 0 0 12px #0004;
+}
+
+/*
+   ---------------------- fußleiste (unten) ----------------------
+*/
+
+footer {
+    background-color: #c2a07e;
+    padding: 32px 16px;
+
+    /* schrift */
+    font-family: sans-serif;
+    font-weight: 100;
+    color: #54371b;
+    line-height: 2;
+}
+
+footer > ul {
+    list-style-type: symbols(cyclic "📜" "📑" "☎️");
+    margin: 0;
+}
+
+/* links, die nur im footer sind */
+footer a {
+    color: #54371b;
+    text-decoration: none;
+}

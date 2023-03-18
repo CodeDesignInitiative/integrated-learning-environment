@@ -48,7 +48,7 @@ main {
     color: rgb(216 180 254);
 }
 
-#css-base {
+#css-base, #html-base, #html-snippet {
     display: none;
 }
 
