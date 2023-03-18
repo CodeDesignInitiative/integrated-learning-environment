@@ -20,7 +20,7 @@
        [:div.flex.flex-row.bg-zinc-600
         [:img.m-2.aspect-square.object-cover.w-12.h-12.rounded-full
          {:src (or (get-in (first conversations) [:conversation/with :person/img])
-                   "/img/persons/test.jpg")}]
+                   "/img/persons/avatar_2.png")}]
         [:div.m-2
          [:div (get-in (first conversations) [:conversation/with :person/name])]
          [:div.text-sm (get-in (first conversations) [:conversation/with :person/organization])]]
@@ -50,7 +50,7 @@
     [:div.flex.flex-row.bg-zinc-600
      [:img.m-2.aspect-square.object-cover.w-12.h-12.rounded-full
       {:src (or (get-in conversation [:conversation/with :person/img])
-                "/img/persons/test.jpg")}]
+                "/img/persons/avatar_2.png")}]
      [:div.m-2
       [:div (get-in conversation [:conversation/with :person/name])]
       [:div.text-sm (get-in conversation [:conversation/with :person/organization])]]]
