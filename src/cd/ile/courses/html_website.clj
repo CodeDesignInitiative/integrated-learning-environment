@@ -10,40 +10,54 @@
                           :organization "Ausbruchs GmbH"})
 
 
-(def start-chat-with-edna [#:story{:person  person-edna
-                                   :message "Kennst du schon dieses Video?"
-                                   :video   "https://www.youtube-nocookie.com/embed/lXMskKTw3Bc"}
-                           #:story{:person         person-edna
-                                   :message        "Das ist wahre Kunst, findest du nicht auch?"
-                                   :answer-choices ["So was von!"
-                                                    "Total knorke war das!"
-                                                    "Da gebe ich dir voll recht!"]}
-                           #:story{:person         person-edna
-                                   :message        "Jetzt mal was anderes. Kannst du HTML?"
-                                   :answer-choices ["Nein"
-                                                    "Ein bisschen"
-                                                    "Aber hallo!"]}
-                           #:story{:person  person-edna
-                                   :message "Alles klar, ist eigentlich egal, wir brauchen Hilfe und du musst nur Zeit mitbringen."}])
+(def start-chat-with-edna
+  [#:story{:person         person-edna
+           :message        "Hallo! Du bist unser neustes Teammitglied, oder?"
+           :answer-choices ["Korrekt"
+                            "Genau"
+                            "Weiß nicht"]}
+   #:story{:person  person-edna
+           :message "Alles klar. Ich habe eine Aufgabe, wo ich Hilfe brauche mit unserer Webseite."}
+   #:story{:person         person-edna
+           :message        "Kannst du mir da helfen mit dem HTML Code?"
+           :answer-choices ["Weiß nicht"
+                            "Ein bisschen"
+                            "Aber hallo!"]}
+   #:story{:person  person-edna
+           :message "Mir wurde gesagt, dass unser Code Editor dir bei allem weiteren helfen kann – egal wie viel du schon weisst."}]
+  #_#:chat{:final-action "/app/editor?job=website1"
+         :conversation [#:story{:person         person-edna
+                                :message        "Hallo! Du bist unser neustes Teammitglied, oder?"
+                                :answer-choices ["Korrekt"
+                                                 "Genau"
+                                                 "Weiß nicht"]}
+                        #:story{:person  person-edna
+                                :message "Alles klar. Ich habe eine Aufgabe, wo ich Hilfe brauche mit unserer Webseite."}
+                        #:story{:person         person-edna
+                                :message        "Kannst du mir da helfen mit dem HTML Code?"
+                                :answer-choices ["Weiß nicht"
+                                                 "Ein bisschen"
+                                                 "Aber hallo!"]}
+                        #:story{:person  person-edna
+                                :message "Mir wurde gesagt, dass unser Code Editor dir bei allem weiteren helfen kann – egal wie viel du schon weisst."}]})
 
-(def chat-with-edna [#:story{:person  person-edna
-                             :message "Kennst du schon dieses Video?"
-                             :video   "https://www.youtube-nocookie.com/embed/lXMskKTw3Bc"}
-                     #:story{:person         person-edna
-                             :message        "Das ist wahre Kunst, findest du nicht auch?"
-                             :answer-choices ["So was von!"
-                                              "Total knorke war das!"
-                                              "Da gebe ich dir voll recht!"]}
-                     #:story{:person         person-edna
-                             :message        "Jetzt mal was anderes. Kannst du HTML?"
-                             :answer-choices ["Nein"
-                                              "Ein bisschen"
-                                              "Aber hallo!"]}
-                     #:story{:person  person-edna
-                             :message "Alles klar, ist eigentlich egal, wir brauchen Hilfe und du musst nur Zeit mitbringen."}])
+
+
+(def chat-with-edna-2 [#:story{:person  person-edna
+                               :message "Super, vielen Dank für deine Unterstützung! Ich bin wirklich froh, dass du jetzt im Team bist!"}
+                       #:story{:person         person-edna
+                               :message        "Du hast die letzte Aufgabe so schnell und gut bewältigt, deshalb wollte ich dich fragen, ob du dir nochmal Zeit für die weiteren Anpassungen nehmen kannst?"
+                               :answer-choices ["Gerne"
+                                                "Später"
+                                                "Das mache ich direkt"]}
+                       #:story{:person  person-edna
+                               :message "Okay, das freut mich zu hören. Norma von der Marketingabteilung hat noch einige Fehler auf der Webseite gefunden. Ich habe dir den korrigierten Absatz auf deinen Notizzettel aufgeschrieben"}])
 
 (def html-1-snippet "\n    <article>\n        <b>Vereine</b>\n        <img src=\"http://localhost:8080/img/courses/ruhr_hintergrund.jpg\">\n        $$placeholder$$        <ul>\n            <li>\uD83E\uDDCD Neue Leute treffen</li>\n            <li>\uD83E\uDD51 Tolle Events</li>\n            <li>\uD83D\uDD04 Jede Woche</li>\n        </ul>\n\n        <h3>Veranstaltungen</h3>\n        <p>\n            Jede Woche findet in \"Der Werkstatt\" ein offenes Treffen für\n            Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n        </p>\n\n        <p>\n            Es werden auch Ausflüge organisiert und du kannst die geplanten\n            Events jederzeit auf der Webseite\n            <a href=\"https://signalofyouth.de/\"\n               target=\"_blank\">\n                signalofyouth.de ↗️\n            </a>\n            einsehen!\n        </p>\n    </article>")
 (def html-1-line "<h2>SoYou, Wittne</h2>")
+
+(def html-2-snippet "\n    <article>\n        <b>Vereine</b>\n        <img src=\"http://localhost:8080/img/courses/ruhr_hintergrund.jpg\">\n        <h2>SoYou, Witten</h2>        <ul>\n            <li>\uD83E\uDDCD Neue Leute treffen</li>\n            <li>\uD83E\uDD51 Tolle Events</li>\n            <li>\uD83D\uDD04 Jede Woche</li>\n        </ul>\n\n        <h3>Veranstaltungen</h3>\n       $$placeholder$$\n\n        <p>\n            Es werden auch Ausflüge organisiert und du kannst die geplanten\n            Events jederzeit auf der Webseite\n            <a href=\"https://signalofyouth.de/\"\n               target=\"_blank\">\n                signalofyouth.de ↗️\n            </a>\n            einsehen!\n        </p>\n    </article>")
+(def html-2-line "<p>\n Jede Wohce findet in \"Der \n Werkstat\" ein offnes Treffen \n für Jugendliche satt. \n Hier könnnen alle teil nehmen, \n die Lust haben. \n</p>")
 
 (def html-project
   #:project{:id       "website1"
@@ -61,7 +75,21 @@
                                                                            :base    css-website
                                                                            :snippet ""
                                                                            :line    ""}}
-                                         :story              chat-with-edna
+                                         :story              start-chat-with-edna
+                                         :story-final-action "/app/editor"}
+                       #:project.chapter{:id                 (random-uuid)
+                                         :name               "Rechtschreibfehler korrigieren 2x§"
+                                         :notes              ["Korrektur:"
+                                                              "Jede Woche findet in \"Der \n Werkstatt\" ein offenes Treffen \n für Jugendliche statt. \n Hier können alle teilnehmen, \n die Lust haben. "]
+                                         :code               {:html #:code{:lang    :html
+                                                                           :base    html-base
+                                                                           :snippet html-2-snippet
+                                                                           :line    html-2-line}
+                                                              :css  #:code{:lang    :css
+                                                                           :base    css-website
+                                                                           :snippet ""
+                                                                           :line    ""}}
+                                         :story              chat-with-edna-2
                                          :story-final-action "/app/editor"}
                        #:project.chapter{:id                 (random-uuid)
                                          :name               "Hintergrundfarbe anpassen"
@@ -75,5 +103,10 @@
                                                                            :base    ""
                                                                            :snippet ""
                                                                            :line    "body { background: yellow;}"}}
-                                         :story              chat-with-edna
+                                         :story              chat-with-edna-2
                                          :story-final-action "/app/editor"}]})
+
+
+(comment
+  (get (:project/chapters html-project) 0)
+  )
