@@ -98,6 +98,17 @@ main {
     width: 70%;
 }
 
+.chat-next-btn {
+    align-self: end;
+    background: linear-gradient(180deg, #e9308d 0%, #d04f38 100%);
+    border-radius: 12px;
+    margin: 8px;
+    padding: 16px 24px;
+    font-size: 1.3em;
+    width: 40%;
+    text-align: center;
+}
+
 .chat-bubble > h3 {
     font-size: .8em;
     letter-spacing: 2px;
@@ -114,4 +125,14 @@ main {
     display: flex;
     align-self: end;
     width: 70%;
+}
+
+.profile-chat {
+    width: auto;
+    height: 200px;
+}
+
+#chat-keyboard {
+    background-color: #1a2534;
+    padding: 24px 0;
 }

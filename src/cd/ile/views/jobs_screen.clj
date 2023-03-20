@@ -6,16 +6,16 @@
 
 (defn jobs-screen []
   [:main.bg-gradient-to-b.text-white
-   [:h1 "Aufträge"]
-   (map
-     (fn [{:project/keys [id name tags chapters]}]
-       (println tags)
-       [:div
-        [:h2 name]
-        [:a {:href (str "/app/auftrag?job=" id)} "Bearbeiten"]
-        #_[:div.flex.flex-row
-         (map (fn [t] [:span (str (name t))]) tags)]])
-     cd.ile.core.mock-data/projects)])
+   [:h1.p-7.text-xl "Aufträge"]
+   [:div.flex.flex-row.m-7
+    (map
+      (fn [{:project/keys [id name tags chapters]}]
+        [:div.p-7.bg-green-400.rounded
+         [:h2.text-2xl.mb-3 name]
+         [:a {:href (str "/app/auftrag?job=" id)} "Bearbeiten"]
+         #_[:div.flex.flex-row
+            (map (fn [t] [:span (str (name t))]) tags)]])
+      cd.ile.core.mock-data/projects)]])
 
 (defn get-chapter-for-job [job step]
   (let [html-job (:project/chapters html-website/html-project)]

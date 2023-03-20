@@ -36,7 +36,7 @@
                  rounded
                  w-full
                  g-recaptcha]})
-     "Join the waitlist"]))
+     "Anmelden oder Registrieren"]))
 
 (defn home [sys]
   (ui/base

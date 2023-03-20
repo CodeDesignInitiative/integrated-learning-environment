@@ -14,10 +14,11 @@
    :user                               [:map {:closed true}
                                         [:xt/id :user/id]
                                         :user/email
-                                        :user/joined-at
-                                        [:map {:closed true}
-                                         :user.progress/current-projects
-                                         :user.progress/finished-projects]]
+                                        :user/joined-at]
+
+   :user.state                         [:map {:closed true}
+                                        :user.progress/current-projects
+                                        :user.progress/finished-projects]
 
 
    :code/lang                          keyword?

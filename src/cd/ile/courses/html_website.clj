@@ -6,7 +6,25 @@
 
 (def person-edna #:person{:id           (random-uuid)
                           :name         "Edna"
+                          :picture      "/img/persons/avatar_2.png"
                           :organization "Ausbruchs GmbH"})
+
+
+(def start-chat-with-edna [#:story{:person  person-edna
+                                   :message "Kennst du schon dieses Video?"
+                                   :video   "https://www.youtube-nocookie.com/embed/lXMskKTw3Bc"}
+                           #:story{:person         person-edna
+                                   :message        "Das ist wahre Kunst, findest du nicht auch?"
+                                   :answer-choices ["So was von!"
+                                                    "Total knorke war das!"
+                                                    "Da gebe ich dir voll recht!"]}
+                           #:story{:person         person-edna
+                                   :message        "Jetzt mal was anderes. Kannst du HTML?"
+                                   :answer-choices ["Nein"
+                                                    "Ein bisschen"
+                                                    "Aber hallo!"]}
+                           #:story{:person  person-edna
+                                   :message "Alles klar, ist eigentlich egal, wir brauchen Hilfe und du musst nur Zeit mitbringen."}])
 
 (def chat-with-edna [#:story{:person  person-edna
                              :message "Kennst du schon dieses Video?"
@@ -32,7 +50,7 @@
             :name     "Webseite mit HTML"
             :tags     [:html :website]
             :chapters [#:project.chapter{:id                 (random-uuid)
-                                         :name                "Rechtschreibfehler korrigieren"
+                                         :name               "Rechtschreibfehler korrigieren"
                                          :notes              ["Fehler korrigieren"
                                                               "Witten nicht Wittne"]
                                          :code               {:html #:code{:lang    :html

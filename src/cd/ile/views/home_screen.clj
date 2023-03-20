@@ -65,7 +65,7 @@
                              :disabled? true})]
 
     (components/notes-widget mock/notes)]
-   [:.flex.flex-col.items-end.gap-4
+   [:.flex.flex-col.items-end.gap-4.space-between
     (notifications-widget mock/notifications)
     [:.flex.flex-row.gap-8.items-center
      (company-logo)

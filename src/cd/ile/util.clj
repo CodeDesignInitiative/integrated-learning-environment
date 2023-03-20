@@ -2,21 +2,20 @@
   (:require [com.biffweb :as biff]
             [camel-snake-kebab.core :as csk]
             [camel-snake-kebab.extras :as cske]
-            [clj-http.client :as http]))
+            [clj-http.client :as http]
+            [simple-email.core :as simple-email]))
 
 (defn email-signin-enabled? [{:keys [biff/secret]}]
-  (secret :postmark/api-key))
+  (secret :mail/login))
 
-(defn postmark [{:keys [biff/secret]} method endpoint & [form-params options]]
-  (http/request
-   (merge {:method method
-           :url (str "https://api.postmarkapp.com" endpoint)
-           :headers {"X-Postmark-Server-Token" (secret :postmark/api-key)}
-           :as :json
-           :content-type :json
-           :form-params (cske/transform-keys csk/->PascalCase form-params)}
-          options)))
+(defn hostinger-smtp [{:keys [biff/secret]} recipent code]
+  (->
+    (simple-email/mail-server "smtp.hostinger.com" 587      ; host / port
+                              true                          ; ssl
+                              "app@code-editor.digital"     ; user
+                              (secret :mail/login)          ; pw
+                              "app@code-editor.digital")    ; from
+    (simple-email/send-to recipent "LMS Code" (str code))))
 
-(defn send-email [{:keys [postmark/from] :as sys} form-params]
-  (biff/catchall-verbose
-   (postmark sys :post "/email" (merge {:from from} form-params))))
+(defn send-email [sys recipent code]
+  (hostinger-smtp sys recipent code))
