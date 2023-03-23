@@ -28,27 +28,40 @@
               n])
      tabs)])
 
+(defn hidden-code [{:keys [html css]}]
+  [:div
+   [:#html-base
+    (:code/base html)]
+   [:#html-snippet
+    (:code/snippet html)]
+   [:#css-base
+    (:code/base css)]])
 
-(defn editor-screen [html css notes next]
-  [:main.grid.gap-4.text-white.bg-gradient-to-b
-   {:class "grid-cols-[380px,1fr] from-[#372748] to-[#131424]"}
-   [:aside#editor-sidebar.grid.bg-opacity-60
-    {:class "grid-rows-[1fr,320px] bg-[#212121]"}
-    [:div.p-4
-     (editor-tabs ["HTML" "CSS"] "HTML")
-     [:div.w-full.h-full.rounded-lg.text-black.language-html {:id "editor"}
-      (:code/line html)]
-     [:#html-base
-      (:code/base html)]
-     [:#html-snippet
-      (:code/snippet html)]
-     [:#css-base
-      (:code/base css)]
-     [:div.flex.flex-row.space-between.mt-4
-      [:button#help-button "Wiki"]
-      [:a#done-button {:href next} "Fertig"]]]
-    (components/notes-widget notes)
-    ]
-   [:div.p-4
-    [:div.bg-purple-400.rounded-lg.w-full.bg-opacity-5.h-full
-     (editor-output)]]])
+(defn interaction-buttons [next]
+  [:div#editor-interaction
+   [:button.circular-button.neutral
+    [:img {:src "/img/icons/wiki.svg"
+           :title "Wiki"}]]
+   [:a.circular-button.check {:href next}
+    [:img {:src "/img/icons/checkmark.svg"
+           :title "Fertig"}]]])
+
+(defn editor-screen [code notes next]
+  [:main#editor-screen
+   [:aside#editor-sidebar
+    ; (editor-tabs ["HTML" "CSS"] "HTML")
+    [:div#editor-wrapper
+     [:div#editor.w-full.h-full.language-html {:id "editor"}
+      (:code/line (:html code))]
+     (interaction-buttons next)]
+    (hidden-code code)
+    (components/notes-widget notes)]
+
+   [:div#editor-output
+    (editor-output)]
+
+   ; add js editor scripts
+   [:script {:src "/js/src-min-noconflict/ace.js"
+             :type "text/javascript"
+             :charset "utf-9"}]
+   [:script {:src "/js/editor.js"}]])

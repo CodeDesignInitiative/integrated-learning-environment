@@ -26,7 +26,7 @@
                                       [:script {:src "https://unpkg.com/htmx.org@1.8.4"}]
                                       [:script {:src "https://unpkg.com/hyperscript.org@0.9.3"}]
                                       [:script {:src "//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"}]
-                                      [:script {:src "/js/refresh.js"}]]
+                                      #_[:script {:src "/js/refresh.js"}]]
                                      head))))
     body))
 
@@ -43,8 +43,4 @@
             [:span.text-red-700 "//"]
             " editor"]]]
          body
-         [:script {:src "/js/src-min-noconflict/ace.js"
-                   :type "text/javascript"
-                   :charset "utf-9"}]
-         [:script {:src "/js/editor.js"}]
          [:script {:src "/js/chat.js"}]]))

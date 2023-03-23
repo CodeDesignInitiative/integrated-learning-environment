@@ -10,23 +10,18 @@ const css_base = document.getElementById("css-base").innerText
 const output = document.getElementById("output")
 
 
-const updateOutput = (code) => {
-    console.log(html_base)
-    console.log(html_base.replace("$$placeholder$$", html_snippet))
-    return `<!doctype HTML>
+const updateOutput = (code) =>
+    `<!doctype HTML>
      <html>
         <head><style>${css_base}</style></head>
         <body>${html_base.replace("$$placeholder$$", html_snippet)
         .replace("$placeholder$", code)}</body>
      </html>`.replace(/#/g, "%23")
-}
 
 
 
 const on_input_change = () => {
-    const code = editor.getValue()
-
-    output.src = "data:text/html;charset=utf-8," + updateOutput(code);
+    output.src = "data:text/html;charset=utf-8," + updateOutput(editor.getValue());
 }
 
 editor.session.on("change", function (d) {

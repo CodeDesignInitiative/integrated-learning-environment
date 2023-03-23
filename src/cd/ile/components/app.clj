@@ -1,4 +1,4 @@
-(ns cd.ile.feat.app
+(ns cd.ile.components.app
   (:require [com.biffweb :as biff]
             [cd.ile.middleware :as mid]
             [cd.ile.ui :as ui]
@@ -35,8 +35,8 @@
   (let [{:user/keys [email]} (xt/entity db (:uid session))]
     (ui/page {} nil
              (editor-screen/editor-screen
-               cd.ile.core.mock-data/html-example
-               cd.ile.core.mock-data/css-example
+               [cd.ile.core.mock-data/html-example
+                cd.ile.core.mock-data/css-example]
                []
                ""))))
 

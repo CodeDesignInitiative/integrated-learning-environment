@@ -1,9 +1,9 @@
 (ns cd.ile
   (:require [com.biffweb :as biff]
-            [cd.ile.feat.app :as app]
-            [cd.ile.feat.auth :as auth]
-            [cd.ile.feat.home :as home]
-            [cd.ile.feat.worker :as worker]
+            [cd.ile.components.app :as app]
+            [cd.ile.components.auth :as auth]
+            [cd.ile.components.home :as home]
+            [cd.ile.components.worker :as worker]
             [cd.ile.schema :refer [malli-opts]]
             [clojure.test :as test]
             [clojure.tools.logging :as log]
@@ -23,8 +23,7 @@
               (keep :api-routes features)]])
 
 (def handler (-> (biff/reitit-handler {:routes routes})
-                 biff/wrap-base-defaults
-                 refresh/wrap-refresh))
+                 biff/wrap-base-defaults))
 
 (def static-pages (apply biff/safe-merge (map :static features)))
 

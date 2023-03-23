@@ -53,11 +53,23 @@
                        #:story{:person  person-edna
                                :message "Okay, das freut mich zu hören. Norma von der Marketingabteilung hat noch einige Fehler auf der Webseite gefunden. Ich habe dir den korrigierten Absatz auf deinen Notizzettel aufgeschrieben"}])
 
-(def html-1-snippet "\n    <article>\n        <b>Vereine</b>\n        <img src=\"http://localhost:8080/img/courses/ruhr_hintergrund.jpg\">\n        $$placeholder$$        <ul>\n            <li>\uD83E\uDDCD Neue Leute treffen</li>\n            <li>\uD83E\uDD51 Tolle Events</li>\n            <li>\uD83D\uDD04 Jede Woche</li>\n        </ul>\n\n        <h3>Veranstaltungen</h3>\n        <p>\n            Jede Woche findet in \"Der Werkstatt\" ein offenes Treffen für\n            Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n        </p>\n\n        <p>\n            Es werden auch Ausflüge organisiert und du kannst die geplanten\n            Events jederzeit auf der Webseite\n            <a href=\"https://signalofyouth.de/\"\n               target=\"_blank\">\n                signalofyouth.de ↗️\n            </a>\n            einsehen!\n        </p>\n    </article>")
+(def html-1-snippet "\n    <article>\n        <b>Vereine</b>\n        <img src=\"http://localhost:8080/img/courses/ruhr_hintergrund.jpg\">\n        $$placeholder$$        <ul>\n            <li>\uD83E\uDDCD Neue Leute treffen</li>\n            <li>\uD83E\uDD51 Tolle Events</li>\n            <li>\uD83D\uDD04 Jede Woche</li>\n        </ul>\n\n        <h3>Veranstaltungen</h3>\n        <p>\n            Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n            Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n        </p>\n\n        <p>\n            Es werden auch Ausflüge organisiert und du kannst die geplanten\n            Events jederzeit auf der Webseite\n            <a href=\"https://signalofyouth.de/\"\n               target=\"_blank\">\n                signalofyouth.de ↗️\n            </a>\n            einsehen!\n        </p>\n    </article>")
 (def html-1-line "<h2>SoYou, Wittne</h2>")
 
 (def html-2-snippet "\n    <article>\n        <b>Vereine</b>\n        <img src=\"http://localhost:8080/img/courses/ruhr_hintergrund.jpg\">\n        <h2>SoYou, Witten</h2>        <ul>\n            <li>\uD83E\uDDCD Neue Leute treffen</li>\n            <li>\uD83E\uDD51 Tolle Events</li>\n            <li>\uD83D\uDD04 Jede Woche</li>\n        </ul>\n\n        <h3>Veranstaltungen</h3>\n       $$placeholder$$\n\n        <p>\n            Es werden auch Ausflüge organisiert und du kannst die geplanten\n            Events jederzeit auf der Webseite\n            <a href=\"https://signalofyouth.de/\"\n               target=\"_blank\">\n                signalofyouth.de ↗️\n            </a>\n            einsehen!\n        </p>\n    </article>")
 (def html-2-line "<p>\n Jede Wohce findet in \"Der \n Werkstat\" ein offnes Treffen \n für Jugendliche satt. \n Hier könnnen alle teil nehmen, \n die Lust haben. \n</p>")
+
+(def html-3-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        $$placeholder$$<li>\uD83E\uDDCD Neue Leute treffen</li>\n        <li>\uD83E\uDD51 Tolle Events</li>\n        <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n    <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
+(def html-3-line "<li>\uD83C\uDFE1 </li>\n")
+
+(def html-4-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        <li>\uD83C\uDFE1 Meetups jeden Monat</li>\n<li>\uD83E\uDDCD Neue Leute treffen</li>\n   $$placeholder$$     <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n  $$placeholder$$  <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
+(def html-4-line "<li>\uD83E\uDD51 Tolle Events</li>")
+
+(def html-5-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        <li>\uD83C\uDFE1 Meetups jeden Monat</li>\n<li>\uD83E\uDDCD Neue Leute treffen</li>\n        <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n  $$placeholder$$  <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
+(def html-5-line "<h3></h3>\n")
+
+(def html-6-snippet "$$placeholder$$\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        <li>\uD83C\uDFE1 Meetups jeden Monat</li>\n<li>\uD83E\uDDCD Neue Leute treffen</li>\n        <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n  <h3>Webseite von SoYou</h3>\n  <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
+(def html-6-line "<article>\n    <h2>     </h2>\n</article>\n")
 
 (def html-project
   #:project{:id       "website1"
@@ -70,7 +82,9 @@
                                          :code               {:html #:code{:lang    :html
                                                                            :base    html-base
                                                                            :snippet html-1-snippet
-                                                                           :line    html-1-line}
+                                                                           :line    html-1-line
+                                                                           :answer "<h2>SoYou, Witten</h2>"
+                                                                           }
                                                               :css  #:code{:lang    :css
                                                                            :base    css-website
                                                                            :snippet ""
@@ -92,17 +106,55 @@
                                          :story              chat-with-edna-2
                                          :story-final-action "/app/editor"}
                        #:project.chapter{:id                 (random-uuid)
-                                         :name               "Hintergrundfarbe anpassen"
-                                         :notes              ["Hintergrundfarbe anpassen"
-                                                              "lol"]
+                                         :name               "Stichpunkt hinzufügen"
+                                         :notes              ["Stichpunkt \"Meetups jeden Monat\" hinzufügen"]
                                          :code               {:html #:code{:lang    :html
-                                                                           :base    ""
-                                                                           :snippet ""
-                                                                           :line    "<h1>Witten</h1>\n<p>Wo ist das Murmeltier?</p>"}
+                                                                           :base    html-base
+                                                                           :snippet html-3-snippet
+                                                                           :line    html-3-line}
                                                               :css  #:code{:lang    :css
-                                                                           :base    ""
+                                                                           :base    css-website
                                                                            :snippet ""
-                                                                           :line    "body { background: yellow;}"}}
+                                                                           :line    ""}}
+                                         :story              chat-with-edna-2
+                                         :story-final-action "/app/editor"}
+                       #:project.chapter{:id                 (random-uuid)
+                                         :name               "Stichpunkt entfernen"
+                                         :notes              ["Stichpunkt \"Meetups jeden Monat\" hinzufügen"]
+                                         :code               {:html #:code{:lang    :html
+                                                                           :base    html-base
+                                                                           :snippet html-4-snippet
+                                                                           :line    html-4-line}
+                                                              :css  #:code{:lang    :css
+                                                                           :base    css-website
+                                                                           :snippet ""
+                                                                           :line    ""}}
+                                         :story              chat-with-edna-2
+                                         :story-final-action "/app/editor"}
+                       #:project.chapter{:id                 (random-uuid)
+                                         :name               "Überschrift hinzufügen"
+                                         :notes              ["Überschrift \"<h3>Webseite von SoYou</h3>\" hinzufügen"]
+                                         :code               {:html #:code{:lang    :html
+                                                                           :base    html-base
+                                                                           :snippet html-5-snippet
+                                                                           :line    html-5-line}
+                                                              :css  #:code{:lang    :css
+                                                                           :base    css-website
+                                                                           :snippet ""
+                                                                           :line    ""}}
+                                         :story              chat-with-edna-2
+                                         :story-final-action "/app/editor"}
+                       #:project.chapter{:id                 (random-uuid)
+                                         :name               "Neuer Artikel Überschrift hinzufügen"
+                                         :notes              ["Überschrift \"code+design Camp Mai 2023\" hinzufügen"]
+                                         :code               {:html #:code{:lang    :html
+                                                                           :base    html-base
+                                                                           :snippet html-6-snippet
+                                                                           :line    html-6-line}
+                                                              :css  #:code{:lang    :css
+                                                                           :base    css-website
+                                                                           :snippet ""
+                                                                           :line    ""}}
                                          :story              chat-with-edna-2
                                          :story-final-action "/app/editor"}]})
 

@@ -1,10 +1,11 @@
-(ns cd.ile.feat.worker
+(ns cd.ile.components.worker
   (:require [clojure.tools.logging :as log]
             [com.biffweb :as biff :refer [q]]
-            [xtdb.api :as xt]))
+            [xtdb.api :as xt])
+  (:import (java.util Date)))
 
 (defn every-minute []
-  (iterate #(biff/add-seconds % (* 5 60)) (java.util.Date.)))
+  (iterate #(biff/add-seconds % (* 5 60)) (Date.)))
 
 (defn print-usage [{:keys [biff/db]}]
   ;; For a real app, you can have this run once per day and send you the output

@@ -35,14 +35,6 @@ main {
     grid-template-columns: 140px 140px;
     gap: 48px;
 }
-
-#editor {
-    font-family: "IBM Plex Mono", monospace;
-    line-height: 1.5em;
-    color: white;
-    font-size: 16px;
-}
-
 .active-tab {
     background-color: black;
     color: rgb(216 180 254);
@@ -60,13 +52,6 @@ main {
     flex-direction: column;
 }
 
-
-#editor-sidebar button, #editor-sidebar a {
-    background-color: black;
-    border-radius: 8px;
-    color: white;
-    padding: 8px 12px;
-}
 
 .overflow-y {
     overflow-y: scroll;
@@ -139,4 +124,87 @@ main {
 #chat-keyboard {
     background-color: #1a2534;
     padding: 24px 0;
+}
+
+/* editor component */
+
+#editor-screen {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 40px);
+    justify-content: stretch;
+    gap: 4px;
+}
+
+#editor-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+
+#editor-output {
+    padding: 8px;
+    flex: 2;
+    height: 100%;
+}
+
+#editor {
+    height: 100%;
+    font-family: "IBM Plex Mono", monospace;
+    line-height: 1.5em;
+    color: white;
+    font-size: 16px;
+
+    font-weight: 400;
+    letter-spacing: normal;
+    -moz-tab-size: 4;
+    tab-size: 4;
+
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#editor-wrapper {
+    flex-grow: 1;
+    position: relative;
+}
+
+#editor-interaction {
+    width: 100%;
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* buttons */
+
+.circular-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: black;
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    color: white;
+    text-align: center;
+}
+
+.circular-button > img {
+    width: 40px;
+    margin: 0 auto;
+    filter: invert();
+}
+
+.circular-button.neutral {
+    background-color: #9ca3af;
+}
+
+.circular-button.check {
+    background-color: #88e019;
 }

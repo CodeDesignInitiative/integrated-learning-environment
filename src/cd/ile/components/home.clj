@@ -1,4 +1,4 @@
-(ns cd.ile.feat.home
+(ns cd.ile.components.home
   (:require [com.biffweb :as biff]
             [cd.ile.middleware :as mid]
             [cd.ile.ui :as ui]

@@ -1,4 +1,4 @@
-(ns cd.ile.feat.auth
+(ns cd.ile.components.auth
   (:require [com.biffweb :as biff]
             [com.biffweb.impl.util :as butil]
             [com.biffweb.impl.time :as btime]

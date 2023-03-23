@@ -37,7 +37,6 @@
                                               (Integer/parseInt show-chat) 1)
                                             job
                                             step)
-       (editor-screen/editor-screen (get-in chapter [:project.chapter/code :html])
-                                    (get-in chapter [:project.chapter/code :css])
+       (editor-screen/editor-screen (get-in chapter [:project.chapter/code])
                                     (:project.chapter/notes chapter)
                                     (str "/app/auftrag?job=" job "&step=" step "&chat")))]))
