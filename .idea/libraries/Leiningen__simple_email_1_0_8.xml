@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: simple-email:1.0.8">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/simple-email/simple-email/1.0.8/simple-email-1.0.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

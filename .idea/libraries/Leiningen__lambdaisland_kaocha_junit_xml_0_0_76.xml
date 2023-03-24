@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: lambdaisland/kaocha-junit-xml:0.0.76">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/lambdaisland/kaocha-junit-xml/0.0.76/kaocha-junit-xml-0.0.76.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

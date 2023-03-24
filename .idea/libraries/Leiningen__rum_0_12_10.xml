@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: rum:0.12.10">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/rum/rum/0.12.10/rum-0.12.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
