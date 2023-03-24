@@ -8,7 +8,7 @@ EXPOSE 3000
 
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-CMD ["lein", "run"]
+CMD ["lein", "uberjar"]
 
 COPY target/uberjar/lms.jar /lms/app.jar
 

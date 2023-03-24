@@ -47,11 +47,11 @@
 
   :profiles
   {:uberjar       {:omit-source    true
-                   :prep-tasks     ["compile" ["shell" "npx" "shadow-cljs" "release" "app"]]
                    :aot            :all
                    :uberjar-name   "ile.jar"
                    :source-paths   ["env/prod/clj"]
                    :resource-paths ["env/prod/resources"]}
+
 
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
