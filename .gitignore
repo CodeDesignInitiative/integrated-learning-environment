@@ -11,3 +11,5 @@
 .clj-kondo/
 .lsp/
 .portal/
+/.pg-data/
+/.lein-repl-history
