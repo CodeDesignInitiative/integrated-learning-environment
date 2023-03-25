@@ -1,7 +1,8 @@
 FROM clojure:temurin-17-lein-bullseye-slim AS build-jar
 
 WORKDIR /user/src
-COPY . .
+#COPY . .
+COPY . /user/src
 
 RUN lein uberjar
 
