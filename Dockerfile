@@ -1,12 +1,16 @@
-FROM clojure:temurin-17-lein-bullseye-slim AS build-jar
+FROM clojure:temurin-17-lein-bullseye-slim AS builder
 
 WORKDIR /user/src
-#COPY . .
-COPY . /user/src
+COPY . .
+#COPY . /user/src
 
 RUN lein uberjar
 
-COPY /user/src/target/uberjar/ile.jar /ile/app.jar
+FROM azul/zulu-openjdk:17
+
+WORKDIR /root/
+
+COPY --from=builder /user/src/target/uberjar/ile.jar /ile/app.jar
 
 CMD ["java", "-Xmx400m", "-jar", "/ile/app.jar"]
 
