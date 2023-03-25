@@ -1,15 +1,17 @@
-FROM azul/zulu-openjdk:17
+#FROM azul/zulu-openjdk:17
 FROM clojure:lein
 
-EXPOSE 3000
 
 #ARG COMMIT_HASH=willbereplaced
 #ENV COMMIT_HASH=${COMMIT_HASH}
 
-COPY . /usr/src/app
-WORKDIR /usr/src/app
+#COPY . /usr/src/app
+WORKDIR /ile
+COPY . .
 CMD ["lein", "uberjar"]
 
-COPY target/uberjar/lms.jar /lms/app.jar
+COPY target/uberjar/ile.jar /ile/app.jar
 
-CMD ["java", "-Xmx400m", "-jar", "/lms/app.jar"]
+CMD ["java", "-Xmx400m", "-jar", "/ile/app.jar"]
+
+EXPOSE 3000
