@@ -6,7 +6,7 @@ FROM clojure:lein
 #ENV COMMIT_HASH=${COMMIT_HASH}
 
 #COPY . /usr/src/app
-WORKDIR /ile
+#WORKDIR /ile
 COPY . .
 CMD ["lein", "uberjar"]
 
