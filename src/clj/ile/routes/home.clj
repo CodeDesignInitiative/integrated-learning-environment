@@ -8,6 +8,8 @@
             [ile.middleware :as middleware]
             [ring.util.http-response :refer [content-type]]
             [ile.components.app :as app-components]
+
+            [crypto.password.bcrypt :as password]
             [rum.core :as rum]))
 
 
@@ -28,7 +30,7 @@
         user (persistence/find-user email)
         session (:session request)]
     (if user
-      (if (and (= (:user/password user) password))
+      (if (password/check password (:user/password user))
         (let [next-url (get-in request [:query-params "next"] "/")
               updated-session (assoc session :identity (keyword email))]
           (-> (response/redirect next-url)
@@ -44,15 +46,17 @@
 (defn register [request]
   (let [email (get-in request [:form-params "email"])
         password (get-in request [:form-params "password"])
+        username (get-in request [:form-params "username"])
         user (persistence/find-user email)
         session (:session request)]
+    (println user)
     (if user
       (do
         (println "\nUser already exists\n\n")
         (response/redirect "/login"))
       (let [user (persistence/create-user {:xt/id         email
-                               :user/password password
-                               :user/name     ""})
+                                           :user/password (password/encrypt password)
+                                           :user/name     username})
             updated-session (assoc session :identity (keyword email))]
         (-> (response/redirect "/")
             (assoc :session updated-session))))))
@@ -73,15 +77,14 @@
 
     "text/html; charset=utf-8")
   #_(-> (response/redirect "/login")
-      (assoc :session {})))
+        (assoc :session {})))
 
 (def public-routes
   [""
    ["/login" {:post login
               :get  login-screen/login-page}]
    ["/register" {:post register
-              :get  login-screen/login-page}]
-   ])
+                 :get  login-screen/login-page}]])
 
 (def private-routes
   ["" {:middleware [middleware/wrap-unauthorized-login-redirect

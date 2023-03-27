@@ -2,6 +2,7 @@
   (:require
     [ile.mount.xtdb :as xtdb]
     [xtdb.api :as xt]
+    [crypto.password.bcrypt :as password]
     ))
 
 (defn- flatten-result
@@ -63,7 +64,17 @@
                 :in    [[email]]}
               email))
 
+(defn find-all-users
+  []
+  (query-db '{:find  [(pull ?user [* :ile/user])]
+                :where [[?user :user/password string?]]
+                }
+              ))
+
 
 (comment
   (find-user "paul.freelancing@posteo.de")
+  (find-user "asdf@movie.de")
+  (find-all-users)
+  (put-in-db-and-wait {:user/password (password/encrypt "12345678"), :user/name "Paul", :xt/id {:user/email "paul.freelancing@posteo.de"}})
   )

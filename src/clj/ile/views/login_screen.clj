@@ -13,13 +13,7 @@
      :type         "email"
      :required     true
      :autocomplete "email"
-     :placeholder  "Enter your email address"
-     :class        '[border
-                     border-gray-300
-                     rounded
-                     w-full
-                     focus:border-teal-600
-                     focus:ring-teal-600]}]
+     :placeholder  "Enter your email address"}]
    [:label {:for "password"}
     "Passwort"]
    [:input
@@ -41,13 +35,13 @@
      :type         "email"
      :required     true
      :autocomplete "email"
-     :placeholder  "Enter your email address"
-     :class        '[border
-                     border-gray-300
-                     rounded
-                     w-full
-                     focus:border-teal-600
-                     focus:ring-teal-600]}]
+     :placeholder  "Enter your email address"}]
+   [:label {:for "username"}
+    "Nutzer:in Name"]
+   [:input#email
+    {:name         "username"
+     :required     true
+     :placeholder  "Pablo"}]
    [:label {:for "password"}
     "Passwort"]
    [:input
