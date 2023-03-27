@@ -4,7 +4,7 @@
             [ile.core.mock-data :as mock]))
 
 (defn- notifications-widget [notifications]
-  [:div.overflow-y-auto
+  [:div#notifications
    [:h2 "Benachrichtigungen"]
    [:ul.list-none.pl-0
     (map
@@ -14,7 +14,7 @@
          [:span.text-sm.text-zinc-400
           (date-util/format-date date)]
          [:h4.text-lg heading]
-         [:p msg]])
+         [:span msg]])
       notifications)]])
 
 (defn- signout-button []

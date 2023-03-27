@@ -417,7 +417,7 @@ nav a {
 
 
 #home-screen #status-bar {
-    justify-content: end;
+    justify-content: space-between;
     gap: 32px;
     margin-right: 32px;
 }
@@ -463,4 +463,28 @@ nav a {
 #chat-screen {
     display: flex;
     width: 100%;
+}
+
+#notifications {
+    padding: 32px;
+}
+
+#notifications h2 {
+    margin-top: 0;
+    margin-bottom: 32px;
+}
+
+#notifications ul {
+    padding-left: 0;
+    list-style: none;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+#notifications li {
+    border-radius: 24px;
+    background-color: #1115;
+    padding: 16px 20px;
 }

@@ -37,4 +37,4 @@
                                step)
       (editor-screen/editor-screen (get-in chapter [:project.chapter/code])
                                    (:project.chapter/notes chapter)
-                                   (str "/auftrag?job=" job "&step=" step "&chat")))))
+                                   (str "/auftrag?job=" job "&step=" (+ step 1) "&chat")))))
