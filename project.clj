@@ -24,7 +24,6 @@
                  [ring/ring-defaults "0.3.4"]
                  [rum "0.12.10" :exclusions [cljsjs/react cljsjs/react-dom]]
                  [org.apache.commons/commons-email "1.5"]
-                 [org.slf4j/slf4j-simple "2.0.5"]
                  [buddy/buddy-auth "3.0.1"]
                  [cprop "0.1.19"]
                  [simple-email/simple-email "1.0.8"]

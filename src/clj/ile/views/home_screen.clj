@@ -53,7 +53,7 @@
                              :id        "wiki"
                              :disabled? true})
      (components/app-button {:label     "Code Editor"
-                             :href      "/editor"
+                             :href      "/projekte"
                              :icon      "code"
                              :id        "code"
                              :disabled? true})]
@@ -61,7 +61,7 @@
     (components/notes-widget mock/notes)]
    [:div#home-feed.flex.flex-col.items-end.gap-4.space-between
     (notifications-widget mock/notifications)
-    [:.row.align-center
+    [:#status-bar.row.align-center
      (company-logo)
-     (settings-button)
+     ;(settings-button)
      (signout-button)]]])

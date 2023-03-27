@@ -64,17 +64,26 @@
                 :in    [[email]]}
               email))
 
-(defn find-all-users
-  []
-  (query-db '{:find  [(pull ?user [* :ile/user])]
-                :where [[?user :user/password string?]]
-                }
-              ))
+(defn create-user-project
+  [user-project]
+  (put-in-db-and-wait user-project))
 
+(defn get-user-projects [user-email]
+  (query-db '{:find [(pull ?user-project [* :ile/user.project])]
+              :where [[?user-project :user.project/owner user-email]]
+              :in [[user-email]]}
+            user-email))
+
+(defn find-user-project [project-id]
+  (find-first '{:find [(pull ?user-project [* :ile/user.project])]
+              :where [[?user-project :xt/id project-id]]
+              :in [[project-id]]}
+              project-id))
 
 (comment
+  (get-user-projects "paul.freelancing@posteo.de")
   (find-user "paul.freelancing@posteo.de")
   (find-user "asdf@movie.de")
-  (find-all-users)
+  (password/check "12345678" "$2a$11$ABaDeXe5vCcHDoBInVJeu.jAPA6qc81TSOKyx87VDrbsUaqXPzmJe")
   (put-in-db-and-wait {:user/password (password/encrypt "12345678"), :user/name "Paul", :xt/id {:user/email "paul.freelancing@posteo.de"}})
   )

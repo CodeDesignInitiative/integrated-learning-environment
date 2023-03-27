@@ -8,7 +8,7 @@
             [ile.middleware :as middleware]
             [ring.util.http-response :refer [content-type]]
             [ile.components.app :as app-components]
-
+            [ile.views.projects :as projects-page]
             [crypto.password.bcrypt :as password]
             [rum.core :as rum]))
 
@@ -29,10 +29,12 @@
         password (get-in request [:form-params "password"])
         user (persistence/find-user email)
         session (:session request)]
+    (println user)
     (if user
       (if (password/check password (:user/password user))
         (let [next-url (get-in request [:query-params "next"] "/")
               updated-session (assoc session :identity (keyword email))]
+          (println "\n\nPassword matched\n\n")
           (-> (response/redirect next-url)
               (assoc :session updated-session)))
         (do
@@ -79,6 +81,47 @@
   #_(-> (response/redirect "/login")
         (assoc :session {})))
 
+(defn new-project [request]
+  (println request)
+  (println "........xxxxxxxxx.........")
+  (let [template (get-in request [:form-params "template"])
+        project-name (get-in request [:form-params "project-name"])
+        user-email (-> (get-in request [:session :identity]) name)
+        project-id (random-uuid)]
+    (do
+      (persistence/create-user-project (merge {:xt/id project-id}
+                                              #:user.project{:name  project-name
+                                                             :owner user-email
+                                                             :css   (or (:css template) "")
+                                                             :html  (or (:html template) "")}))
+      (println "\n\nRedirect...\n\n")
+      (response/redirect (str "/projekt?id=" project-id)))))
+
+(defn project-editor [request]
+  (let [project-id (get-in request [:form-params "id"])
+
+        project (persistence/find-user-project project-id)]
+    (ile.views.editor-screen/editor-screen
+      {:html (:user.project/html project)
+       :css  (:user.project/css project)}
+      nil nil)
+    ))
+
+(defn redirect-new-project [request]
+  (let [template (get-in request [:form-params "template"])
+        project-name (get-in request [:form-params "name"])
+        user-email (-> (get-in request [:session :identity]) name)
+        project-id (random-uuid)]
+
+    (persistence/create-user-project (merge {:xt/id project-id}
+                                            #:user.project{:name  project-name
+                                                           :owner user-email
+                                                           :css   (or (:css template) "")
+                                                           :html  (or (:html template) "")}))
+    (println "\n\nRedirect...\n\n")
+    (response/redirect (str "/projekt?id=" project-id))
+    ))
+
 (def public-routes
   [""
    ["/login" {:post login
@@ -88,8 +131,8 @@
 
 (def private-routes
   ["" {:middleware [middleware/wrap-unauthorized-login-redirect
-                    middleware/wrap-render-rum
                     middleware/wrap-csrf
+                    middleware/wrap-render-rum
                     middleware/wrap-formats]}
    ["/" {:get app/app}]
    ["/logout" {:get logout}]
@@ -97,6 +140,13 @@
    ["/wiki" {:get app-components/wiki}]
    ["/auftraege" {:get app-components/jobs}]
    ["/auftrag" {:get app-components/job-step}]
+   ["/projekte"
+    ["" {:get projects-page/projects-page
+         :post new-project}]
+    ["/neu" {:post new-project
+             :get redirect-new-project}]
+    ]
+   ["/projekt" {:get project-editor}]
    ["/editor" {:get app-components/editor}]
    ["/settings" {:get app-components/settings}]
    ])

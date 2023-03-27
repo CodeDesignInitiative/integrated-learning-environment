@@ -10,14 +10,13 @@
    [:iframe#output]
    ])
 
-(defn- editor-tabs [tabs active]
+(defn- editor-tabs []
   "The editor tab bar"
-  [:div.flex.flex-row.gap-4.items-center.list-none.mb-4
-   (map
-     (fn [n] [:span.px-4.py-2.bg-purple-300.bg-opacity-10.rounded-lg
-              (when (= active n) {:class "active-tab"})
-              n])
-     tabs)])
+  [:div#editor-tabs
+   [:button {:onclick "change_language(\"html\")"}
+    "HTML"]
+   [:button {:onclick "change_language(\"css\")"}
+    "CSS"]])
 
 (defn hidden-code [{:keys [html css]}]
   [:div
@@ -38,18 +37,23 @@
            :title "Fertig"}]]])
 
 (defn editor-screen [code notes next]
-  [:main#editor-screen
-   [:aside#editor-sidebar
-    ; (editor-tabs ["HTML" "CSS"] "HTML")
-    [:div#editor-wrapper
-     [:div#editor.w-full.h-full.language-html {:id "editor"}
-      (:code/line (:html code))]
-     (interaction-buttons next)]
-    (hidden-code code)
-    (components/notes-widget notes)]
+  [:main.column.full-width
+   [:nav.row
+    [:a {:href "/"} "Zurück"]
+    ]
+   [:div#editor-screen
+    [:aside#editor-sidebar
+     (editor-tabs)
+     [:div#editor-wrapper
+      [:div#editor.w-full.h-full.language-html {:id "editor"}
+       (:code/line (:html code))]
+      (interaction-buttons next)]
+     (hidden-code code)
+     (when notes
+       (components/notes-widget notes))]
 
-   [:div#editor-output
-    (editor-output)]
+    [:div#editor-output
+     (editor-output)]]
 
    ; add js editor scripts
    [:script {:src "/js/src-min-noconflict/ace.js"

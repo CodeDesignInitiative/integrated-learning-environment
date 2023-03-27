@@ -21,6 +21,16 @@ main {
     height: 100vh;
 }
 
+nav {
+    padding: 8px;
+    background-color: #1a2534;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
 .caveat {
     font-family: "Caveat", sans-serif;
 }
@@ -31,6 +41,10 @@ main {
 
 .full-height {
     height: 100%;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .app-grid {
@@ -79,7 +93,7 @@ main {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #444;
+    background-color: #445265;
 }
 
 #browser #navbar {
@@ -185,10 +199,22 @@ main {
     height: 100%;
 }
 
+#editor-tabs {
+    display: flex;
+    gap: 16px;
+    background-color: #1a2534;
+}
+
+#editor-tabs button {
+    padding: 8px 16px;
+    background-color: #3d506b;
+    border: none;
+    color: white;
+}
+
 #editor-output {
     padding: 8px;
     flex: 2;
-    height: 100%;
 }
 
 #editor {
@@ -213,7 +239,7 @@ main {
 }
 
 #editor-interaction {
-    width: 100%;
+    width: calc(100% - 32px);
     z-index: 100;
     position: absolute;
     bottom: 0;
@@ -252,6 +278,7 @@ main {
     border-radius: 999px;
     color: white;
     text-align: center;
+    border: none;
 }
 
 .circular-button > img {
@@ -368,8 +395,15 @@ main {
     gap: 12px;
 }
 
-.login-form > input, button {
+.login-form > input, .login-form > button {
     border-radius: 999px;
     border: none;
     padding: 8px 16px;
+}
+
+
+#home-screen #status-bar {
+    justify-content: end;
+    gap: 32px;
+    margin-right: 32px;
 }

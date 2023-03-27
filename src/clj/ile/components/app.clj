@@ -37,18 +37,3 @@
 
 (defn settings [{:keys [session] :as req}]
   (layout/render-page (settings-screen/settings-screen)))
-
-
-(def features
-  {:routes ["/app" {:middleware [middleware/wrap-signed-in
-                                 middleware/wrap-csrf
-                                 middleware/wrap-render-rum
-                                 ]}
-            ["" {:get app}]
-            ["/chat" {:get chat}]
-            ["/wiki" {:get wiki}]
-            ["/auftraege" {:get jobs}]
-            ["/auftrag" {:get job-step}]
-            ["/editor" {:get editor}]
-            ["/settings" {:get settings}]
-            ]})
