@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Leiningen: com.xtdb/xtdb-jdbc:1.23.1">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/xtdb/xtdb-jdbc/1.23.1/xtdb-jdbc-1.23.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

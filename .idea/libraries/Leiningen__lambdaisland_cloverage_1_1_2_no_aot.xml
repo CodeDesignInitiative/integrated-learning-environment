@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Leiningen: lambdaisland/cloverage:1.1.2-no-aot">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/lambdaisland/cloverage/1.1.2-no-aot/cloverage-1.1.2-no-aot.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
