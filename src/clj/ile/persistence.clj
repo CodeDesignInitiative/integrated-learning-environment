@@ -90,4 +90,4 @@
   )
 
 (defn save-project [project]
-  (put-in-db project))
+  (put-in-db-and-wait project))

@@ -32,36 +32,38 @@
    [:button.circular-button.neutral
     [:img {:src "/img/icons/wiki.svg"
            :title "Wiki"}]]
-   [:a.circular-button.check {:href next}
-    [:img {:src "/img/icons/checkmark.svg"
-           :title "Fertig"}]]])
+   (when next
+     [:a.circular-button.check {:href next}
+      [:img {:src   "/img/icons/checkmark.svg"
+             :title "Fertig"}]])])
 
 (defn editor-screen [code notes next]
   (println code)
   [:main.column.full-width
-   [:nav.row
+   [:nav.row.space-between
     [:a {:href "/"} "Zurück"]
-    [:form {:action "/projekt/speichern"
-            :id "save-form"
-            :method "post"}
-     [:input {:id    "__anti-forgery-token"
-              :name  "__anti-forgery-token"
-              :type  :hidden
-              :value *anti-forgery-token*}]
-     [:input {:name  "html"
-              :id "html-input"
-              :type  :hidden
-              :value ""}]
-     [:input {:name  "css"
-              :id "css-input"
-              :type  :hidden
-              :value ""}]
-     [:input {:name  "id"
-              :id "id"
-              :type  :hidden
-              :value ""}]
-     [:button
-      {:onclick "save()"} "Speichern"]]]
+    (when-not next
+      [:form {:action "/projekt/speichern"
+              :id     "save-form"
+              :method "post"}
+       [:input {:id    "__anti-forgery-token"
+                :name  "__anti-forgery-token"
+                :type  :hidden
+                :value *anti-forgery-token*}]
+       [:input {:name  "html"
+                :id    "html-input"
+                :type  :hidden
+                :value ""}]
+       [:input {:name  "css"
+                :id    "css-input"
+                :type  :hidden
+                :value ""}]
+       [:input {:name  "id"
+                :id    "id"
+                :type  :hidden
+                :value ""}]
+       [:button
+        {:onclick "save()"} "Speichern"]])]
 
    [:div#editor-screen
     [:aside#editor-sidebar
