@@ -2,7 +2,9 @@
   (:require [buddy.auth :refer [authenticated?]]
             [clojure.pprint :refer [pprint]]
             [ile.components.app :as app]
+            [ile.courses.html-website :as html-website]
             [ile.persistence :as persistence]
+            [ile.views.chat-screen :as chat-screen]
             [ile.views.login-screen :as login-screen]
             [ring.util.response :as response]
             [ile.layout :as layout]
@@ -127,13 +129,14 @@
         html (get-in request [:form-params "html"])
         css (get-in request [:form-params "css"])
         project (persistence/find-user-project project-id)]
-    (pprint (merge project
-                   {:user.project/html html
-                    :user.project/css  css}))
     (persistence/save-project (merge project
                                      {:user.project/html html
                                       :user.project/css  css}))
     (response/redirect (str "/projekt?id=" project-id)))
+  )
+
+(defn chat-screen [requset]
+  (chat-screen/chat-screen html-website/start-chat-with-edna 1 "website1" 1)
   )
 
 (def public-routes
@@ -150,7 +153,7 @@
                     middleware/wrap-formats]}
    ["/" {:get app/app}]
    ["/logout" {:get logout}]
-   ["/chat" {:get app-components/chat}]
+   ["/chat" {:get chat-screen}]
    ["/wiki" {:get app-components/wiki}]
    ["/auftraege" {:get app-components/jobs}]
    ["/auftrag" {:get app-components/job-step}]

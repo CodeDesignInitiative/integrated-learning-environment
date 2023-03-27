@@ -20,7 +20,7 @@
     [:div#chat-keyboard
      [:p.m-2 "Los gehts..."]
      [:div.chat-next-btn
-      [:a {:href (str "/auftrag?job=" job "&step=" (+ job-step 1))}
+      [:a {:href (str "/auftrag?job=" job "&step=" job-step)}
        [:p.m-0 "Weiter"]]]]))
 
 
@@ -56,7 +56,10 @@
       [:a {:href (str "/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
        [:p.m-0 "Weiter"]]]]))
 
-(defn chat-interactive-screen [conversation chat-step job job-step]
+(defn chat-screen [conversation chat-step job job-step]
+  (println "\n\nJob Step\n")
+  (println job-step)
+  (println "\n\n")
   [:main#chat-screen
 
    (profile (:story/person (get conversation 0)))
@@ -74,8 +77,6 @@
          (answer-choices-widget job job-step chat-step answer-choices)
          (keyboard-with-next-button conversation chat-step job job-step))])
     (final-next-button conversation chat-step job job-step)]
-   ])
+   ]
 
-
-(defn chat-screen []
-  (chat-interactive-screen html-website/start-chat-with-edna 1 "website1" 0))
+  )

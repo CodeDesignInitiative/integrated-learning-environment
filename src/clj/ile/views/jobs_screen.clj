@@ -29,13 +29,12 @@
                1)
         show-chat (get params :chat)
         chapter (get-chapter-for-job job step)]
-    (clojure.pprint/pprint chapter)
     (if show-chat
-      (chat-screen/chat-interactive-screen (get-in chapter [:project.chapter/story])
-                                           (if (not-empty show-chat)
+      (chat-screen/chat-screen (get-in chapter [:project.chapter/story])
+                               (if (not-empty show-chat)
                                              (Integer/parseInt show-chat) 1)
-                                           job
-                                           step)
+                               job
+                               step)
       (editor-screen/editor-screen (get-in chapter [:project.chapter/code])
                                    (:project.chapter/notes chapter)
                                    (str "/auftrag?job=" job "&step=" step "&chat")))))

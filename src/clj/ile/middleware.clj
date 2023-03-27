@@ -87,7 +87,6 @@
 (def backend (backends/session))
 
 (defn wrap-base [handler]
-  (clojure.pprint/pprint (:request handler))
   (-> ((:middleware defaults) handler)
       (wrap-authentication backend)
       wrap-session

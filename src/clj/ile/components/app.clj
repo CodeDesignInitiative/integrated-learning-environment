@@ -1,5 +1,6 @@
 (ns ile.components.app
-  (:require [ile.layout :as layout]
+  (:require [ile.courses.html-website :as html-website]
+            [ile.layout :as layout]
             [ile.middleware :as middleware]
             [ile.ui :as ui]
             [xtdb.api :as xt]
@@ -15,8 +16,6 @@
 (defn app [{:keys [session] :as req}]
   (layout/render-page (home-screen/home-screen)))
 
-(defn chat [{:keys [session] :as req}]
-  (layout/render-page (chat-screen/chat-screen)))
 
 (defn wiki [{:keys [session] :as req}]
   (layout/render-page (wiki-screen/wiki-screen)))
