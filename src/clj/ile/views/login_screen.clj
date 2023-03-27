@@ -26,7 +26,6 @@
     {:name       "password"
      :required     true
      :type       :password
-     :paceholder "*******"
      :min-length 8}]
    [:button {:type "submit"}
     "Anmelden"]])
@@ -34,7 +33,7 @@
 (defn signup-form []
   [:form.login-form {:id     "signup-form"
                      :method :post
-                     :action "/login"}
+                     :action "/register"}
    [:label {:for "email"}
     "Email"]
    [:input#email
@@ -55,16 +54,14 @@
     {:name       "password"
      :required     true
      :type       :password
-     :min-length 8
-     :paceholder "********"}]
+     :min-length 8}]
    [:label {:for "password2"}
     "Passwort wiederholen"]
    [:input
     {:name       "password2"
      :required     true
      :type       :password
-     :min-length 8
-     :paceholder "********"}]
+     :min-length 8}]
    [:button {:type "submit"}
     "Registrieren"]])
 

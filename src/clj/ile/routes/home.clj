@@ -1,16 +1,14 @@
 (ns ile.routes.home
-  (:require [ile.components.home :as home]
-            [buddy.auth :refer [authenticated? throw-unauthorized]]
+  (:require [buddy.auth :refer [authenticated?]]
             [ile.components.app :as app]
+            [ile.persistence :as persistence]
             [ile.views.login-screen :as login-screen]
             [ring.util.response :as response]
             [ile.layout :as layout]
             [ile.middleware :as middleware]
-            [ile.mount.xtdb :as xtdb]
-            [ring.util.http-response :refer [content-type ok]]
+            [ring.util.http-response :refer [content-type]]
             [ile.components.app :as app-components]
-            [rum.core :as rum]
-            [xtdb.api :as xt]))
+            [rum.core :as rum]))
 
 
 
@@ -23,97 +21,41 @@
 
       [:h1 "Hello " (get-in request [:session :identity])])))
 
-(defn logged-in? [params]
-  false
-  )
-
-
-(def authdata
-  "Global var that stores valid users with their
-   respective passwords."
-  {:admin "secret"
-   :test  "secret"})
-
-(defn- flatten-result
-  "Takes the XTDB typical result (a set containing vectors) and combines the
-  entries into a single vector"
-  [result]
-  (vec (mapcat (fn [e] e) result)))
-
-(defn- query-args-count-match?
-  "Checks whether the number of arguments required for the query match the provided
-  number of arguments.
-
-  Based on: https://github.com/jacobobryant/biff - Copyright (c) 2023 Jacob O'Bryan
-  License:  https://github.com/jacobobryant/biff/blob/master/LICENSE"
-  [query args]
-
-  (when-not (= (count (first (:in query)))
-               (count args))
-    (throw (ex-info (str "Incorrect number of query arguments. Expected "
-                         (count (first (:in query)))
-                         " but got "
-                         (count args)
-                         ".")
-                    {}))))
-
-(defn query-db
-  "Executes a xtdb query with the provided arguments and returns a flattened result vector."
-  ([query & args]
-   (query-args-count-match? query args)
-   (-> (xt/db xtdb/node)
-       (xt/q query (when args (vec args)))
-       flatten-result))
-  ([query]
-   (-> (xt/db xtdb/node)
-       (xt/q query)
-       flatten-result)))
-
-(defn find-first
-  [query & args]
-  (-> (apply query-db query args)
-      first))
-
-(defn find-user
-  [email]
-  (find-first '{:find  [(pull ?user [* :ile/user])]
-                :where [[?user :xt/id email]]
-                :in    [[email]]}
-              email))
-
-(defn put-in-db [& documents]
-  (let [puts (vec (map (fn [v] [::xt/put v]) documents))]
-    (xt/submit-tx xtdb/node puts)))
-
-(defn put-in-db-and-wait [& documents]
-  (xt/await-tx xtdb/node (apply put-in-db documents)))
-
-(defn create-user
-  [user]
-  (put-in-db-and-wait user)
-  user)
 
 (defn login [request]
   (let [email (get-in request [:form-params "email"])
         password (get-in request [:form-params "password"])
-        user (find-user email)
-        session (:session request)
-        found-password (get authdata (keyword email))]
+        user (persistence/find-user email)
+        session (:session request)]
     (if user
-      (if (and found-password (= found-password password))
+      (if (and (= (:user/password user) password))
         (let [next-url (get-in request [:query-params "next"] "/")
               updated-session (assoc session :identity (keyword email))]
           (-> (response/redirect next-url)
               (assoc :session updated-session)))
-        (login-screen/login-page request)
-        )
-      (let [user (create-user {:xt/id         email
+        (do
+          (println "\nWrong password\n\n")
+          (response/redirect "/login")))
+
+      (do
+        (println "\nUser does not exist\n\n")
+        (response/redirect "/login")))))
+
+(defn register [request]
+  (let [email (get-in request [:form-params "email"])
+        password (get-in request [:form-params "password"])
+        user (persistence/find-user email)
+        session (:session request)]
+    (if user
+      (do
+        (println "\nUser already exists\n\n")
+        (response/redirect "/login"))
+      (let [user (persistence/create-user {:xt/id         email
                                :user/password password
                                :user/name     ""})
             updated-session (assoc session :identity (keyword email))]
         (-> (response/redirect "/")
-            (assoc :session updated-session))
-        ))))
+            (assoc :session updated-session))))))
 
 (defn logout
   [request]
@@ -136,6 +78,8 @@
 (def public-routes
   [""
    ["/login" {:post login
+              :get  login-screen/login-page}]
+   ["/register" {:post register
               :get  login-screen/login-page}]
    ])
 
