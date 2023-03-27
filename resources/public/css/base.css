@@ -56,22 +56,24 @@ nav a {
 .app-button {
     padding: 16px;
     border-radius: 16px;
-    background: rgb(2,0,36);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(127,127,227,1) 0%, rgba(0,212,255,1) 100%);
+    background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(127, 127, 227, 1) 0%, rgba(0, 212, 255, 1) 100%);
 }
 
-#chat.app-button  {
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(74,173,50,1) 0%, rgba(91,223,111,1) 100%);
-}
-#wiki.app-button  {
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(173,152,50,1) 0%, rgba(213,159,54,1) 100%);
-}
-#code.app-button  {
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(93,138,227,1) 0%, rgba(0,212,255,1) 100%);
+#chat-icon.app-button {
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(74, 173, 50, 1) 0%, rgba(91, 223, 111, 1) 100%);
 }
 
-#jobs.app-button  {
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(140,50,173,1) 0%, rgba(213,54,165,1) 100%);
+#wiki.app-button {
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(173, 152, 50, 1) 0%, rgba(213, 159, 54, 1) 100%);
+}
+
+#code.app-button {
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(93, 138, 227, 1) 0%, rgba(0, 212, 255, 1) 100%);
+}
+
+#jobs.app-button {
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(140, 50, 173, 1) 0%, rgba(213, 54, 165, 1) 100%);
 }
 
 .app-button img {
@@ -126,6 +128,7 @@ nav a {
     height: 100%;
     display: flex;
     flex-direction: column;
+    flex: 1;
     overflow-y: scroll;
     /*justify-content: end;*/
 }
@@ -141,6 +144,11 @@ nav a {
     padding: 16px 24px;
     font-size: 1.3em;
     width: 70%;
+}
+
+.chat-bubble a, .chat-next-btn a {
+    color: white;
+    text-decoration: none;
 }
 
 .chat-next-btn {
@@ -304,6 +312,10 @@ nav a {
     flex-direction: column;
 }
 
+.gap {
+    gap: 16px;
+}
+
 .align-center {
     align-items: center;
 }
@@ -333,6 +345,7 @@ nav a {
 #app-button {
     position: relative;
 }
+
 #app-button img {
     filter: invert();
 }
@@ -368,7 +381,7 @@ nav a {
     overflow-y: auto;
     padding: 8px 16px;
     font-family: sans-serif;
-/*"Caveat",*/
+    /*"Caveat",*/
 }
 
 
@@ -407,4 +420,47 @@ nav a {
     justify-content: end;
     gap: 32px;
     margin-right: 32px;
+}
+
+
+#projects-page {
+    padding: 32px;
+}
+
+.project-list {
+    gap: 16px;
+}
+
+.button.project {
+    height: 120px;
+    width: 120px;
+    border-radius: 24px;
+}
+
+.project-template {
+    width: 200px;
+    border-radius: 24px;
+
+    background-color: #6038D0;
+
+    padding: 8px 16px;
+
+}
+
+#new-project {
+    max-width: 240px;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.project-template button, .project-template input,
+#new-project button, #new-project input {
+    border: none;
+    border-radius: 999px;
+    padding: 12px;
+}
+
+#chat-screen {
+    display: flex;
+    width: 100%;
 }

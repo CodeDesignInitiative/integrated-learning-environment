@@ -61,9 +61,8 @@
               :type  :hidden
               :value ""}]
      [:button
-      {:onclick "save()"} "Speichern"]
-     ]
-    ]
+      {:onclick "save()"} "Speichern"]]]
+
    [:div#editor-screen
     [:aside#editor-sidebar
      (editor-tabs)

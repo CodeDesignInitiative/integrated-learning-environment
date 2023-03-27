@@ -14,7 +14,7 @@
     [:div.text-xl (:person/name person)]
     [:div.text-sm (get-in person [:conversation/with :person/organization])]]])
 
-(defn next-button
+(defn final-next-button
   [conversation chat-step job job-step]
   (when (= (count conversation) chat-step)
     [:div#chat-keyboard
@@ -24,71 +24,58 @@
        [:p.m-0 "Weiter"]]]]))
 
 
+(defn chat-history [conversation chat-step]
+  (map
+    (fn [{:story/keys [person message video answer-choices]}]
+      [:<>
+       [:div.chat-bubble
+        [:h3.text-sm (:person/name person)]
+        [:p.m-0 message]]
+       (when answer-choices
+         [:div.chat-user-answers
+          [:div.chat-bubble.user
+           [:p.m-0 (first answer-choices)]]])])
+    (take (- chat-step 1) conversation)))
+
+(defn answer-choices-widget [job job-step chat-step answer-choices]
+  [:div#chat-keyboard
+   [:p.m-2 "Sende deine Antwort..."]
+
+   [:div.chat-user-answers
+    (map
+      (fn [answer]
+        [:div.chat-bubble.user
+         [:a {:href (str "/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
+          [:p.m-0 answer]]])
+      answer-choices)]])
+
+(defn keyboard-with-next-button [conversation chat-step job job-step]
+  (when (not (= (count conversation) chat-step))
+    [:div#chat-keyboard
+     [:div.chat-next-btn
+      [:a {:href (str "/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
+       [:p.m-0 "Weiter"]]]]))
+
 (defn chat-interactive-screen [conversation chat-step job job-step]
-  [:main.bg-gradient-to-b.text-white
-   [:div.grow.bg-slate-700.full-height.flex.flex-row
+  [:main#chat-screen
 
-    ; profile header
-    (profile (:story/person (get conversation 0)))
+   (profile (:story/person (get conversation 0)))
+   [:div#chat.flex-grow
+    [:div.chat-spacer]
+    (chat-history conversation chat-step)
 
-    ; messages
-
-    [:div#chat.flex-grow
-
-     [:div.chat-spacer]
-
-     (when (> (count conversation) 1)
-
-       (map
-         (fn [{:story/keys [person message video answer-choices]}]
-           [:<>
-            [:div.chat-bubble
-             [:h3.text-sm (:person/name person)]
-             [:p.m-0 message]]
-            (when answer-choices
-              [:div.chat-user-answers
-               [:div.chat-bubble.user
-                [:p.m-0 (first answer-choices)]]])])
-         (take (- chat-step 1) conversation)))
-
-     ; interactions
-
-     (let [{:story/keys [person message video answer-choices]} (get conversation (- chat-step 1))]
-       [:<>
-
-        ; chat message
-
-        [:div.chat-bubble
-         [:h3 (:person/name person)]
-         [:p.m-0 message]]
-
-        ; answer choices, if present
-
-        (if answer-choices
-          [:div#chat-keyboard
-           [:p.m-2 "Sende deine Antwort..."]
-           ; when end of conversation: next button to next step
-
-           [:div.chat-user-answers
-            (map
-              (fn [answer]
-                [:div.chat-bubble.user
-                 [:a {:href (str "/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
-                  [:p.m-0 answer]]])
-              answer-choices)]]
-
-          ; when no anser choices either "next" button
-          ; or nothing, when end of conversation
-          (when (not (= (count conversation) chat-step))
-            [:div#chat-keyboard
-             [:div.chat-next-btn
-              [:a {:href (str "/auftrag?job=" job "&step=" job-step "&chat=" (+ chat-step 1))}
-               [:p.m-0 "Weiter"]]]]))])
-
-     (next-button conversation chat-step job job-step)]
-    ]])
+    ; interactions
+    (let [{:story/keys [person message video answer-choices]} (get conversation (- chat-step 1))]
+      [:<>
+       [:div.chat-bubble
+        [:h3 (:person/name person)]
+        [:p.m-0 message]]
+       (if answer-choices
+         (answer-choices-widget job job-step chat-step answer-choices)
+         (keyboard-with-next-button conversation chat-step job job-step))])
+    (final-next-button conversation chat-step job job-step)]
+   ])
 
 
 (defn chat-screen []
-  [:main.bg-gradient-to-b.text-white
-   (chat-interactive-screen html-website/start-chat-with-edna 1 "website1" 1)])
+  (chat-interactive-screen html-website/start-chat-with-edna 1 "website1" 0))

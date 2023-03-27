@@ -40,7 +40,7 @@
      (components/app-button {:label         "Chat"
                              :href          "/chat"
                              :icon          "chat"
-                             :id            "chat"
+                             :id            "chat-icon"
                              :notifications 1})
      (components/app-button {:label     "Aufträge"
                              :href      "/auftraege"
