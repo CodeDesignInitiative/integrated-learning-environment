@@ -3,6 +3,8 @@
             [ile.middleware :as middleware]
             [ile.ui :as ui]
             [xtdb.api :as xt]
+            [buddy.auth :refer [authenticated? throw-unauthorized]]
+            [clojure.pprint :refer [pprint]]
             [ile.views.chat-screen :as chat-screen]
             [ile.views.wiki-screen :as wiki-screen]
             [ile.views.jobs-screen :as jobs-screen]

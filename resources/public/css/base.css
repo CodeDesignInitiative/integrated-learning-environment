@@ -225,6 +225,23 @@ main {
 
 /* buttons */
 
+.button {
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #babed7;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 100px;
+    padding: 8px 16px;
+}
+
+.button img {
+    width: 24px;
+    height: 24px;
+}
+
 .circular-button {
     display: flex;
     flex-direction: column;
@@ -258,6 +275,10 @@ main {
 .column {
     display: flex;
     flex-direction: column;
+}
+
+.align-center {
+    align-items: center;
 }
 
 #home-screen {
@@ -329,3 +350,26 @@ main {
 /*    display: flex;*/
 /*    gap: 16px;*/
 /*}*/
+
+
+/* login page */
+
+#login-page {
+    display: flex;
+    gap: 12px;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.login-form > input, button {
+    border-radius: 999px;
+    border: none;
+    padding: 8px 16px;
+}

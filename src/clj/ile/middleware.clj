@@ -11,8 +11,10 @@
     [ile.layout :refer [error-page]]
     [buddy.auth :refer [authenticated? throw-unauthorized]]
     [ring.middleware.session :refer [wrap-session]]
+    [buddy.auth.backends.session :refer [session-backend]]
     [buddy.auth.backends :as backends]
     [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
+    [ring.util.response :as response]
     [rum.core :as rum]))
 
 (defn wrap-internal-error [handler]
@@ -78,13 +80,12 @@
   "Redirect unauthenticated users to the login-page. Or do nothing."
   [handler]
   (fn [request]
-    (let [session (:session request)
-          original-uri (:uri request)]
-      (if (or (some? session)
-              (= original-uri "/login"))
-        (handler request)
-        (assoc-in (ring.util.response/redirect "/login-page")
-                  [:session :original-uri] original-uri)))))
+    (println "\n\n\nIs Authenticated?")
+    (println (authenticated? request))
+    (if (authenticated? request)
+      (handler request)
+      (let [original-uri (:uri request)]
+        (ring.util.response/redirect (str "/login?next=" original-uri))))))
 
 
 #_(defn unauthorized-handler
@@ -117,6 +118,27 @@
                                    (assoc-in [:session :cookie-attrs :same-site] :lax))))
 
 ;; Create an instance
+
+(defn unauthorized-handler
+  [request metadata]
+  (cond
+    ;; If request is authenticated, raise 403 instead
+    ;; of 401 (because user is authenticated but permission
+    ;; denied is raised).
+    (authenticated? request)
+    [:div [:h1 "Nicht angemeldet"]]
+    #_(-> (render (slurp (io/resource "error.html")) request)
+        (assoc :status 403))
+    ;; In other cases, redirect the user to login page.
+    :else
+    (let [current-url (:uri request)]
+      (response/redirect (format "/login?next=%s" current-url)))))
+
+;; Create an instance of auth backend.
+
+(def auth-backend
+  (session-backend {:unauthorized-handler unauthorized-handler}))
+
 (def backend (backends/session))
 
 

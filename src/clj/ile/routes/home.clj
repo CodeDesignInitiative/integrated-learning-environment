@@ -2,52 +2,18 @@
   (:require [ile.components.home :as home]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ile.components.app :as app]
+            [ile.views.login-screen :as login-screen]
             [ring.util.response :as response]
             [ile.layout :as layout]
             [ile.middleware :as middleware]
             [ile.mount.xtdb :as xtdb]
+            [ring.util.http-response :refer [content-type ok]]
             [ile.components.app :as app-components]
+            [rum.core :as rum]
             [xtdb.api :as xt]))
 
 
 
-
-(defn signin-form []
-  [:form {:id     "signin-form"
-          :method :post
-          :action "/login"}
-   [:input#email
-    {:name         "email"
-     :type         "text"
-     :autocomplete "email"
-     :placeholder  "Enter your email address"
-     :class        '[border
-                     border-gray-300
-                     rounded
-                     w-full
-                     focus:border-teal-600
-                     focus:ring-teal-600]}]
-   [:input
-    {:name       "password"
-     :type       :password
-     :paceholder "Password"}]
-   [:.h-3]
-   [:button
-    {:type  "submit"
-     :class '[bg-teal-600
-              hover:bg-teal-800
-              text-white
-              py-2
-              px-4
-              rounded
-              w-full]}
-    "Anmelden oder Registrieren"]])
-
-(defn login-page [r]
-  (layout/render-page
-    [:div
-     (signin-form)
-     ]))
 
 
 (defn home [request]
@@ -139,7 +105,7 @@
               updated-session (assoc session :identity (keyword email))]
           (-> (response/redirect next-url)
               (assoc :session updated-session)))
-        (login-page request)
+        (login-screen/login-page request)
         )
       (let [user (create-user {:xt/id         email
                                :user/password password
@@ -151,21 +117,35 @@
 
 (defn logout
   [request]
-  (-> (response/redirect "/login")
+  (content-type
+    {:status  200
+     :session nil
+     :headers {"Content-Type" "text/html; charset=utf-8"}
+     :body    (rum/render-static-markup
+                [:html.full-height
+                 [:head
+                  [:link {:rel  :stylesheet
+                          :href "/css/base.css?v=1"}]]
+                 [:body.row.full-height
+                  [:h1 "Logged Out"]]])}
+
+    "text/html; charset=utf-8")
+  #_(-> (response/redirect "/login")
       (assoc :session {})))
 
 (def public-routes
   [""
    ["/login" {:post login
-              :get  login-page}]
-   ["/logout" {:get logout}]])
+              :get  login-screen/login-page}]
+   ])
 
 (def private-routes
-  ["" {:middleware [#_middleware/wrap-unauthorized-login-redirect
+  ["" {:middleware [middleware/wrap-unauthorized-login-redirect
                     middleware/wrap-render-rum
                     middleware/wrap-csrf
                     middleware/wrap-formats]}
    ["/" {:get app/app}]
+   ["/logout" {:get logout}]
    ["/chat" {:get app-components/chat}]
    ["/wiki" {:get app-components/wiki}]
    ["/auftraege" {:get app-components/jobs}]
