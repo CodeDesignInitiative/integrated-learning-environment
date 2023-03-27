@@ -14,10 +14,11 @@ const output = document.getElementById("output")
 let html_stored = editor.getValue();
 let css_stored = "";
 
-const blank_css = `body {
-                        background-color: white;
-                        font-family: sans-serif;
-                    }`
+const blank_css =
+`body {
+    background-color: white;
+    font-family: sans-serif;
+}`
 
 const change_language = (lang) => {
     if (current_language !== lang) {
@@ -77,7 +78,7 @@ const generate_html = () => {
 
     } else {
         if (html_base === "") {
-            return ""
+            return html_stored
         } else {
             return html_base.replace("$$placeholder$$", html_snippet)
                 .replace("$placeholder$", html_stored)
@@ -103,3 +104,37 @@ editor.session.on("change", function (d) {
 })
 
 on_input_change()
+
+
+// save project
+
+const save_form = document.getElementById("save-form");
+const html_input = document.getElementById("html-input");
+const css_input = document.getElementById("css-input");
+const id_input = document.getElementById("id");
+
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+});
+
+const get_html_value = () => {
+    if (current_language === "html") {
+        return editor.getValue()
+    } else {
+        return html_stored;
+    }
+}
+
+const save = () => {
+    console.log(params)
+    html_input.value = get_html_value();
+    css_input.value = (current_language === "css") ? editor.getValue() : css_stored
+
+    id_input.value = params.id
+
+    save_form.submit()
+
+}
+
+
+console.log(params.id)

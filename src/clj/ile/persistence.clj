@@ -84,6 +84,10 @@
   (get-user-projects "paul.freelancing@posteo.de")
   (find-user "paul.freelancing@posteo.de")
   (find-user "asdf@movie.de")
+  (find-user-project #uuid"ba24ebdc-00af-41df-ae4e-b1406d442926")
   (password/check "12345678" "$2a$11$ABaDeXe5vCcHDoBInVJeu.jAPA6qc81TSOKyx87VDrbsUaqXPzmJe")
   (put-in-db-and-wait {:user/password (password/encrypt "12345678"), :user/name "Paul", :xt/id {:user/email "paul.freelancing@posteo.de"}})
   )
+
+(defn save-project [project]
+  (put-in-db project))

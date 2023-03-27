@@ -1,5 +1,6 @@
 (ns ile.routes.home
   (:require [buddy.auth :refer [authenticated?]]
+            [clojure.pprint :refer [pprint]]
             [ile.components.app :as app]
             [ile.persistence :as persistence]
             [ile.views.login-screen :as login-screen]
@@ -98,12 +99,11 @@
       (response/redirect (str "/projekt?id=" project-id)))))
 
 (defn project-editor [request]
-  (let [project-id (get-in request [:form-params "id"])
-
-        project (persistence/find-user-project project-id)]
+  (let [project-id (get-in request [:query-params "id"])
+        project (persistence/find-user-project (parse-uuid project-id))]
     (ile.views.editor-screen/editor-screen
-      {:html (:user.project/html project)
-       :css  (:user.project/css project)}
+      {:html {:code/line (:user.project/html project)}
+       :css  {:code/base (:user.project/css project)}}
       nil nil)
     ))
 
@@ -121,6 +121,20 @@
     (println "\n\nRedirect...\n\n")
     (response/redirect (str "/projekt?id=" project-id))
     ))
+
+(defn save-project [request]
+  (let [project-id (parse-uuid (get-in request [:form-params "id"]))
+        html (get-in request [:form-params "html"])
+        css (get-in request [:form-params "css"])
+        project (persistence/find-user-project project-id)]
+    (pprint (merge project
+                   {:user.project/html html
+                    :user.project/css  css}))
+    (persistence/save-project (merge project
+                                     {:user.project/html html
+                                      :user.project/css  css}))
+    (response/redirect (str "/projekt?id=" project-id)))
+  )
 
 (def public-routes
   [""
@@ -141,12 +155,13 @@
    ["/auftraege" {:get app-components/jobs}]
    ["/auftrag" {:get app-components/job-step}]
    ["/projekte"
-    ["" {:get projects-page/projects-page
+    ["" {:get  projects-page/projects-page
          :post new-project}]
     ["/neu" {:post new-project
-             :get redirect-new-project}]
+             :get  redirect-new-project}]
     ]
-   ["/projekt" {:get project-editor}]
+   ["/projekt"
+    ["" {:get project-editor}]
+    ["/speichern" {:post save-project}]]
    ["/editor" {:get app-components/editor}]
-   ["/settings" {:get app-components/settings}]
-   ])
+   ["/settings" {:get app-components/settings}]])

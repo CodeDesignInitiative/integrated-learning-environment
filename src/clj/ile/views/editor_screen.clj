@@ -1,7 +1,7 @@
 (ns ile.views.editor-screen
 
   (:require [ile.ui.components :as components]
-            [ile.core.mock-data :as mock]))
+            [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 (defn- editor-output []
   "Render an empty browser chrome"
@@ -37,9 +37,32 @@
            :title "Fertig"}]]])
 
 (defn editor-screen [code notes next]
+  (println code)
   [:main.column.full-width
    [:nav.row
     [:a {:href "/"} "Zurück"]
+    [:form {:action "/projekt/speichern"
+            :id "save-form"
+            :method "post"}
+     [:input {:id    "__anti-forgery-token"
+              :name  "__anti-forgery-token"
+              :type  :hidden
+              :value *anti-forgery-token*}]
+     [:input {:name  "html"
+              :id "html-input"
+              :type  :hidden
+              :value ""}]
+     [:input {:name  "css"
+              :id "css-input"
+              :type  :hidden
+              :value ""}]
+     [:input {:name  "id"
+              :id "id"
+              :type  :hidden
+              :value ""}]
+     [:button
+      {:onclick "save()"} "Speichern"]
+     ]
     ]
    [:div#editor-screen
     [:aside#editor-sidebar
