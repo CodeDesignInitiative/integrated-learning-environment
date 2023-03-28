@@ -85,7 +85,7 @@ nav a {
     color: rgb(216 180 254);
 }
 
-#css-base, #html-base, #html-snippet {
+#hidden-code {
     display: none;
 }
 
@@ -259,6 +259,11 @@ nav a {
 
 /* buttons */
 
+button {
+
+    cursor: pointer;
+}
+
 .button {
     color: black;
     display: flex;
@@ -269,6 +274,22 @@ nav a {
     font-weight: 500;
     border-radius: 100px;
     padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+
+
+.button-sm {
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: rgba(36, 134, 189, 0.87);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 100px;
+    border: none;
+    padding: 4px 12px;
 }
 
 .button img {
@@ -429,6 +450,7 @@ nav a {
 
 .project-list {
     gap: 16px;
+    flex-wrap: wrap;
 }
 
 .button.project {

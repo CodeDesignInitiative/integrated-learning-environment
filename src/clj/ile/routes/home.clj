@@ -32,7 +32,6 @@
         password (get-in request [:form-params "password"])
         user (persistence/find-user email)
         session (:session request)]
-    (println user)
     (if user
       (if (password/check password (:user/password user))
         (let [next-url (get-in request [:query-params "next"] "/")

@@ -19,51 +19,57 @@
     "CSS"]])
 
 (defn hidden-code [{:keys [html css]}]
-  [:div
+  [:div#hidden-code
    [:#html-base
     (:code/base html)]
    [:#html-snippet
     (:code/snippet html)]
+   [:#html-answer
+    (:code/answer html)]
    [:#css-base
     (:code/base css)]])
 
 (defn interaction-buttons [next]
   [:div#editor-interaction
    [:button.circular-button.neutral
+    {:onclick "show_help()"}
     [:img {:src "/img/icons/wiki.svg"
            :title "Wiki"}]]
    (when next
-     [:a.circular-button.check {:href next}
+     [:button.circular-button.check {:onclick (str "validate('" next "')")}
       [:img {:src   "/img/icons/checkmark.svg"
              :title "Fertig"}]])])
+
+(defn nav-bar [next]
+  [:nav.row.space-between
+   [:a {:href "/"} "Zurück"]
+   (when-not next
+     [:form {:action "/projekt/speichern"
+             :id     "save-form"
+             :method "post"}
+      [:input {:id    "__anti-forgery-token"
+               :name  "__anti-forgery-token"
+               :type  :hidden
+               :value *anti-forgery-token*}]
+      [:input {:name  "html"
+               :id    "html-input"
+               :type  :hidden
+               :value ""}]
+      [:input {:name  "css"
+               :id    "css-input"
+               :type  :hidden
+               :value ""}]
+      [:input {:name  "id"
+               :id    "id"
+               :type  :hidden
+               :value ""}]
+      [:button.button-sm
+       {:onclick "save()"} "Speichern"]])])
 
 (defn editor-screen [code notes next]
   (println code)
   [:main.column.full-width
-   [:nav.row.space-between
-    [:a {:href "/"} "Zurück"]
-    (when-not next
-      [:form {:action "/projekt/speichern"
-              :id     "save-form"
-              :method "post"}
-       [:input {:id    "__anti-forgery-token"
-                :name  "__anti-forgery-token"
-                :type  :hidden
-                :value *anti-forgery-token*}]
-       [:input {:name  "html"
-                :id    "html-input"
-                :type  :hidden
-                :value ""}]
-       [:input {:name  "css"
-                :id    "css-input"
-                :type  :hidden
-                :value ""}]
-       [:input {:name  "id"
-                :id    "id"
-                :type  :hidden
-                :value ""}]
-       [:button
-        {:onclick "save()"} "Speichern"]])]
+   (nav-bar next)
 
    [:div#editor-screen
     [:aside#editor-sidebar

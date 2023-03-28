@@ -57,9 +57,6 @@
        [:p.m-0 "Weiter"]]]]))
 
 (defn chat-screen [conversation chat-step job job-step]
-  (println "\n\nJob Step\n")
-  (println job-step)
-  (println "\n\n")
   [:main#chat-screen
 
    (profile (:story/person (get conversation 0)))

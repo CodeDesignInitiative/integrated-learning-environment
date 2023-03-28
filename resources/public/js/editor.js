@@ -7,7 +7,9 @@ let current_language = "html";
 const html_editor = document.getElementById("editor")
 const html_base = document.getElementById("html-base").innerText
 const html_snippet = document.getElementById("html-snippet").innerText
+const html_answer = document.getElementById("html-answer").innerText
 const css_base = document.getElementById("css-base").innerText
+
 
 const output = document.getElementById("output")
 
@@ -104,6 +106,19 @@ editor.session.on("change", function (d) {
 })
 
 on_input_change()
+
+// validate input
+
+const validate = (next) => {
+    if (html_answer.trim() === editor.getValue().trim()) {
+        window.location.href = next;
+    } else {
+        alert("Deine Eingabe ist nicht ganz korrekt. Schau dir nochmal das Beispiel an. Wenn du nicht weiter weißt drücke auf den Hilfe-Knopf mit der Glühbirne.")
+    }
+}
+
+const show_help = () =>
+    alert("Dein Ergebnis sollte so aussehen:\n\n" + html_answer)
 
 
 // save project
