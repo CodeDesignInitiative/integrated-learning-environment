@@ -87,11 +87,13 @@
                                          :story-final-action "/editor"}
                        #:project.chapter{:id                 (random-uuid)
                                          :name               "Stichpunkt hinzufügen"
-                                         :notes              ["Stichpunkt \"Meetups jeden Monat\" hinzufügen"]
+                                         :notes              ["Stichpunkt \"Meetups jeden Monat\" hinzufügen"
+                                                              "\uD83C\uDFE1 kopiere hier das Emoji,falls du es aus Versehen entfernst"]
                                          :code               {:html #:code{:lang    :html
                                                                            :base    html-base
                                                                            :snippet html-3-snippet
-                                                                           :line    html-3-line}
+                                                                           :line    html-3-line
+                                                                           :answer "<li>\uD83C\uDFE1 Meetups jeden Monat</li>\n"}
                                                               :css  #:code{:lang    :css
                                                                            :base    css-website
                                                                            :snippet ""
@@ -100,11 +102,13 @@
                                          :story-final-action "/editor"}
                        #:project.chapter{:id                 (random-uuid)
                                          :name               "Stichpunkt entfernen"
-                                         :notes              ["Stichpunkt \"Tolles Events\" entfernen"]
+                                         :notes              ["Stichpunkt \"Tolles Events\" entfernen"
+                                                              "Auch <li> und </li>, sowie das Emoji entfernen"]
                                          :code               {:html #:code{:lang    :html
                                                                            :base    html-base
                                                                            :snippet html-4-snippet
-                                                                           :line    html-4-line}
+                                                                           :line    html-4-line
+                                                                           :answer ""}
                                                               :css  #:code{:lang    :css
                                                                            :base    css-website
                                                                            :snippet ""
