@@ -13,3 +13,4 @@
 .portal/
 /.pg-data/
 /.lein-repl-history
+/log/
