@@ -41,7 +41,7 @@
 (def html-3-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        $$placeholder$$<li>\uD83E\uDDCD Neue Leute treffen</li>\n        <li>\uD83E\uDD51 Tolle Events</li>\n        <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n    <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
 (def html-3-line "<li>\uD83C\uDFE1 </li>\n")
 
-(def html-4-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        <li>\uD83C\uDFE1 Meetups jeden Monat</li>\n<li>\uD83E\uDDCD Neue Leute treffen</li>\n   $$placeholder$$     <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n  $$placeholder$$  <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
+(def html-4-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        <li>\uD83C\uDFE1 Meetups jeden Monat</li>\n<li>\uD83E\uDDCD Neue Leute treffen</li>\n   $$placeholder$$     <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n     <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
 (def html-4-line "<li>\uD83E\uDD51 Tolle Events</li>")
 
 (def html-5-snippet "\n<article>\n    <b>Vereine</b>\n    <img src=\"../../../../resources/public/img/courses/ruhr_hintergrund.jpg\">\n    <h2>SoYou, Witten</h2>\n    <ul>\n        <li>\uD83C\uDFE1 Meetups jeden Monat</li>\n<li>\uD83E\uDDCD Neue Leute treffen</li>\n        <li>\uD83D\uDD04 Jede Woche</li>\n            </ul>\n\n    <h3>Veranstaltungen</h3>\n    <p>\n        Jede Woche findet in \"Der Werkstadt\" ein offenes Treffen für\n        Jugendliche satt. Hier können alle teilnehmen, die Lust haben.\n    </p>\n\n  $$placeholder$$  <p>\n        Es werden auch Ausflüge organisiert und du kannst die geplanten\n        Events jederzeit auf der Webseite\n        <a href=\"https://signalofyouth.de/\"\n           target=\"_blank\">\n            signalofyouth.de ↗️\n        </a>\n        einsehen!\n    </p>\n</article>")
@@ -71,13 +71,14 @@
                                          :story              start-chat-with-edna
                                          :story-final-action "/editor"}
                        #:project.chapter{:id                 (random-uuid)
-                                         :name               "Rechtschreibfehler korrigieren 2x§"
+                                         :name               "Rechtschreibfehler korrigieren"
                                          :notes              ["Korrektur:"
                                                               "Jede Woche findet in \"Der \n Werkstatt\" ein offenes Treffen \n für Jugendliche statt. \n Hier können alle teilnehmen, \n die Lust haben. "]
                                          :code               {:html #:code{:lang    :html
                                                                            :base    html-base
                                                                            :snippet html-2-snippet
-                                                                           :line    html-2-line}
+                                                                           :line    html-2-line
+                                                                           :answer "<p>Jede Woche findet in \"Der \n Werkstatt\" ein offenes Treffen \n für Jugendliche statt. \n Hier können alle teilnehmen, \n die Lust haben.</p>"}
                                                               :css  #:code{:lang    :css
                                                                            :base    css-website
                                                                            :snippet ""

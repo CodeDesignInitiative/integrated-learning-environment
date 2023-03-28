@@ -49,9 +49,6 @@ const change_language = (lang) => {
 
 
 const generate_css = () => {
-    // console.log("Css stored: ", (css_stored === ""))
-    // console.log("Css base: ", (css_base === ""))
-    // console.log("Css current lang: ", (current_language === "css"))
     if (current_language === "css") {
         return editor.getValue()
     } else {
@@ -69,7 +66,6 @@ const generate_css = () => {
 }
 
 const generate_html = () => {
-    console.log("Html base: ", (html_base === ""))
     if (current_language === "html") {
         if (html_base === "") {
             return editor.getValue()
@@ -109,8 +105,25 @@ on_input_change()
 
 // validate input
 
+// ;
 const validate = (next) => {
-    if (html_answer.trim() === editor.getValue().trim()) {
+    console.log(html_answer
+        .trim()
+        .replace(/ +/g, "")
+        .replace(/(\r\n|\n|\r)/gm, ""))
+    console.log(editor.getValue()
+        .trim()
+        .replace(/ +/g, "")
+        .replace(/(\r\n|\n|\r)/gm, ""))
+
+    if (html_answer
+            .trim()
+            .replace(/ +/g, "")
+            .replace(/(\r\n|\n|\r)/gm, "") ===
+        editor.getValue()
+            .trim()
+            .replace(/ +/g, "")
+            .replace(/(\r\n|\n|\r)/gm, "")) {
         window.location.href = next;
     } else {
         alert("Deine Eingabe ist nicht ganz korrekt. Schau dir nochmal das Beispiel an. Wenn du nicht weiter weißt drücke auf den Hilfe-Knopf mit der Glühbirne.")
@@ -141,7 +154,6 @@ const get_html_value = () => {
 }
 
 const save = () => {
-    console.log(params)
     html_input.value = get_html_value();
     css_input.value = (current_language === "css") ? editor.getValue() : css_stored
 
@@ -152,4 +164,3 @@ const save = () => {
 }
 
 
-console.log(params.id)
