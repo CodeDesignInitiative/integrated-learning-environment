@@ -107,15 +107,6 @@ on_input_change()
 
 // ;
 const validate = (next) => {
-    console.log(html_answer
-        .trim()
-        .replace(/ +/g, "")
-        .replace(/(\r\n|\n|\r)/gm, ""))
-    console.log(editor.getValue()
-        .trim()
-        .replace(/ +/g, "")
-        .replace(/(\r\n|\n|\r)/gm, ""))
-
     if (html_answer
             .trim()
             .replace(/ +/g, "")

@@ -115,6 +115,10 @@ nav a {
     overflow-y: scroll;
 }
 
+.p-2 {
+    padding: 16px;
+}
+
 /*flex*/
 
 .space-between {
@@ -337,6 +341,14 @@ button {
     gap: 16px;
 }
 
+.gap-2 {
+    gap: 32px;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
 .align-center {
     align-items: center;
 }
@@ -445,7 +457,21 @@ button {
 
 
 #projects-page {
-    padding: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+#projects-page nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#projects-page nav h1 {
+    margin: 0;
 }
 
 .project-list {
@@ -454,28 +480,36 @@ button {
 }
 
 .button.project {
-    height: 120px;
-    width: 120px;
-    border-radius: 24px;
+    padding: 16px;
+    border-radius: 12px;
+    color: #fffdfd;
+    background-color: #babed770;
+    /*text-align: center;*/
+    justify-content: space-between;
 }
 
-.project-template {
-    width: 200px;
-    border-radius: 24px;
-
-    background-color: #6038D0;
-
-    padding: 8px 16px;
-
+.button.project img {
+    filter: invert();
 }
 
-#new-project {
+
+.new-project {
     max-width: 240px;
     gap: 8px;
-    margin-top: 24px;
+
+    width: 200px;
+    border-radius: 12px;
+
+    background-color: #79A1D5;
+
+    padding: 24px 16px;
 }
 
-.project-template button, .project-template input,
+.new-project h4 {
+    margin-top: 0;
+}
+
+.new-project button, .new-project input,
 #new-project button, #new-project input {
     border: none;
     border-radius: 999px;

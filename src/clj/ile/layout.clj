@@ -38,11 +38,6 @@
 
 
     page
-    [:script {:src "/js/chat.js"}]
-    ;[:script {:src "/js/src-min-noconflict/ace.js"
-    ;          :type "text/javascript"
-    ;          :charset "utf-9"}]
-    ;[:script {:src "/js/editor.js"}]
     ]])
 
 

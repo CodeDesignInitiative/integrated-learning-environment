@@ -74,6 +74,7 @@
          (answer-choices-widget job job-step chat-step answer-choices)
          (keyboard-with-next-button conversation chat-step job job-step))])
     (final-next-button conversation chat-step job job-step)]
-   ]
+   [:script {:src "/js/chat.js"}]]
+
 
   )

@@ -67,7 +67,6 @@
        {:onclick "save()"} "Speichern"]])])
 
 (defn editor-screen [code notes next]
-  (println code)
   [:main.column.full-width
    (nav-bar next)
 
