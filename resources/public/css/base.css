@@ -472,6 +472,7 @@ button {
 
 #projects-page nav h1 {
     margin: 0;
+    margin-bottom: -4px;
 }
 
 .project-list {

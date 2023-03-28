@@ -35,10 +35,7 @@
     [:link {:rel  :stylesheet
             :href "/css/base.css?v=2"}]]
    [:body
-
-
-    page
-    ]])
+    page]])
 
 
 (defn render-page

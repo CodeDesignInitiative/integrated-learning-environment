@@ -1,6 +1,7 @@
 (ns ile.routes.home
   (:require [buddy.auth :refer [authenticated?]]
             [clojure.pprint :refer [pprint]]
+            [clojure.string :as string]
             [ile.components.app :as app]
             [ile.courses.html-website :as html-website]
             [ile.persistence :as persistence]
@@ -83,19 +84,29 @@
   #_(-> (response/redirect "/login")
         (assoc :session {})))
 
+(def grid-html "\n<h1>Meine Website</h1>\n\n<main>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n        <a href=\"https://code-editor.digital\">code+design LMS</a>\n    </article>\n    <article class=\"highlight\">\n        <h2>CSS Tips und Tricks</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n        <a href=\"https://css-tricks.com/\">css-tricks.com</a>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article class=\"highlight\">\n        <h2>CSS Tips und Tricks</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n</main>")
+(def grid-css "body {\n    background-color: #f5f5f5;\n    font-family: Helvetica, sans-serif;\n}\n\nmain {\n    /* Zeige alles, was im Main-Tag ist in einem Raster an */\n    display: grid;\n    /* zwei Spalten */\n    grid-template-columns: 1fr 1fr;\n    /* 12px Abstand zwischen Spalten & Zeilen */\n    gap: 12px;\n}\n\narticle {\n    border: 1px solid #ddd;\n    border-radius: 12px;\n    padding: 0 12px;\n    min-width: 260px;\n    min-height: 140px;\n}\n\na {\n    color: #42d5ac;\n    text-decoration: none;\n    font-weight: bold;\n    transition-property: color;\n    transition-duration: .3s;\n    transition-timing-function: ease-in-out;\n}\n\na:hover {\n    text-decoration: underline;\n    color: #4c42d5;\n    transition-property: color;\n    transition-duration: .3s;\n    transition-timing-function: ease-in-out;\n}\n\n.highlight {\n    background-color: #555;\n    color: white\n}")
+
+(defn get-template-code [template]
+  (condp = template
+    "grid" {:html grid-html
+            :css  grid-css}
+    "blog" {:html (string/replace html-website/html-base #"\$\$placeholder\$\$"
+                                  (string/replace html-website/html-1-snippet #"\$\$placeholder\$\$" html-website/html-1-line))
+            :css  html-website/css-website}))
+
 (defn new-project [request]
-  (println request)
-  (println "........xxxxxxxxx.........")
   (let [template (get-in request [:form-params "template"])
         project-name (get-in request [:form-params "project-name"])
         user-email (-> (get-in request [:session :identity]) name)
+        template-code (get-template-code template)
         project-id (random-uuid)]
     (do
       (persistence/create-user-project (merge {:xt/id project-id}
                                               #:user.project{:name  project-name
                                                              :owner user-email
-                                                             :css   (or (:css template) "")
-                                                             :html  (or (:html template) "")}))
+                                                             :css   (if template (:css template-code) "")
+                                                             :html  (if template (:html template-code) "")}))
       (println "\n\nRedirect...\n\n")
       (response/redirect (str "/projekt?id=" project-id)))))
 

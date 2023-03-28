@@ -22,6 +22,13 @@ const blank_css =
     font-family: sans-serif;
 }`
 
+const load_css_base_to_stored = () =>
+     (css_base !== "") ? css_stored = css_base : {}
+
+window.onload = (event) => {
+    load_css_base_to_stored()
+}
+
 const change_language = (lang) => {
     if (current_language !== lang) {
         if (current_language === "html") {

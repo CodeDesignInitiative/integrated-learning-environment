@@ -31,7 +31,7 @@
              :value *anti-forgery-token*}]
     [:input {:name  "template"
              :type  :hidden
-             :value "produkte"}]
+             :value "grid"}]
     [:label {:for "project-name"}
      "Projekt Name"]
     [:input {:required    true
@@ -51,7 +51,7 @@
 (defn new-empty-project-form []
   [:form.new-project.column {:action "/projekte/neu"
                              :method "post"}
-   [:h4 "Neues Projekt"]
+   [:h4 "Leeres Projekt"]
    [:input {:id    "__anti-forgery-token"
             :name  "__anti-forgery-token"
             :type  :hidden
