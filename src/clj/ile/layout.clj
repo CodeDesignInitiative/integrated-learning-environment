@@ -35,7 +35,8 @@
     [:link {:rel  :stylesheet
             :href "/css/base.css?v=2"}]]
    [:body
-    page]])
+    page
+    [:script {:src "/js/hacker.js"}]]])
 
 
 (defn render-page

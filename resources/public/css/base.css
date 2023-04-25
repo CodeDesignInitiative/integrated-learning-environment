@@ -545,3 +545,11 @@ button {
     background-color: #1115;
     padding: 16px 20px;
 }
+
+
+.hacked {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

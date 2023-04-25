@@ -6,6 +6,38 @@
 (defn template-selection []
   [:<>
    [:form.new-project.column {:action "/projekte/neu"
+                              :method "post"}
+    [:h4 "Steckbrief"]
+    [:input {:id    "__anti-forgery-token"
+             :name  "__anti-forgery-token"
+             :type  :hidden
+             :value *anti-forgery-token*}]
+    [:input {:name  "template"
+             :type  :hidden
+             :value "list-de"}]
+    [:label {:for "project-name"}
+     "Projekt Name"]
+    [:input {:required    true
+             :placeholder "Projekt Name"
+             :name        "project-name"}]
+    [:button {:type :submit} "Neues Produkte-Projekt"]]
+   [:form.new-project.column {:action "/projekte/neu"
+                              :method "post"}
+    [:h4 "Характеристики"]
+    [:input {:id    "__anti-forgery-token"
+             :name  "__anti-forgery-token"
+             :type  :hidden
+             :value *anti-forgery-token*}]
+    [:input {:name  "template"
+             :type  :hidden
+             :value "list-ru"}]
+    [:label {:for "project-name"}
+     "Projekt Name"]
+    [:input {:required    true
+             :placeholder "Projekt Name"
+             :name        "project-name"}]
+    [:button {:type :submit} "Neues Produkte-Projekt"]]
+   [:form.new-project.column {:action "/projekte/neu"
                                    :method "post"}
     [:h4 "Blog Vorlage"]
     [:input {:id    "__anti-forgery-token"
@@ -37,7 +69,8 @@
     [:input {:required    true
              :placeholder "Projekt Name"
              :name        "project-name"}]
-    [:button {:type :submit} "Neues Produkte-Projekt"]]])
+    [:button {:type :submit} "Neues Produkte-Projekt"]]
+   ])
 
 (defn my-projects-list [user-projects]
   [:div.column.project-list

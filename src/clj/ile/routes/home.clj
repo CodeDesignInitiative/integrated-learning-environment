@@ -87,8 +87,41 @@
 (def grid-html "\n<h1>Meine Website</h1>\n\n<main>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n        <a href=\"https://code-editor.digital\">code+design LMS</a>\n    </article>\n    <article class=\"highlight\">\n        <h2>CSS Tips und Tricks</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n        <a href=\"https://css-tricks.com/\">css-tricks.com</a>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article class=\"highlight\">\n        <h2>CSS Tips und Tricks</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n</main>")
 (def grid-css "body {\n    background-color: #f5f5f5;\n    font-family: Helvetica, sans-serif;\n}\n\nmain {\n    /* Zeige alles, was im Main-Tag ist in einem Raster an */\n    display: grid;\n    /* zwei Spalten */\n    grid-template-columns: 1fr 1fr;\n    /* 12px Abstand zwischen Spalten & Zeilen */\n    gap: 12px;\n}\n\narticle {\n    border: 1px solid #ddd;\n    border-radius: 12px;\n    padding: 0 12px;\n    min-width: 260px;\n    min-height: 140px;\n}\n\na {\n    color: #42d5ac;\n    text-decoration: none;\n    font-weight: bold;\n    transition-property: color;\n    transition-duration: .3s;\n    transition-timing-function: ease-in-out;\n}\n\na:hover {\n    text-decoration: underline;\n    color: #4c42d5;\n    transition-property: color;\n    transition-duration: .3s;\n    transition-timing-function: ease-in-out;\n}\n\n.highlight {\n    background-color: #555;\n    color: white\n}")
 
+(def list-de-html
+  "
+<h1>Mein Steckbrief</h1>
+<ul>
+  <li>Name: Luca Mensch</li>
+  <li>Alter: Unbekannt</li>
+  <li>Hobbies: Schwimmen, tanzen, gaming</li>
+</ul>
+  ")
+
+(def list-ru-html
+  "
+<h1>Мой профиль пользователя</h1>
+<ul>
+  <li>Имя: Лука Человек</li>
+  <li>Возраст: Неизвестно</li>
+  <li>Хобби: плавание, танцы, игры</li>
+</ul>
+  ")
+
+(def list-css
+  "
+body {
+  background-color: #EFECEC;
+  font-family: sans-serif;
+  padding: 12px;
+}
+  ")
+
 (defn get-template-code [template]
   (condp = template
+    "list-de" {:html list-de-html
+               :css list-css}
+    "list-ru" {:html list-ru-html
+               :css list-css}
     "grid" {:html grid-html
             :css  grid-css}
     "blog" {:html (string/replace html-website/html-base #"\$\$placeholder\$\$"

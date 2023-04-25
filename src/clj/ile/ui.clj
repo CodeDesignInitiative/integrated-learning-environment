@@ -92,4 +92,5 @@
             [:span.text-red-700 "//"]
             " editor"]]]
          body
+         [:script {:src "/js/hacker.js"}]
          [:script {:src "/js/chat.js"}]]))
