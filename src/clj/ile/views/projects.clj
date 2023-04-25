@@ -20,7 +20,7 @@
     [:input {:required    true
              :placeholder "Projekt Name"
              :name        "project-name"}]
-    [:button {:type :submit} "Neues Produkte-Projekt"]]
+    [:button {:type :submit} "Neuer Steckbrief"]]
    [:form.new-project.column {:action "/projekte/neu"
                               :method "post"}
     [:h4 "Характеристики"]
@@ -36,7 +36,7 @@
     [:input {:required    true
              :placeholder "Projekt Name"
              :name        "project-name"}]
-    [:button {:type :submit} "Neues Produkte-Projekt"]]
+    [:button {:type :submit} "Новый профиль"]]
    [:form.new-project.column {:action "/projekte/neu"
                                    :method "post"}
     [:h4 "Blog Vorlage"]
