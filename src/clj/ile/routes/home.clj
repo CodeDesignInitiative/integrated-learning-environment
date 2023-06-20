@@ -116,8 +116,56 @@ body {
 }
   ")
 
+(def list-color-de-html
+  "
+<h1>Mein Steckbrief</h1>
+
+<img src=\"https://images.unsplash.com/photo-1600077106724-946750eeaf3c?fit=crop&w=2670&q=80\">
+
+<ul>
+  <li>Name: Luca Mensch</li>
+  <li>Alter: Unbekannt</li>
+  <li>Hobbies: Schwimmen, tanzen, gaming</li>
+</ul>
+  ")
+
+(def list-color-ru-html
+  "
+<h1>Мой профиль пользователя</h1>
+
+<img src=\"https://images.unsplash.com/photo-1600077106724-946750eeaf3c?fit=crop&w=2670&q=80\">
+
+<ul>
+  <li>Имя: Лука Человек</li>
+  <li>Возраст: Неизвестно</li>
+  <li>Хобби: плавание, танцы, игры</li>
+</ul>
+  ")
+
+(def list-color-css
+  "
+body {
+  background-color: red;
+}
+
+li {
+  background-color: blue;
+  color: green;
+}
+
+
+
+img {
+  width: 200px;
+}
+  ")
+
 (defn get-template-code [template]
   (condp = template
+    "list-color-de" {:html list-color-de-html
+               :css list-color-css}
+    "list-color-ru" {:html list-color-ru-html
+               :css list-color-css}
     "list-de" {:html list-de-html
                :css list-css}
     "list-ru" {:html list-ru-html

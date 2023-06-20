@@ -7,6 +7,38 @@
   [:<>
    [:form.new-project.column {:action "/projekte/neu"
                               :method "post"}
+    [:h4 "Steckbrief 2: Farbe"]
+    [:input {:id    "__anti-forgery-token"
+             :name  "__anti-forgery-token"
+             :type  :hidden
+             :value *anti-forgery-token*}]
+    [:input {:name  "template"
+             :type  :hidden
+             :value "list-color-de"}]
+    [:label {:for "project-name"}
+     "Projekt Name"]
+    [:input {:required    true
+             :placeholder "Projekt Name"
+             :name        "project-name"}]
+    [:button {:type :submit} "Neuer Steckbrief"]]
+   [:form.new-project.column {:action "/projekte/neu"
+                              :method "post"}
+    [:h4 "Характеристики 2: цвет"]
+    [:input {:id    "__anti-forgery-token"
+             :name  "__anti-forgery-token"
+             :type  :hidden
+             :value *anti-forgery-token*}]
+    [:input {:name  "template"
+             :type  :hidden
+             :value "list-color-ru"}]
+    [:label {:for "project-name"}
+     "Projekt Name"]
+    [:input {:required    true
+             :placeholder "Projekt Name"
+             :name        "project-name"}]
+    [:button {:type :submit} "Новый профиль"]]
+   [:form.new-project.column {:action "/projekte/neu"
+                              :method "post"}
     [:h4 "Steckbrief"]
     [:input {:id    "__anti-forgery-token"
              :name  "__anti-forgery-token"
