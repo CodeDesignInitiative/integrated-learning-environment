@@ -30,7 +30,7 @@
 (defn signup-form [lang]
   [:form.login-form {:id     "signup-form"
                      :method :post
-                     :action (str "/" (name lang) "/reqister")}
+                     :action (str "/" (name lang) "/register")}
    [:label {:for "email"}
     (tr lang :login/email)]
    [:input#email
