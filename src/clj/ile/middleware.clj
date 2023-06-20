@@ -7,6 +7,7 @@
     [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
     [ile.middleware.formats :as formats]
     [ring-ttl-session.core :refer [ttl-memory-store]]
+    [ring.util.response :as response]
     [ring.middleware.defaults :as ring-defaults]
     [ile.layout :refer [error-page]]
     [buddy.auth :refer [authenticated?]]
@@ -61,10 +62,10 @@
     (if (authenticated? request)
       (handler request)
       (let [original-uri (:uri request)]
-        (ring.util.response/redirect
+        (response/redirect
           (if (or (= original-uri "/")
                   (= original-uri "/logout"))
-            "/login"
+            "/de/login"
             (str "/login?next=" original-uri)))))))
 
 

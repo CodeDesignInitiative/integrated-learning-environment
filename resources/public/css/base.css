@@ -337,6 +337,11 @@ button {
     flex-direction: column;
 }
 
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .gap {
     gap: 16px;
 }
@@ -434,6 +439,15 @@ button {
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
+}
+
+#login-page a {
+    display: block;
+    color: black;
+    border-radius: 12px;
+    background-color: white;
+    padding: 8px 12px;
+    margin-bottom: 12px;
 }
 
 .login-form {

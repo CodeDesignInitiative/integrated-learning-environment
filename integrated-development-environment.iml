@@ -52,6 +52,9 @@
     <orderEntry type="library" name="Leiningen: com.googlecode.json-simple/json-simple:1.1.1" level="project" />
     <orderEntry type="library" name="Leiningen: com.lambdaworks/scrypt:1.4.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.sun.mail/javax.mail:1.5.6" level="project" />
+    <orderEntry type="library" name="Leiningen: com.taoensso/encore:3.31.0" level="project" />
+    <orderEntry type="library" name="Leiningen: com.taoensso/tempura:1.5.3" level="project" />
+    <orderEntry type="library" name="Leiningen: com.taoensso/truss:1.6.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-core:1.23.1" level="project" />
     <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-jdbc:1.23.1" level="project" />
     <orderEntry type="library" name="Leiningen: com.zaxxer/HikariCP:3.4.5" level="project" />

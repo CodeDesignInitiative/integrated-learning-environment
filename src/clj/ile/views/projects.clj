@@ -144,6 +144,6 @@
 
       [:div
        [:h2 "Neues Projekt"]
-       [:div.column.gap
+       [:div.grid-2.gap
         (new-empty-project-form)
         (template-selection)]]]]))

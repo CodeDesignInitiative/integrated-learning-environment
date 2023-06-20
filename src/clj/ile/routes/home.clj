@@ -230,11 +230,15 @@ img {
   (chat-screen/chat-screen html-website/start-chat-with-edna 1 "website1" 1)
   )
 
+(defn redirect-lang-de [r]
+  (response/redirect "/de/login"))
+
 (def public-routes
   [""
-   ["/login" {:post login
+   ["/login" {:get redirect-lang-de}]
+   ["/:lang/login" {:post login
               :get  login-screen/login-page}]
-   ["/register" {:post register
+   ["/:lang/register" {:post register
                  :get  login-screen/login-page}]])
 
 (def private-routes

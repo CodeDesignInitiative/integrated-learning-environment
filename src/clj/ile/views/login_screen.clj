@@ -1,71 +1,84 @@
 (ns ile.views.login-screen
-  (:require [ile.layout :as layout]))
+  (:require
+    [ile.layout :as layout]
+    [ile.dictonary.translations :refer [tr]]))
 
 
-(defn signin-form []
+(defn signin-form [lang]
   [:form.login-form {:id     "signin-form"
                      :method :post
-                     :action "/login"}
+                     :action (str "/" (name lang) "/login")}
    [:label {:for "email"}
-    "Email"]
+    (tr lang :login/email)]
    [:input#email
     {:name         "email"
      :type         "email"
      :required     true
      :autocomplete "email"
-     :placeholder  "Enter your email address"}]
+     :placeholder  "name@example.com"}]
    [:label {:for "password"}
-    "Passwort"]
+    (tr lang :login/password)]
    [:input
     {:name       "password"
-     :required     true
+     :required   true
      :type       :password
+     :placeholder "**********"
      :min-length 8}]
    [:button {:type "submit"}
-    "Anmelden"]])
+    (tr lang :login/login)]])
 
-(defn signup-form []
+(defn signup-form [lang]
   [:form.login-form {:id     "signup-form"
                      :method :post
-                     :action "/register"}
+                     :action (str "/" (name lang) "/reqister")}
    [:label {:for "email"}
-    "Email"]
+    (tr lang :login/email)]
    [:input#email
     {:name         "email"
      :type         "email"
      :required     true
      :autocomplete "email"
-     :placeholder  "Enter your email address"}]
+     :placeholder  "name@example.com"}]
    [:label {:for "username"}
-    "Nutzer:in Name"]
+    (tr lang :login/username)]
    [:input#email
-    {:name         "username"
-     :required     true
-     :placeholder  "Pablo"}]
+    {:name        "username"
+     :required    true
+     :placeholder "Pablo"}]
    [:label {:for "password"}
-    "Passwort"]
+    (tr lang :login/password)]
    [:input
     {:name       "password"
-     :required     true
+     :required   true
      :type       :password
+     :placeholder "**********"
      :min-length 8}]
    [:label {:for "password2"}
-    "Passwort wiederholen"]
+    (tr lang :login/password-repeat)]
    [:input
     {:name       "password2"
-     :required     true
+     :required   true
      :type       :password
+     :placeholder "**********"
      :min-length 8}]
    [:button {:type "submit"}
-    "Registrieren"]])
+    (tr lang :login/register)
+    ]])
 
-(defn login-page [r]
-  (layout/render-page
-    [:div#login-page
-     [:div
-      [:h1 "Anmelden"]
-      (signin-form)]
-     [:div
-      [:h1 "Registrieren"]
-      (signup-form)]
-     ]))
+(defn login-page [request]
+  (let [lang (-> (get-in request [:path-params :lang]) keyword)]
+    (layout/render-page
+      [:div#login-page
+       [:div
+        [:div
+         [:a {:href "/ru/login"} "RU"]]
+        [:div
+         [:a {:href "/de/login"} "DE"]]
+        ]
+       [:div
+        [:h1 (tr lang :login/login)]
+        (signin-form lang)]
+       [:div
+        [:h1 (tr lang :login/register)]
+        (signup-form lang)]
+       ])))

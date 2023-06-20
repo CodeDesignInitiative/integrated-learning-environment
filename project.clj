@@ -20,6 +20,7 @@
                  [org.clojure/tools.cli "1.0.214"]
                  [org.clojure/tools.logging "1.2.4"]
                  [org.postgresql/postgresql "42.5.4"]
+                 [com.taoensso/tempura "1.5.3"]
                  [ring/ring-core "1.9.6"]
                  [ring/ring-defaults "0.3.4"]
                  [rum "0.12.10" :exclusions [cljsjs/react cljsjs/react-dom]]
