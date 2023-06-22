@@ -1,21 +1,39 @@
-@font-face {
-    font-family: "Caveat";
-    src: local("Caveat"), url("../fonts/caveat-variable.ttf");
-}
-
-@font-face {
-    font-family: "IBM Plex Mono";
-    src: local("IBM Plex Mono"), url("../fonts/IBMPlexMono-Regular.ttf");
-}
-
 body {
-    background: #372748 linear-gradient(180deg, #372748 0%, #131424 100%);
+    background: var(--blue-4);
     display: flex;
     height: 100vh;
     font-family: Helvetica, sans-serif;
     color: white;
     margin: 0;
 }
+
+button {
+    background-color: white;
+    color: var(--dark-blue);
+    border-radius: 32px;
+    border: 2px solid var(--dark-blue);
+    padding: 8px 12px;
+    box-shadow: 4px 4px 0 var(--dark-blue);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+button:hover {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--dark-blue);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+
+button:active {
+    background-color: var(--dark-blue);
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+button p {
+    margin: 0;
+    font-weight: 700;
+}
+
 
 main {
     height: 100vh;
