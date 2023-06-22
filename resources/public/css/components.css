@@ -1,0 +1,113 @@
+
+#start-screen {
+    display: grid;
+    grid-template-areas:
+            "title story editor"
+            "empty story editor"
+            "login story wiki"
+            "button-row button-row button-row";
+
+    grid-template-rows: 1fr 1fr 1fr auto;
+    grid-template-columns: 2fr 3fr 4fr;
+
+    width: 100vw;
+    height: calc(100vh - var(--d-3) * 2) ;
+    gap: var(--d-2);
+    padding: var(--d-3);
+
+    background-image: url("/img/bg/start_bg.svg");
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#start-screen > button {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 16px 24px ;
+}
+
+#start-screen > * > h2 {
+    font-size: 3.5em;
+    margin: 0;
+}
+
+
+#start-screen #title {
+    grid-area: title;
+
+    display: flex;
+    justify-content: center;
+
+}
+#start-screen #title img {
+    width: 140px;
+}
+
+#start-screen #login-area {
+    grid-area: login;
+    background-color: var(--sand-primary);
+}
+
+#start-screen #login-area h2 {
+    font-size: 1.5em;
+}
+
+#start-screen #story-area {
+    grid-area: story;
+    position: relative;
+    background-color: var(--lilac-primary);
+    background-image: url("/img/bg/story_start_bg.svg");
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#start-screen > * > img.icon {
+    height: 4em;
+}
+
+#start-screen #story-area #story-peep {
+    position: absolute;
+    max-height: 70%;
+    max-width: 50%;
+    top: 24px;
+    left: 15%;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#start-screen #editor-area {
+    position: relative;
+    grid-area: editor;
+    background-color: var(--coral-primary);
+    flex-direction: column;
+    justify-content: flex-end;
+}
+#start-screen #editor-area h2 {
+    z-index: 10;
+}
+
+#start-screen #editor-area  #peep-laptop {
+    position: absolute;
+    max-height: 70%;
+    max-width: 50%;
+    left: 0;
+    bottom: -4px;
+}
+
+#start-screen #wiki-area {
+    grid-area: wiki;
+    background-color: var(--mint-primary);
+}
+
+#start-screen > #start-button-row {
+    grid-area: button-row;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--d-2);
+}
+

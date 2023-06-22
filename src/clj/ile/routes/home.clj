@@ -14,7 +14,9 @@
             [ile.components.app :as app-components]
             [ile.views.projects :as projects-page]
             [crypto.password.bcrypt :as password]
-            [rum.core :as rum]))
+            [rum.core :as rum]
+
+            [ile.ui.start.core :as start-screen]))
 
 
 
@@ -242,11 +244,11 @@ img {
                  :get  login-screen/login-page}]])
 
 (def private-routes
-  ["" {:middleware [middleware/wrap-unauthorized-login-redirect
+  ["" {:middleware [#_middleware/wrap-unauthorized-login-redirect
                     middleware/wrap-csrf
                     middleware/wrap-render-rum
                     middleware/wrap-formats]}
-   ["/" {:get app/app}]
+   ["/" {:get start-screen/start-screen #_app/app}]
    ["/logout" {:get logout}]
    ["/chat" {:get chat-screen}]
    ["/wiki" {:get app-components/wiki}]
