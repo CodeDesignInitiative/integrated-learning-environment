@@ -2,14 +2,14 @@
   (:require
     [clojure.tools.logging :as log]
     [ile.env :refer [defaults]]
-    [ile.layout :as layout]
+    [ile.mount.config :refer [env]]
+    [ile.layout :refer [error-page] :as layout]
     [muuntaja.middleware :refer [wrap-format wrap-params]]
     [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
     [ile.middleware.formats :as formats]
     [ring-ttl-session.core :refer [ttl-memory-store]]
     [ring.util.response :as response]
     [ring.middleware.defaults :as ring-defaults]
-    [ile.layout :refer [error-page]]
     [buddy.auth :refer [authenticated?]]
     [ring.middleware.session :refer [wrap-session]]
     [buddy.auth.backends :as backends]
@@ -79,17 +79,32 @@
 (defn wrap-ile-defaults [handler]
   (ring-defaults/wrap-defaults
     handler
-    (-> ring-defaults/site-defaults
+    (-> (if (:dev env)
+          ring-defaults/site-defaults
+          ring-defaults/secure-site-defaults)
+
         (assoc-in [:security :anti-forgery] false)
         (assoc-in [:session :store] (ttl-memory-store (* 60 30)))
         ; enabling cookies for authentication cross-site requests
         (assoc-in [:session :cookie-attrs :same-site] :lax))))
 
+
+(defn wrap-security-header [handler]
+  (fn [request]
+    (if (:dev env)
+      (handler request)
+      (->
+        (handler request)
+        (response/header "Content-Security-Policy" "default-src https:")
+        (response/header "header-Strict-Transport-Security" "max-age=63072000")
+        (response/header "X-XSS-Protection" "1; mode=block")))))
+
 (def backend (backends/session))
 
 (defn wrap-base [handler]
-  (-> ((:middleware defaults) handler)
-      (wrap-authentication backend)
-      wrap-session
-      wrap-ile-defaults
-      wrap-internal-error))
+  (->
+    ((:middleware defaults) handler)
+    (wrap-authentication backend)
+    wrap-session
+    wrap-ile-defaults
+    wrap-internal-error))
