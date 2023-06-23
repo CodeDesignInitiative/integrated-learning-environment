@@ -82,7 +82,8 @@
     (-> (if (:dev env)
           ring-defaults/site-defaults
           (-> ring-defaults/secure-site-defaults
-              (assoc :proxy true)))
+              (assoc :proxy true)
+              (assoc [:security :hsts] true)))
         #_ring-defaults/site-defaults
 
         (assoc-in [:security :anti-forgery] false)
@@ -106,6 +107,7 @@
 (defn wrap-base [handler]
   (->
     ((:middleware defaults) handler)
+    wrap-security-header
     (wrap-authentication backend)
     wrap-session
     wrap-ile-defaults
