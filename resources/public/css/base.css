@@ -7,7 +7,7 @@ body {
     margin: 0;
 }
 
-button {
+button, .button {
     background-color: white;
     color: var(--dark-blue);
     border-radius: 32px;
@@ -15,23 +15,34 @@ button {
     padding: 8px 12px;
     box-shadow: 4px 4px 0 var(--dark-blue);
     transition: box-shadow 0.3s, transform 0.3s;
+    text-decoration: none;
 }
 
-button:hover {
+button:hover, .button:hover {
     transform: translate(4px, 4px);
     box-shadow: 0 0 0 var(--dark-blue);
     transition: box-shadow 0.3s, transform 0.3s;
 }
 
-button:active {
+button:active, .button:active {
     background-color: var(--dark-blue);
     color: #fff;
     transition: background-color 0.2s, color 0.2s;
 }
 
-button p {
-    margin: 0;
+button > p, .button > p {
     font-weight: 700;
+    font-size: 2em;
+    padding: 0 12px;
+    margin: 0 0 -4px;
+}
+
+@media screen and (min-resolution: 150dpi) {
+
+    button > p, .button > p {
+        font-size: 1.5em;
+
+    }
 }
 
 
@@ -286,38 +297,38 @@ button {
     cursor: pointer;
 }
 
-.button {
-    color: black;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background-color: #babed7;
-    text-decoration: none;
-    font-weight: 500;
-    border-radius: 100px;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-}
+/*.button {*/
+/*    color: black;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 4px;*/
+/*    background-color: #babed7;*/
+/*    text-decoration: none;*/
+/*    font-weight: 500;*/
+/*    border-radius: 100px;*/
+/*    padding: 8px 16px;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*}*/
 
 
-.button-sm {
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background-color: rgba(36, 134, 189, 0.87);
-    text-decoration: none;
-    font-weight: 500;
-    border-radius: 100px;
-    border: none;
-    padding: 4px 12px;
-}
+/*.button-sm {*/
+/*    color: white;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 4px;*/
+/*    background-color: rgba(36, 134, 189, 0.87);*/
+/*    text-decoration: none;*/
+/*    font-weight: 500;*/
+/*    border-radius: 100px;*/
+/*    border: none;*/
+/*    padding: 4px 12px;*/
+/*}*/
 
-.button img {
-    width: 24px;
-    height: 24px;
-}
+/*.button img {*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*}*/
 
 .circular-button {
     display: flex;

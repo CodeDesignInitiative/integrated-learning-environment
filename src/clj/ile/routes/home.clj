@@ -16,7 +16,10 @@
             [crypto.password.bcrypt :as password]
             [rum.core :as rum]
 
-            [ile.ui.start.core :as start-screen]))
+            [ile.ui.start.core :as start-screen]
+            [ile.ui.editor.core :as editor-screen]
+
+            ))
 
 
 
@@ -255,7 +258,8 @@ img {
    ["/auftraege" {:get app-components/jobs}]
    ["/auftrag" {:get app-components/job-step}]
    ["/projekte"
-    ["" {:get  projects-page/projects-page
+    ["" {:get  editor-screen/editor-project-selection-screen
+         #_projects-page/projects-page
          :post new-project}]
     ["/neu" {:post new-project
              :get  redirect-new-project}]
