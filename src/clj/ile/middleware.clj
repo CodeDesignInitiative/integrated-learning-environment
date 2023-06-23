@@ -81,7 +81,8 @@
     handler
     (-> (if (:dev env)
           ring-defaults/site-defaults
-          ring-defaults/secure-site-defaults)
+          (merge ring-defaults/site-defaults
+                 ring-defaults/secure-site-defaults))
 
         (assoc-in [:security :anti-forgery] false)
         (assoc-in [:session :store] (ttl-memory-store (* 60 30)))
