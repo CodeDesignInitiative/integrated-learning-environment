@@ -2,12 +2,14 @@
 
 
 (defn privacy-statement [_request]
-  [:main
+  [:main.p-2
    [:h1 "Datenschutzerklärung"]
 
    [:h2 "Ansprechpartner"]
 
    [:p "paul.hempel@code.design"]
+
+   [:h2 "Erläuterungen"]
 
    [:p "Diese Webseite benutzt kein Tracking."]
    [:p "Es werden nur notwendige Session Cookies gesetzt."]

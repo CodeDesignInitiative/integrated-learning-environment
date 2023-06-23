@@ -1,4 +1,23 @@
 /* ---------------------------------------------------- */
+/* legal */
+
+#legal {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+#legal > a {
+    text-decoration: none;
+    color: black;
+    font-size: .8em;
+}
+
+/* ---------------------------------------------------- */
+
 /* start screen */
 
 #start-screen {

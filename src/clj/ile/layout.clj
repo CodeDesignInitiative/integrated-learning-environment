@@ -22,6 +22,8 @@
   [:html.full-height
    [:head
 
+    [:title "play+learn"]
+
     ; favicon
     [:link {:rel "apple-touch-icon" :sizes "180x180" :href "/apple-touch-icon.png"}]
     [:link {:rel "icon" :type "image/png" :sizes "32x32" :href "/favicon-32x32.png"}]
@@ -44,7 +46,13 @@
             :href "/css/layout.css?v=2"}]
     ]
    [:body
-    page]])
+    page
+
+    [:#legal
+     [:a.link {:href "https://code.design/impressum"}
+      "Impressum"]
+     [:a.link {:href "/datenschutz"}
+      "Datenschutz"]]]])
 
 
 (defn render-page
