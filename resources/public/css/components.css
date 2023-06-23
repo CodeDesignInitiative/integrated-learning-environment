@@ -1,3 +1,5 @@
+/* ---------------------------------------------------- */
+/* start screen */
 
 #start-screen {
     display: grid;
@@ -11,7 +13,7 @@
     grid-template-columns: 2fr 3fr 4fr;
 
     width: 100vw;
-    height: calc(100vh - var(--d-3) * 2) ;
+    height: calc(100vh - var(--d-3) * 2);
     gap: var(--d-2);
     padding: var(--d-3);
 
@@ -21,16 +23,16 @@
     background-repeat: no-repeat;
 }
 
-#start-screen > button {
+#start-screen > a {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
-    padding: 16px 24px ;
+    padding: 16px 24px;
 }
 
 #start-screen > * > h2 {
-    font-size: 3.5em;
+    font-size: 5em;
     margin: 0;
 }
 
@@ -42,17 +44,21 @@
     justify-content: center;
 
 }
+
 #start-screen #title img {
     width: 140px;
 }
 
 #start-screen #login-area {
     grid-area: login;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--sand-primary);
 }
 
 #start-screen #login-area h2 {
-    font-size: 1.5em;
+    font-size: 3em;
 }
 
 #start-screen #story-area {
@@ -66,7 +72,7 @@
 }
 
 #start-screen > * > img.icon {
-    height: 4em;
+    height: 8em;
 }
 
 #start-screen #story-area #story-peep {
@@ -83,15 +89,16 @@
 #start-screen #editor-area {
     position: relative;
     grid-area: editor;
-    background-color: var(--coral-primary);
+    background-color: var(--rose-primary);
     flex-direction: column;
     justify-content: flex-end;
 }
+
 #start-screen #editor-area h2 {
     z-index: 10;
 }
 
-#start-screen #editor-area  #peep-laptop {
+#start-screen #editor-area #peep-laptop {
     position: absolute;
     max-height: 70%;
     max-width: 50%;
@@ -111,3 +118,35 @@
     gap: var(--d-2);
 }
 
+
+@media screen
+and (min-resolution: 150dpi)
+and (orientation: portrait) {
+    #start-screen {
+        display: grid;
+        grid-template-areas:
+            "title login"
+            "story story"
+            "editor wiki"
+            "button-row button-row";
+
+        grid-template-rows: auto 1fr 1fr auto;
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media screen and (min-resolution: 150dpi) {
+
+    #start-screen > * > h2 {
+        font-size: 3em;
+    }
+
+    #start-screen #login-area h2 {
+        font-size: 2em;
+    }
+
+    #start-screen > * > img.icon {
+        height: 4.5em;
+    }
+}
