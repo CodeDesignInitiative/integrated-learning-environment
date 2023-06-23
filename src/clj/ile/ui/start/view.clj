@@ -39,6 +39,10 @@
       :alt "Lesezeichen Icon"}]
     [:h2 "Wiki"]]
    [:div#start-button-row
+    [:a.link {:href "https://code.design/impressum"}
+     "Impressum"]
+    [:a.link {:href "/datenschutz"}
+     "Datenschutz"]
     [:a.button
      [:p "Sprache"]]
     [:a.button

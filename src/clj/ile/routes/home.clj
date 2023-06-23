@@ -18,8 +18,7 @@
 
             [ile.ui.start.core :as start-screen]
             [ile.ui.editor.core :as editor-screen]
-
-            ))
+            [ile.ui.legal.core :as legal]))
 
 
 
@@ -252,6 +251,8 @@ img {
                     middleware/wrap-render-rum
                     middleware/wrap-formats]}
    ["/" {:get start-screen/start-screen #_app/app}]
+   ["/datenschutz" {:get legal/privacy-statement
+                    }]
    ["/logout" {:get logout}]
    ["/chat" {:get chat-screen}]
    ["/wiki" {:get app-components/wiki}]

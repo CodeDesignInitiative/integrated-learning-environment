@@ -114,10 +114,15 @@
 #start-screen > #start-button-row {
     grid-area: button-row;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     gap: var(--d-2);
 }
 
+#start-screen > #start-button-row > a.link {
+    color: black;
+    text-decoration: none;
+}
 
 @media screen
 and (min-resolution: 150dpi)
