@@ -81,7 +81,8 @@
     handler
     (-> (if (:dev env)
           ring-defaults/site-defaults
-          ring-defaults/secure-site-defaults)
+          (-> ring-defaults/secure-site-defaults
+              (assoc :proxy true)))
         #_ring-defaults/site-defaults
 
         (assoc-in [:security :anti-forgery] false)
