@@ -36,10 +36,23 @@
     gap: 1rem;
     padding: var(--d-3);
 
-    background-image: url("/img/bg/start_bg.svg");
-    background-position: bottom;
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-image: url("/img/bg/bg.svg");
+    background-position: -300px bottom;
+    background-size: cover;
+    background-repeat: repeat-x;
+
+    animation: shift 60s linear infinite;
+}
+
+
+@keyframes shift {
+    0% {
+        background-position: 0 bottom;
+
+    }
+    100% {
+        background-position: calc(-100vh * 2.5) bottom;
+    }
 }
 
 #start-screen > a {
