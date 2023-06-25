@@ -8,7 +8,7 @@
 
 (defn wrap-dev [handler]
   (-> handler
-      refresh/wrap-refresh
+      ;refresh/wrap-refresh
       wrap-reload
       ;; disable prone middleware, it can not handle async
       (cond-> (not (env :async?)) (wrap-exceptions {:app-namespaces ['ile]}))))

@@ -33,7 +33,7 @@
 
     width: 100vw;
     height: calc(100vh - var(--d-3) * 2);
-    gap: var(--d-2);
+    gap: 1rem;
     padding: var(--d-3);
 
     background-image: url("/img/bg/start_bg.svg");
@@ -51,7 +51,7 @@
 }
 
 #start-screen > * > h2 {
-    font-size: 5em;
+    font-size: 5rem;
     margin: 0;
 }
 
@@ -84,9 +84,9 @@
     grid-area: story;
     position: relative;
     background-color: var(--lilac-primary);
-    background-image: url("/img/bg/story_start_bg.svg");
+    background-image: url("/img/bg/story_bg.svg");
     background-position: bottom;
-    background-size: contain;
+    /*background-size: contain;*/
     background-repeat: no-repeat;
 }
 
@@ -108,9 +108,13 @@
 #start-screen #editor-area {
     position: relative;
     grid-area: editor;
-    background-color: var(--rose-primary);
+    background-color: var(--rose-1);
     flex-direction: column;
     justify-content: flex-end;
+    background-image: url("/img/bg/editor_bg.svg");
+    background-position: bottom;
+    /*background-size: contain;*/
+    background-repeat: no-repeat;
 }
 
 #start-screen #editor-area h2 {
@@ -128,6 +132,10 @@
 #start-screen #wiki-area {
     grid-area: wiki;
     background-color: var(--mint-primary);
+    background-image: url("/img/bg/wiki_bg.svg");
+    background-position: top;
+    /*background-size: contain;*/
+    background-repeat: no-repeat;
 }
 
 #start-screen > #start-button-row {
@@ -151,16 +159,20 @@ and (orientation: portrait) {
         grid-template-areas:
             "title login"
             "story story"
-            "editor wiki"
+            "editor editor"
+            "wiki wiki"
             "button-row button-row";
 
-        grid-template-rows: auto 1fr 1fr auto;
+        grid-template-rows: auto 3fr 3fr 2fr auto;
         grid-template-columns: 1fr 1fr;
+        gap: 2rem;
     }
 
 }
 
-@media screen and (min-resolution: 150dpi) {
+@media screen
+    and (min-resolution: 150dpi)
+    and (orientation: landscape) {
 
     #start-screen > * > h2 {
         font-size: 3em;

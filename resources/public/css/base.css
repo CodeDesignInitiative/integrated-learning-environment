@@ -6,10 +6,28 @@ body {
     margin: 0;
 }
 
+.tile {
+    background-size: 100%;
+    border-radius: 32px;
+    border: 2px solid var(--dark-blue);
+    padding: 8px 12px;
+    box-shadow: 4px 4px 0 var(--dark-blue);
+    transition: box-shadow 0.3s, transform 0.3s,  background-size 1s;
+    text-decoration: none;
+}
+
+.tile:hover {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--dark-blue);
+    background-size: 200% !important;
+    transition: box-shadow 0.3s, transform 0.3s, background-size 1s ease-in-out;
+
+}
+
 button, .button {
     background-color: white;
     color: var(--dark-blue);
-    border-radius: 32px;
+    border-radius: 999px;
     border: 2px solid var(--dark-blue);
     padding: 8px 12px;
     box-shadow: 4px 4px 0 var(--dark-blue);
@@ -31,12 +49,14 @@ button:active, .button:active {
 
 button > p, .button > p {
     font-weight: 700;
-    font-size: 2em;
-    padding: 0 12px;
-    margin: 0 0 -4px;
+    font-size: 3rem;
+    padding: .4rem 1rem;
+    margin: 0 0 -0.4rem;
 }
 
-@media screen and (min-resolution: 150dpi) {
+@media screen
+and (min-resolution: 150dpi)
+and (orientation: landscape)  {
 
     button > p, .button > p {
         font-size: 1.5em;

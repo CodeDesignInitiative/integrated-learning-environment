@@ -35,9 +35,9 @@
 
     ; custom css
     [:link {:rel  :stylesheet
-            :href "/css/base.css?v=3"}]
+            :href "/css/base.css?v=4"}]
     [:link {:rel  :stylesheet
-            :href "/css/components.css?v=3"}]
+            :href "/css/components.css?v=4"}]
     [:link {:rel  :stylesheet
             :href "/css/color.css?v=2"}]
     [:link {:rel  :stylesheet
