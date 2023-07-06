@@ -28,3 +28,15 @@
 (defn tr [lang kee]
   (tempura/tr {:dict dictionary} [lang] [kee])
   #_(partial tempura/tr opts lang))
+
+
+(defn lang
+  "Get language parameter from url as keyword"
+  [request]
+  (-> (get-in request [:path-params :lang]) keyword))
+
+(defn url
+  "Create url with language paramter as first directory in path.
+  Concats url-args as string to url."
+  [lang & url]
+  (str "/" (name lang) (apply str url)))

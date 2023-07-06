@@ -1,6 +1,6 @@
 (ns ile.ui.projects.view
   (:require
-    [ile.util :as util]
+    [ile.dictonary.translations :as tr]
     [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 
@@ -106,7 +106,7 @@
    ])
 
 (defn project-list-entry [project lang]
-  [:a.button.project {:href (util/lang-url lang "/projekt?id=" (:xt/id project))}
+  [:a.button.project {:href (tr/url lang "/projekt?id=" (:xt/id project))}
    [:h3
     (or (:user.project/name project) "Unbenannt")]])
 
@@ -131,16 +131,17 @@
 (def new-project-btn
   [:a.button.new-project {:href "/projekt/neu"}
    [:h1 "+"]
-   [:p]
    [:h3 "Neues Projekt"]])
 
-(defn projects-page [lang projects]
-
+(defn projects-page
+  "Page containing projects that a specific user created.
+  Can direct to create-project page."
+  [lang projects]
   [:<>
    [:nav
-    [:a.button {:href "/"} "Zurück"]
+    [:a.button {:href (tr/url lang "/")} "Zurück"]
     [:h1 "Editor"]
-    [:a.button {:href "/projekte/neu"} "Neues Projekt"]]
+    [:a.button {:href (tr/url lang "/projekte/neu")} "Neues Projekt"]]
    [:main#projects-page
     [:h2 "Meine Projekte"]
     [:.project-list

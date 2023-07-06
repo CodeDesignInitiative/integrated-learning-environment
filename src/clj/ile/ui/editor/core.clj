@@ -2,8 +2,8 @@
   (:require
     [ile.ui.editor.view :as view]))
 
-(defn editor [code next]
-  (view/editor-page code next))
+(defn editor [lang code next]
+  (view/editor-page lang code next))
 
 ;(defn new-project [request]
 ;  (let [template (get-in request [:form-params "template"])

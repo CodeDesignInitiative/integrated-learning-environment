@@ -13,10 +13,3 @@
 
 (defn send-email [sys recipent code]
   (hostinger-smtp recipent code))
-
-
-(defn lang [request]
-  (-> (get-in request [:path-params :lang]) keyword))
-
-(defn lang-url [lang & url]
-  (str "/" (name lang) (apply str url)))

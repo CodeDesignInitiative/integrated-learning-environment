@@ -1,7 +1,6 @@
 (ns ile.ui.start.view
   (:require
-    [ile.util :as util]
-    [rum.core :as rum]))
+    [ile.dictonary.translations :as tr]))
 
 
 (defn start-screen [lang]
@@ -11,7 +10,7 @@
      {:src "/img/logo_play_learn.svg"
       :alt "App Icon mit Aufschrift: play + learn"}]]
    [:a.tile#login-area
-    {:href (util/lang-url lang "/login")}
+    {:href (tr/url lang "/login")}
     [:img.icon
      {:src "/img/icons/happy-outline.svg"
       :alt "Happy emoji Icon"}]
@@ -26,7 +25,7 @@
       :alt "Karten Icon"}]
     [:h2 "Story"]]
    [:a.tile#editor-area
-    {:href (util/lang-url lang "/projekte")}
+    {:href (tr/url lang "/projekte")}
     [:img.icon
      {:src "/img/icons/code.svg"
       :alt "eckige Klammern, die einen Schrägstrich umschließen"}]

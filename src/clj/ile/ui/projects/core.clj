@@ -1,5 +1,6 @@
 (ns ile.ui.projects.core
   (:require
+    [ile.dictonary.translations :as tr]
     [ile.ui.editor.core :as editor]
     [ile.persistence :as persistence]
     [ile.ui.projects.view :as view]
@@ -7,7 +8,7 @@
     [ring.util.response :as response]))
 
 (defn- projects-page [request]
-  (let [lang (util/lang request)
+  (let [lang (tr/lang request)
         user-email (get-in request [:session :identity])
         user-projects (if user-email (or (persistence/get-user-projects (name user-email)) []) [])]
     (view/projects-page lang user-projects)))
@@ -28,9 +29,11 @@
 
 
 (defn project-editor [request]
-  (let [project-id (get-in request [:query-params "id"])
+  (let [lang (tr/lang request)
+        project-id (get-in request [:query-params "id"])
         project (persistence/find-user-project (parse-uuid project-id))]
     (editor/editor
+      lang
       {:html {:code/line (:user.project/html project)}
        :css  {:code/base (:user.project/css project)}}
       nil)))

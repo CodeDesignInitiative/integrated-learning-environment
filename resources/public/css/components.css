@@ -269,6 +269,10 @@ and (orientation: landscape) {
     background-color: white;
 }
 
+.button.new-project > h1 {
+    margin-bottom: var(--d-3);
+}
+
 .button.project {
     background-color: var(--mint-primary);
     justify-content: space-between;

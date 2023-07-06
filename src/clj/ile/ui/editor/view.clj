@@ -1,5 +1,6 @@
 (ns ile.ui.editor.view
   (:require [ile.ui.components :as components]
+            [ile.dictonary.translations :as tr]
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 (defn- editor-tabs
@@ -33,9 +34,9 @@
       [:img {:src   "/img/icons/checkmark.svg"
              :title "Fertig"}]])])
 
-(defn nav-bar [next]
+(defn nav-bar [lang next]
   [:nav
-   [:a.button {:href "/projekte"} "Zurück"]
+   [:a.button {:href (tr/url lang "/projekte")} "Zurück"]
    (when-not next
      [:form {:action "/projekt/speichern"
              :id     "save-form"
@@ -59,10 +60,10 @@
       [:button
        {:onclick "save()"} "Speichern"]])])
 
-(defn editor-page [code next]
+(defn editor-page [lang code next]
   [:main#editor-screen
    [:aside#editor-sidebar
-    (nav-bar next)
+    (nav-bar lang next)
     (editor-tabs)
     [:div#editor-wrapper
      [:div#editor.w-full.h-full.language-html {:id "editor"}

@@ -1,10 +1,10 @@
 (ns ile.ui.start.core
   (:require
-    [ile.ui.start.view :as view]
-    [ile.util :as util]))
+    [ile.dictonary.translations :as tr]
+    [ile.ui.start.view :as view]))
 
 (defn- start-screen [request]
-  (let [lang (util/lang request)]
+  (let [lang (tr/lang request)]
     (view/start-screen lang)))
 
 (def routes
