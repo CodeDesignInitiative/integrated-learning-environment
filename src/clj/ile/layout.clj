@@ -5,18 +5,6 @@
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]
             [rum.core :as rum]))
 
-(defn error-page
-  "error-details should be a map containing the following keys:
-   :status - error status
-   :title - error title (optional)
-
-   returns a response map with the error page as the body
-   and the status specified by the status key"
-  [error-details]
-  :status (:status error-details)
-  :headers {"Content-Type" "text/html; charset=utf-8"}
-  :body [:div (str error-details)])
-
 
 (defn page [page]
   [:html.full-height
@@ -37,7 +25,7 @@
     [:link {:rel  :stylesheet
             :href "/css/base.css?v=4"}]
     [:link {:rel  :stylesheet
-            :href "/css/components.css?v=4"}]
+            :href "/css/components.css?v=5"}]
     [:link {:rel  :stylesheet
             :href "/css/color.css?v=2"}]
     [:link {:rel  :stylesheet
@@ -55,6 +43,7 @@
       "Datenschutz"]]]])
 
 
+
 (defn render-page
   "renders the page wrapped in the base HTML"
   [p]
@@ -63,3 +52,25 @@
              (rum/render-static-markup
                (page p))))
     "text/html; charset=utf-8"))
+
+
+(defn error-page
+  "error-details should be a map containing the following keys:
+   :status - error status
+   :title - error title (optional)
+
+   returns a response map with the error page as the body
+   and the status specified by the status key"
+  [{:keys [status title]}]
+  (render-page
+    [:main#error-page
+     [:nav
+      [:a.button {:href "/"} "Zurück zum Start"]
+      [:a.button {:href "/login"} "Anmelden"]
+      [:a.button {:href "/logout"} "Abmelden"]]
+     [:div
+      [:h1 (str title)]
+      [:h2 (str "Fehlercode: " status)]
+      [:p "Aber alles kein Problem. Am besten gehst du zurück auf die Startseite: "
+       [:a.button {:href "/"} "Zurück zum Start"]]
+      [:img {:src "/img/puppies.gif"}]]]))

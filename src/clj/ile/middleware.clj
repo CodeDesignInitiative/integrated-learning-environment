@@ -19,8 +19,8 @@
   (let [error-result (fn [^Throwable t]
                        (log/error t (.getMessage t))
                        (error-page {:status  500
-                                    :title   "Something very bad has happened!"
-                                    :message "We've dispatched a team of highly trained gnomes to take care of the problem."}))]
+                                    :title   "Oh no!"
+                                    :message "Da ist wohl etwas schief gelaufen. Sollte der Fehler wiederkommen, kannst du eine Mail an paul.hempel@code.design schreiben mit Informationen was genau passiert ist und wir kümmern uns um den Fehler :)"}))]
     (fn wrap-internal-error-fn
       ([req respond _]
        (handler req respond #(respond (error-result %))))

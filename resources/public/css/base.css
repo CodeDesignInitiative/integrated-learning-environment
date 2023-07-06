@@ -1,6 +1,5 @@
 body {
     background: var(--blue-4);
-    display: flex;
     height: 100vh;
     font-family: Helvetica, sans-serif;
     margin: 0;
@@ -33,7 +32,11 @@ button, .button {
     box-shadow: 4px 4px 0 var(--dark-blue);
     transition: box-shadow 0.3s, transform 0.3s;
     text-decoration: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
 }
+
 
 button:hover, .button:hover {
     transform: translate(4px, 4px);
@@ -66,12 +69,14 @@ and (orientation: landscape)  {
 
 
 main {
-    height: 100vh;
+    /*height: 100vh;*/
 }
 
 nav {
-    padding: 8px;
-    background-color: #1a2534;
+    padding: var(--d-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
 }
 
 nav a {
@@ -242,113 +247,6 @@ nav a {
     padding: 24px 0;
 }
 
-/* editor component */
-
-#editor-screen {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    justify-content: stretch;
-    gap: 4px;
-}
-
-#editor-sidebar {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100%;
-}
-
-#editor-tabs {
-    display: flex;
-    gap: 16px;
-    background-color: #1a2534;
-}
-
-#editor-tabs button {
-    padding: 8px 16px;
-    background-color: #3d506b;
-    border: none;
-    color: white;
-}
-
-#editor-output {
-    padding: 8px;
-    flex: 2;
-}
-
-#editor {
-    height: 100%;
-    font-family: "IBM Plex Mono", monospace;
-    line-height: 1.5em;
-    color: white;
-    font-size: 16px;
-
-    font-weight: 400;
-    letter-spacing: normal;
-    -moz-tab-size: 4;
-    tab-size: 4;
-
-    border-radius: 0;
-    box-shadow: none;
-}
-
-#editor-wrapper {
-    flex-grow: 1;
-    position: relative;
-}
-
-#editor-interaction {
-    width: calc(100% - 32px);
-    z-index: 100;
-    position: absolute;
-    bottom: 0;
-    padding: 16px;
-
-    display: flex;
-    justify-content: space-between;
-}
-
-/* buttons */
-
-button {
-
-    cursor: pointer;
-}
-
-/*.button {*/
-/*    color: black;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    gap: 4px;*/
-/*    background-color: #babed7;*/
-/*    text-decoration: none;*/
-/*    font-weight: 500;*/
-/*    border-radius: 100px;*/
-/*    padding: 8px 16px;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*}*/
-
-
-/*.button-sm {*/
-/*    color: white;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    gap: 4px;*/
-/*    background-color: rgba(36, 134, 189, 0.87);*/
-/*    text-decoration: none;*/
-/*    font-weight: 500;*/
-/*    border-radius: 100px;*/
-/*    border: none;*/
-/*    padding: 4px 12px;*/
-/*}*/
-
-/*.button img {*/
-/*    width: 24px;*/
-/*    height: 24px;*/
-/*}*/
-
 .circular-button {
     display: flex;
     flex-direction: column;
@@ -518,66 +416,7 @@ button {
 }
 
 
-#projects-page {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow-y: scroll;
-}
 
-#projects-page nav {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-#projects-page nav h1 {
-    margin: 0;
-    margin-bottom: -4px;
-}
-
-.project-list {
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.button.project {
-    padding: 16px;
-    border-radius: 12px;
-    color: #fffdfd;
-    background-color: #babed770;
-    /*text-align: center;*/
-    justify-content: space-between;
-}
-
-.button.project img {
-    filter: invert();
-}
-
-
-.new-project {
-    max-width: 240px;
-    gap: 8px;
-
-    width: 200px;
-    border-radius: 12px;
-
-    background-color: #79A1D5;
-
-    padding: 24px 16px;
-}
-
-.new-project h4 {
-    margin-top: 0;
-}
-
-.new-project button, .new-project input,
-#new-project button, #new-project input {
-    border: none;
-    border-radius: 999px;
-    padding: 12px;
-}
 
 #chat-screen {
     display: flex;

@@ -10,6 +10,7 @@
      {:src "/img/logo_play_learn.svg"
       :alt "App Icon mit Aufschrift: play + learn"}]]
    [:a.tile#login-area
+    {:href "/login"}
     [:img.icon
      {:src "/img/icons/happy-outline.svg"
       :alt "Happy emoji Icon"}]

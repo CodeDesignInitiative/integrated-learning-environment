@@ -1,5 +1,6 @@
-(ns ile.views.projects
+(ns ile.ui.projects.view
   (:require [ile.persistence :as persistence]
+            [ile.ui.components :as components]
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 
@@ -70,7 +71,7 @@
              :name        "project-name"}]
     [:button {:type :submit} "Новый профиль"]]
    [:form.new-project.column {:action "/projekte/neu"
-                                   :method "post"}
+                              :method "post"}
     [:h4 "Blog Vorlage"]
     [:input {:id    "__anti-forgery-token"
              :name  "__anti-forgery-token"
@@ -87,7 +88,7 @@
     [:button {:type :submit} "Neues Blog-Projekt"]]
 
    [:form.new-project.column {:action "/projekte/neu"
-                                   :method "post"}
+                              :method "post"}
     [:h4 "Raster Vorlage"]
     [:input {:id    "__anti-forgery-token"
              :name  "__anti-forgery-token"
@@ -105,13 +106,13 @@
    ])
 
 (defn my-projects-list [user-projects]
-  [:div.column.project-list
-   (map
+  [:<>
+   (->
      (fn [project]
        [:a.button.project {:href (str "/projekt?id=" (:xt/id project))}
-        (or (:user.project/name project) "Unbenannt")
-        [:img {:src "img/icons/chevron-forward.svg"}]])
-     user-projects)])
+        [:h3
+         (or (:user.project/name project) "Unbenannt")]])
+     (map user-projects))])
 
 (defn new-empty-project-form []
   [:form.new-project.column {:action "/projekte/neu"
@@ -128,23 +129,23 @@
             :name        "project-name"}]
    [:button {:type :submit} "Neues leeres Projekt"]])
 
+(def new-project-btn
+  [:a.button.new-project {:href "/projekt/neu"}
+   [:h1 "+"]
+   [:h3 "Neues Projekt"]
+   #_[:img {:src "img/icons/chevron-forward.svg"}]])
+
 (defn projects-page [request]
-  (let [user-email (or (get-in request [:session :identity]) "")
-        user-projects (or (persistence/get-user-projects (name user-email)) [])
+  (let [user-email (get-in request [:session :identity])
+        user-projects (if user-email (or (persistence/get-user-projects (name user-email)) []) [])
         templates []]
-    [:main#projects-page
+    [:<>
      [:nav
       [:a.button {:href "/"} "Zurück"]
-      [:h1 "Freier Code Editor"]]
-
-     [:div.column.flex-1
+      [:h1 "Editor"]
+      [:a.button {:href "/projekte/neu"} "Neues Projekt"]]
+     [:main#projects-page
       [:h2 "Meine Projekte"]
-      (my-projects-list user-projects)]
-     #_[:div.row.p-2.gap-2
-
-
-      #_[:div
-       [:h2 "Neues Projekt"]
-       [:div.grid-2.gap
-        (new-empty-project-form)
-        (template-selection)]]]]))
+      [:.project-list
+       new-project-btn
+       (my-projects-list user-projects)]]]))

@@ -18,7 +18,37 @@
 
 /* ---------------------------------------------------- */
 
-/* start screen */
+/* error page */
+
+#error-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    background-image: url("/img/bg/bg.svg");
+    background-position: -300px bottom;
+    background-size: cover;
+    background-repeat: repeat-x;
+
+    animation: shift 60s linear infinite;
+}
+
+#error-page > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+#error-page > div > img {
+    width: 300px;
+}
+
+/* ---------------------------------------------------- */
+
+/* start page */
 
 #start-screen {
     display: grid;
@@ -31,7 +61,6 @@
     grid-template-rows: 1fr 1fr 1fr auto;
     grid-template-columns: 2fr 3fr 4fr;
 
-    width: 100vw;
     height: calc(100vh - var(--d-3) * 2);
     gap: 1rem;
     padding: var(--d-3);
@@ -184,8 +213,8 @@ and (orientation: portrait) {
 }
 
 @media screen
-    and (min-resolution: 150dpi)
-    and (orientation: landscape) {
+and (min-resolution: 150dpi)
+and (orientation: landscape) {
 
     #start-screen > * > h2 {
         font-size: 3em;
@@ -198,4 +227,144 @@ and (orientation: portrait) {
     #start-screen > * > img.icon {
         height: 4.5em;
     }
+}
+
+
+/* ---------------------------------------------------- */
+
+/* Project Page */
+
+
+#projects-page {
+    /*margin: var(--d-3);*/
+    /*width: 100vw;*/
+    /*height: 100vh;*/
+    overflow: hidden;
+}
+
+#projects-page > h2 {
+    padding: 0 var(--d-3);
+}
+
+.project-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--d-2);
+    align-items: stretch;
+    padding: var(--d-2) var(--d-3);
+}
+
+.project-list > a.button {
+    border-radius: var(--d-2);
+    width: 200px;
+    height: 80px;
+    padding: 16px;
+}
+
+.button.new-project {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.button.project {
+    background-color: var(--mint-primary);
+    justify-content: space-between;
+}
+
+
+/* ---------------------------------------------------- */
+
+/* editor component */
+
+
+#editor-screen {
+    padding: var(--d-3);
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 2 * var(--d-3));
+    justify-content: stretch;
+    gap: var(--d-2);
+}
+
+#editor-sidebar {
+    border-radius: var(--d-2);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+}
+
+#editor-sidebar > nav {
+    padding: 0;
+    padding-bottom: var(--d-3);
+}
+
+#editor-tabs {
+    border-radius: var(--d-2) var(--d-2) 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    background-color: var(--mint-1);
+    padding: 12px 8px;
+    border: 2px solid var(--dark-blue);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+    border-bottom: none;
+}
+
+#editor-tabs button {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 8px 16px;
+    border: none;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#editor-output {
+    border-radius: var(--d-2);
+    flex: 1;
+    background-color: white;
+    border: 2px solid var(--dark-blue);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+#editor-output > iframe {
+    width: 100%;
+    border-radius: var(--d-2);
+}
+
+#editor {
+    border-radius: 0 0 var(--d-2) var(--d-2);
+    height: 100%;
+    font-family: "IBM Plex Mono", monospace;
+    line-height: 1.5em;
+    font-size: 16px;
+
+    font-weight: 400;
+    letter-spacing: normal;
+    -moz-tab-size: 4;
+    tab-size: 4;
+    border: 2px solid var(--dark-blue);
+    border-top: none;
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+#editor-wrapper {
+    flex-grow: 1;
+    position: relative;
+}
+
+#editor-interaction {
+    width: calc(100% - 32px);
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+    padding: 16px;
+
+    display: flex;
+    justify-content: space-between;
 }

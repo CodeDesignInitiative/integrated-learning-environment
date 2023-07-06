@@ -11,13 +11,12 @@
             [ile.layout :as layout]
             [ile.middleware :as middleware]
             [ring.util.http-response :refer [content-type]]
-            [ile.components.app :as app-components]
-            [ile.views.projects :as projects-page]
             [crypto.password.bcrypt :as password]
             [rum.core :as rum]
 
+            [ile.ui.projects.core :as projects-page]
+
             [ile.ui.start.core :as start-screen]
-            [ile.ui.editor.core :as editor-screen]
             [ile.ui.legal.core :as legal]))
 
 
@@ -219,16 +218,6 @@ img {
     (response/redirect (str "/projekt?id=" project-id))
     ))
 
-(defn save-project [request]
-  (let [project-id (parse-uuid (get-in request [:form-params "id"]))
-        html (get-in request [:form-params "html"])
-        css (get-in request [:form-params "css"])
-        project (persistence/find-user-project project-id)]
-    (persistence/save-project (merge project
-                                     {:user.project/html html
-                                      :user.project/css  css}))
-    (response/redirect (str "/projekt?id=" project-id)))
-  )
 
 (defn chat-screen [requset]
   (chat-screen/chat-screen html-website/start-chat-with-edna 1 "website1" 1)
@@ -250,23 +239,22 @@ img {
                     middleware/wrap-csrf
                     middleware/wrap-render-rum
                     middleware/wrap-formats]}
+   projects-page/routes
+
+
    ["/" {:get start-screen/start-screen #_app/app}]
    ["/datenschutz" {:get legal/privacy-statement
                     }]
    ["/logout" {:get logout}]
    ["/chat" {:get chat-screen}]
-   ["/wiki" {:get app-components/wiki}]
-   ["/auftraege" {:get app-components/jobs}]
-   ["/auftrag" {:get app-components/job-step}]
-   ["/projekte"
+   ["/wiki" {:get app/wiki}]
+   ["/auftraege" {:get app/jobs}]
+   ["/auftrag" {:get app/job-step}]
+   #_["/projekte"
     ["" {:get  editor-screen/editor-project-selection-screen
          #_projects-page/projects-page
          :post new-project}]
     ["/neu" {:post new-project
-             :get  redirect-new-project}]
-    ]
-   ["/projekt"
-    ["" {:get project-editor}]
-    ["/speichern" {:post save-project}]]
-   ["/editor" {:get app-components/editor}]
-   ["/settings" {:get app-components/settings}]])
+             :get  redirect-new-project}]]
+   ["/editor" {:get app/editor}]
+   ["/settings" {:get app/settings}]])
