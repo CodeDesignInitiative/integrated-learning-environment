@@ -87,7 +87,7 @@
         #_ring-defaults/site-defaults
 
         (assoc-in [:security :anti-forgery] false)
-        (assoc-in [:session :store] (ttl-memory-store (* 60 30)))
+        (assoc-in [:session :store] (ttl-memory-store (* 60 60 2)))
         ; enabling cookies for authentication cross-site requests
         (assoc-in [:session :cookie-attrs :same-site] :lax))))
 

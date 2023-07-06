@@ -16,7 +16,7 @@
 
             [ile.ui.projects.core :as projects-page]
 
-            [ile.ui.start.core :as start-screen]
+            [ile.ui.start.core :as start-page]
             [ile.ui.legal.core :as legal]))
 
 
@@ -166,13 +166,13 @@ img {
 (defn get-template-code [template]
   (condp = template
     "list-color-de" {:html list-color-de-html
-               :css list-color-css}
+                     :css  list-color-css}
     "list-color-ru" {:html list-color-ru-html
-               :css list-color-css}
+                     :css  list-color-css}
     "list-de" {:html list-de-html
-               :css list-css}
+               :css  list-css}
     "list-ru" {:html list-ru-html
-               :css list-css}
+               :css  list-css}
     "grid" {:html grid-html
             :css  grid-css}
     "blog" {:html (string/replace html-website/html-base #"\$\$placeholder\$\$"
@@ -226,23 +226,29 @@ img {
 (defn redirect-lang-de [r]
   (response/redirect "/de/login"))
 
+(defn redirect-start-lang-de [r]
+  (println "redirect")
+  (response/redirect "/de/")
+  #_[:main
+   [:a {:href "/de/"} "Deutsch"]])
+
 (def public-routes
   [""
    ["/login" {:get redirect-lang-de}]
    ["/:lang/login" {:post login
-              :get  login-screen/login-page}]
+                    :get  login-screen/login-page}]
    ["/:lang/register" {:post register
-                 :get  login-screen/login-page}]])
+                       :get  login-screen/login-page}]])
 
 (def private-routes
   ["" {:middleware [#_middleware/wrap-unauthorized-login-redirect
                     middleware/wrap-csrf
                     middleware/wrap-render-rum
                     middleware/wrap-formats]}
+
+   ["/" {:get redirect-start-lang-de}]
+   start-page/routes
    projects-page/routes
-
-
-   ["/" {:get start-screen/start-screen #_app/app}]
    ["/datenschutz" {:get legal/privacy-statement
                     }]
    ["/logout" {:get logout}]
@@ -251,10 +257,10 @@ img {
    ["/auftraege" {:get app/jobs}]
    ["/auftrag" {:get app/job-step}]
    #_["/projekte"
-    ["" {:get  editor-screen/editor-project-selection-screen
-         #_projects-page/projects-page
-         :post new-project}]
-    ["/neu" {:post new-project
-             :get  redirect-new-project}]]
+      ["" {:get  editor-screen/editor-project-selection-screen
+           #_projects-page/projects-page
+           :post new-project}]
+      ["/neu" {:post new-project
+               :get  redirect-new-project}]]
    ["/editor" {:get app/editor}]
    ["/settings" {:get app/settings}]])

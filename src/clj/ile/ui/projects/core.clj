@@ -3,24 +3,28 @@
     [ile.ui.editor.core :as editor]
     [ile.persistence :as persistence]
     [ile.ui.projects.view :as view]
+    [ile.util :as util]
     [ring.util.response :as response]))
 
-(defn- project-page [request]
-  (view/projects-page request))
+(defn- projects-page [request]
+  (let [lang (util/lang request)
+        user-email (get-in request [:session :identity])
+        user-projects (if user-email (or (persistence/get-user-projects (name user-email)) []) [])]
+    (view/projects-page lang user-projects)))
 
-(defn- project-page-new-project [request]
+(defn- projects-page-new-project [request]
   #_(let [template (get-in request [:form-params "template"])
-        project-name (get-in request [:form-params "project-name"])
-        user-email (-> (get-in request [:session :identity]) name)
-        template-code (get-template-code template)
-        project-id (random-uuid)]
-    (do
-      (persistence/create-user-project (merge {:xt/id project-id}
-                                              #:user.project{:name  project-name
-                                                             :owner user-email
-                                                             :css   (if template (:css template-code) "")
-                                                             :html  (if template (:html template-code) "")}))
-      (response/redirect (str "/projekt?id=" project-id)))))
+          project-name (get-in request [:form-params "project-name"])
+          user-email (-> (get-in request [:session :identity]) name)
+          template-code (get-template-code template)
+          project-id (random-uuid)]
+      (do
+        (persistence/create-user-project (merge {:xt/id project-id}
+                                                #:user.project{:name  project-name
+                                                               :owner user-email
+                                                               :css   (if template (:css template-code) "")
+                                                               :html  (if template (:html template-code) "")}))
+        (response/redirect (str "/projekt?id=" project-id)))))
 
 
 (defn project-editor [request]
@@ -40,13 +44,12 @@
     (persistence/save-project (merge project
                                      {:user.project/html html
                                       :user.project/css  css}))
-    (response/redirect (str "/projekt?id=" project-id)))
-  )
+    (response/redirect (str "/projekt?id=" project-id))))
 
 (def routes
-  [""
+  ["/:lang"
    ["/projekt"
     ["" {:get project-editor}]
     ["/speichern" {:post save-project}]]
-   ["/projekte" {:get project-page
-                :post  project-page-new-project}]])
+   ["/projekte" {:get  projects-page
+                 :post projects-page-new-project}]])

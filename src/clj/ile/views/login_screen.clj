@@ -1,7 +1,8 @@
 (ns ile.views.login-screen
   (:require
     [ile.layout :as layout]
-    [ile.dictonary.translations :refer [tr]]))
+    [ile.dictonary.translations :refer [tr]]
+    [ile.util :as util]))
 
 
 (defn signin-form [lang]
@@ -12,10 +13,9 @@
     (tr lang :login/email)]
    [:input#email
     {:name         "email"
-     :type         "email"
      :required     true
      :autocomplete "email"
-     :placeholder  "name@example.com"}]
+     :placeholder  "username or name@example.com"}]
    [:label {:for "password"}
     (tr lang :login/password)]
    [:input
@@ -66,7 +66,7 @@
     ]])
 
 (defn login-page [request]
-  (let [lang (-> (get-in request [:path-params :lang]) keyword)]
+  (let [lang (util/lang request)]
     (layout/render-page
       [:div#login-page
        [:div
