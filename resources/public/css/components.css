@@ -302,8 +302,7 @@ and (orientation: landscape) {
 }
 
 #editor-sidebar > nav {
-    padding: 0;
-    padding-bottom: var(--d-3);
+    padding: 0 0 var(--d-3);
 }
 
 #editor-tabs {
@@ -371,4 +370,37 @@ and (orientation: landscape) {
 
     display: flex;
     justify-content: space-between;
+}
+
+
+
+/* ---------------------------------------------------- */
+
+/* login & register pages */
+
+
+#login-page {
+    display: flex;
+    flex: 1;
+    gap: var(--d-3);
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: calc(var(--d-3) * 3);
+}
+
+#login-page > aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--d-2);
+}
+
+#register-page {
+    padding: var(--d-3);
+    display: flex;
+    gap: var(--d-3);
+    align-items: center;
+}
+
+#register-page > * {
+    flex: 1;
 }

@@ -6,18 +6,15 @@
             [ile.courses.html-website :as html-website]
             [ile.persistence :as persistence]
             [ile.views.chat-screen :as chat-screen]
-            [ile.views.login-screen :as login-screen]
             [ring.util.response :as response]
             [ile.layout :as layout]
             [ile.middleware :as middleware]
-            [ring.util.http-response :refer [content-type]]
-            [crypto.password.bcrypt :as password]
-            [rum.core :as rum]
 
             [ile.ui.projects.core :as projects-page]
+            [ile.ui.auth.core :as auth-page]
 
             [ile.ui.start.core :as start-page]
-            [ile.ui.legal.core :as legal]))
+            [ile.ui.legal.core :as legal-page]))
 
 
 
@@ -31,61 +28,6 @@
       [:h1 "Hello " (get-in request [:session :identity])])))
 
 
-(defn login [request]
-  (let [email (get-in request [:form-params "email"])
-        password (get-in request [:form-params "password"])
-        user (persistence/find-user email)
-        session (:session request)]
-    (if user
-      (if (password/check password (:user/password user))
-        (let [next-url (get-in request [:query-params "next"] "/")
-              updated-session (assoc session :identity (keyword email))]
-          (println "\n\nPassword matched\n\n")
-          (-> (response/redirect next-url)
-              (assoc :session updated-session)))
-        (do
-          (println "\nWrong password\n\n")
-          (response/redirect "/login")))
-
-      (do
-        (println "\nUser does not exist\n\n")
-        (response/redirect "/login")))))
-
-(defn register [request]
-  (let [email (get-in request [:form-params "email"])
-        password (get-in request [:form-params "password"])
-        username (get-in request [:form-params "username"])
-        user (persistence/find-user email)
-        session (:session request)]
-    (println user)
-    (if user
-      (do
-        (println "\nUser already exists\n\n")
-        (response/redirect "/login"))
-      (let [user (persistence/create-user {:xt/id         email
-                                           :user/password (password/encrypt password)
-                                           :user/name     username})
-            updated-session (assoc session :identity (keyword email))]
-        (-> (response/redirect "/")
-            (assoc :session updated-session))))))
-
-(defn logout
-  [request]
-  (content-type
-    {:status  200
-     :session nil
-     :headers {"Content-Type" "text/html; charset=utf-8"}
-     :body    (rum/render-static-markup
-                [:html.full-height
-                 [:head
-                  [:link {:rel  :stylesheet
-                          :href "/css/base.css?v=1"}]]
-                 [:body.row.full-height
-                  [:h1 "Logged Out"]]])}
-
-    "text/html; charset=utf-8")
-  #_(-> (response/redirect "/login")
-        (assoc :session {})))
 
 (def grid-html "\n<h1>Meine Website</h1>\n\n<main>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n        <a href=\"https://code-editor.digital\">code+design LMS</a>\n    </article>\n    <article class=\"highlight\">\n        <h2>CSS Tips und Tricks</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n        <a href=\"https://css-tricks.com/\">css-tricks.com</a>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article class=\"highlight\">\n        <h2>CSS Tips und Tricks</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n    <article>\n        <h2>Neue HTML Kurse</h2>\n        <p>Lorem ipsum dolet sunt.</p>\n    </article>\n</main>")
 (def grid-css "body {\n    background-color: #f5f5f5;\n    font-family: Helvetica, sans-serif;\n}\n\nmain {\n    /* Zeige alles, was im Main-Tag ist in einem Raster an */\n    display: grid;\n    /* zwei Spalten */\n    grid-template-columns: 1fr 1fr;\n    /* 12px Abstand zwischen Spalten & Zeilen */\n    gap: 12px;\n}\n\narticle {\n    border: 1px solid #ddd;\n    border-radius: 12px;\n    padding: 0 12px;\n    min-width: 260px;\n    min-height: 140px;\n}\n\na {\n    color: #42d5ac;\n    text-decoration: none;\n    font-weight: bold;\n    transition-property: color;\n    transition-duration: .3s;\n    transition-timing-function: ease-in-out;\n}\n\na:hover {\n    text-decoration: underline;\n    color: #4c42d5;\n    transition-property: color;\n    transition-duration: .3s;\n    transition-timing-function: ease-in-out;\n}\n\n.highlight {\n    background-color: #555;\n    color: white\n}")
@@ -223,8 +165,6 @@ img {
   (chat-screen/chat-screen html-website/start-chat-with-edna 1 "website1" 1)
   )
 
-(defn redirect-lang-de [r]
-  (response/redirect "/de/login"))
 
 (defn redirect-start-lang-de [r]
   (println "redirect")
@@ -233,12 +173,7 @@ img {
    [:a {:href "/de/"} "Deutsch"]])
 
 (def public-routes
-  [""
-   ["/login" {:get redirect-lang-de}]
-   ["/:lang/login" {:post login
-                    :get  login-screen/login-page}]
-   ["/:lang/register" {:post register
-                       :get  login-screen/login-page}]])
+  auth-page/routes)
 
 (def private-routes
   ["" {:middleware [#_middleware/wrap-unauthorized-login-redirect
@@ -249,9 +184,8 @@ img {
    ["/" {:get redirect-start-lang-de}]
    start-page/routes
    projects-page/routes
-   ["/datenschutz" {:get legal/privacy-statement
+   ["/datenschutz" {:get legal-page/privacy-statement
                     }]
-   ["/logout" {:get logout}]
    ["/chat" {:get chat-screen}]
    ["/wiki" {:get app/wiki}]
    ["/auftraege" {:get app/jobs}]

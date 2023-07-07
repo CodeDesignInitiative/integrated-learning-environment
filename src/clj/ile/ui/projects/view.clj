@@ -139,11 +139,13 @@
   [lang projects]
   [:<>
    [:nav
-    [:a.button {:href (tr/url lang "/")} "Zurück"]
+    [:a.button {:href (tr/url lang "/")} "← " "Zurück"]
     [:h1 "Editor"]
-    [:a.button {:href (tr/url lang "/projekte/neu")} "Neues Projekt"]]
+    [:a.button {:href (tr/url lang "/projekte/neu")}
+     "Neues Projekt"
+     [:img {:src "/img/icons/rocket.svg"}]]]
    [:main#projects-page
     [:h2 "Meine Projekte"]
     [:.project-list
-     new-project-btn
+     #_new-project-btn
      (my-projects-list projects lang)]]])

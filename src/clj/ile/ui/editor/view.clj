@@ -36,7 +36,7 @@
 
 (defn nav-bar [lang next]
   [:nav
-   [:a.button {:href (tr/url lang "/projekte")} "Zurück"]
+   [:a.button {:href (tr/url lang "/projekte")} "← " "Zurück"]
    (when-not next
      [:form {:action "/projekt/speichern"
              :id     "save-form"
@@ -58,7 +58,8 @@
                :type  :hidden
                :value ""}]
       [:button
-       {:onclick "save()"} "Speichern"]])])
+       {:onclick "save()"}
+       [:img {:src "/img/icons/save-outline.svg"}] "Speichern"]])])
 
 (defn editor-page [lang code next]
   [:main#editor-screen

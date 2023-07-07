@@ -14,8 +14,7 @@
     [:img.icon
      {:src "/img/icons/happy-outline.svg"
       :alt "Happy emoji Icon"}]
-    [:h2 "Anmelden"]
-    ]
+    [:h2 (tr/tr lang :login/login)]]
    [:a.tile#story-area
     [:img#story-peep
      {:src "/img/peeps/story_peep.svg"
@@ -23,13 +22,13 @@
     [:img.icon
      {:src "/img/icons/map-outline.svg"
       :alt "Karten Icon"}]
-    [:h2 "Story"]]
+    [:h2 (tr/tr lang :start/story-tile)]]
    [:a.tile#editor-area
     {:href (tr/url lang "/projekte")}
     [:img.icon
      {:src "/img/icons/code.svg"
       :alt "eckige Klammern, die einen Schrägstrich umschließen"}]
-    [:h2 "Editor"]
+    [:h2 (tr/tr lang :start/editor-tile)]
     [:img#peep-laptop
      {:src "/img/peeps/peep_laptop.svg"
       :alt "Person holding a laptop."}]]
@@ -38,11 +37,10 @@
     [:img.icon
      {:src "/img/icons/bookmark.svg"
       :alt "Lesezeichen Icon"}]
-    [:h2 "Wiki"]]
+    [:h2 (tr/tr lang :start/wiki-tile)]]
    [:div#start-button-row
     [:a.button
-     [:p "Sprache"]]
+     [:img {:src "/img/icons/language.svg"}]
+     (tr/tr lang :start/language-btn)]
     [:a.button
-     [:p "Hilfe ?!"]]]
-   ]
-  )
+     (tr/tr lang :start/help-btn)]]])
