@@ -177,7 +177,7 @@ img {
   auth-page/routes)
 
 (def private-routes
-  ["" {:middleware [#_middleware/wrap-unauthorized-login-redirect
+  ["" {:middleware [middleware/wrap-unauthorized-login-redirect
                     middleware/wrap-csrf
                     middleware/wrap-render-rum
                     middleware/wrap-formats]}
