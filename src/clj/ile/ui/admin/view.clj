@@ -11,9 +11,12 @@
    name])
 
 (defn templates-page [templates]
-  [:main
-   [:h1 "All templates"]
-   (map template-row-item templates)])
+  [:<>
+   [:nav
+    [:a.button {:href "/admin"} "Zurück"]]
+   [:main#templates-page
+    [:h1 "All templates"]
+    (map template-row-item templates)]])
 
 (defn template-edit-page
   [{:template/keys [name code visible? name-translations] :as template
@@ -49,7 +52,10 @@
 
 (defn admin-page []
 
-  [:main
-   [:a.button {:href "/admin/users"} "Users"]
-   [:a.button {:href "/admin/templates"} "Templates"]
-   [:a.button {:href "/admin/story"} "Story"]])
+  [:<>
+   [:nav
+    [:a.button {:href "/de/"} "Zu Startseite"]]
+   [:main#admin-page
+    [:a.button {:href "/admin/users"} "Users"]
+    [:a.button {:href "/admin/templates"} "Templates"]
+    [:a.button {:href "/admin/story"} "Story"]]])

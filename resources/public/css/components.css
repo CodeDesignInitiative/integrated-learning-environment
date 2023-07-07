@@ -409,10 +409,24 @@ and (orientation: landscape) {
 
 /* admin pages */
 
+#admin-page {
+    padding: var(--d-3);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
 
 #template-editor {
     padding: var(--d-3);
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+main#templates-page {
+    padding: var(--d-3);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
