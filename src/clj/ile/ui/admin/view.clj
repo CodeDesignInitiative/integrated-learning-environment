@@ -13,7 +13,8 @@
 (defn templates-page [templates]
   [:<>
    [:nav
-    [:a.button {:href "/admin"} "Zurück"]]
+    [:a.button {:href "/admin"} "Zurück"]
+    [:a.button {:href "/admin/template/new"} "Neues Template"]]
    [:main#templates-page
     [:h1 "All templates"]
     (map template-row-item templates)]])
@@ -25,13 +26,17 @@
    [:nav
     [:a.button {:href "/admin/templates"} "Zurück / Abrechen"]]
    [:main#template-editor
-    [:h1 (str "Template \"" name "\" bearbeiten")]
+    [:h1
+     (if (nil? template)
+       "Neues Template anlegen"
+       (str "Template \"" name "\" bearbeiten"))]
     [:form.form-tile
-     {:action (str "/admin/template/" id)
+     {:action (str "/admin/template/" (or id "new"))
       :method :post}
      (util/hidden-anti-forgery-field)
      [:label "Name"]
      [:input {:value name
+              :required true
               :name  "template_name"}]
      [:label "Sichtbar?"]
      [:input {:type    :checkbox

@@ -10,6 +10,39 @@ body {
     justify-content: stretch;
 }
 
+body {
+    animation: fadeInAnimation ease-out .5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+main {
+    animation: slideInAnimation ease-out .5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(5%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
 .tile {
     background-size: 100%;
     border-radius: 32px;

@@ -16,6 +16,7 @@
 
 (defn create-template! [template]
   (let [template' (p/with-xt-id template)]
+    (println template')
     (if (spec/valid? :ile/template template')
       (p/put-in-db-and-wait template')
       (spec/explain :ile/template template'))))
