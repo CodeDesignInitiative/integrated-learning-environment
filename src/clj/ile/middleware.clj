@@ -98,7 +98,7 @@
       (handler request)
       (->
         (handler request)
-        (response/header "Content-Security-Policy" "default-src https:'" #_"default-src https:; img-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'")
+        #_(response/header "Content-Security-Policy" "default-src https:'" #_"default-src https:; img-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'")
         (response/header "header-Strict-Transport-Security" "max-age=63072000")
         (response/header "X-XSS-Protection" "1; mode=block")))))
 
