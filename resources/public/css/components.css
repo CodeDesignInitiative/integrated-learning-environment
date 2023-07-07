@@ -376,6 +376,46 @@ and (orientation: landscape) {
 
 /* ---------------------------------------------------- */
 
+/* project pages */
+
+#new-project-page {
+    padding: var(--d-3);
+}
+
+#new-project-form {
+    display: flex;
+    gap: var(--d-3);
+    align-items: start;
+}
+
+#new-project-form > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--d-2);
+}
+
+#new-project-form > div > div {
+    background-color: var(--mint-primary);
+    border-radius: 12px;
+    height: 120px;
+    width: 200px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#new-project-form > div > #empty-project-option {
+    background-color: white;
+}
+
+#new-project-form > div > div > input {
+
+}
+
+/* ---------------------------------------------------- */
+
 /* login & register pages */
 
 

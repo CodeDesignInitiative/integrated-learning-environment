@@ -4,7 +4,7 @@
             [clojure.string :as string]
             [ile.components.app :as app]
             [ile.courses.html-website :as html-website]
-            [ile.persistence :as persistence]
+            [ile.projects.core :as projects]
             [ile.views.chat-screen :as chat-screen]
             [ring.util.response :as response]
             [ile.layout :as layout]
@@ -129,7 +129,7 @@ img {
         template-code (get-template-code template)
         project-id (random-uuid)]
     (do
-      (persistence/create-user-project (merge {:xt/id project-id}
+      (projects/create-user-project (merge {:xt/id project-id}
                                               #:user.project{:name  project-name
                                                              :owner user-email
                                                              :css   (if template (:css template-code) "")
@@ -139,7 +139,7 @@ img {
 
 (defn project-editor [request]
   (let [project-id (get-in request [:query-params "id"])
-        project (persistence/find-user-project (parse-uuid project-id))]
+        project (projects/find-user-project (parse-uuid project-id))]
     (ile.views.editor-screen/editor-screen
       {:html {:code/line (:user.project/html project)}
        :css  {:code/base (:user.project/css project)}}
@@ -152,7 +152,7 @@ img {
         user-email (-> (get-in request [:session :identity]) name)
         project-id (random-uuid)]
 
-    (persistence/create-user-project (merge {:xt/id project-id}
+    (projects/create-user-project (merge {:xt/id project-id}
                                             #:user.project{:name  project-name
                                                            :owner user-email
                                                            :css   (or (:css template) "")

@@ -161,6 +161,22 @@ textarea {
     height: 10rem;
 }
 
+select {
+    background-color: white;
+    color: var(--dark-blue);
+    border-radius: 999px;
+    font-size: 1.2rem;
+
+    width: 300px;
+    border: 2px solid var(--dark-blue);
+    padding: 8px 12px;
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+option {
+    background-color: white;
+}
+
 input {
     background-color: white;
     color: var(--dark-blue);
@@ -173,7 +189,7 @@ input:focus {
     background-color: var(--lilac-4);
 }
 
-form > input {
+form > input, .form-tile > input {
     width: 300px;
     border: 2px solid var(--dark-blue);
     padding: 8px 12px;

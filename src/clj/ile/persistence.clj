@@ -52,6 +52,10 @@
 (defn put-in-db-and-wait [& documents]
   (xt/await-tx xtdb/node (apply put-in-db documents)))
 
+(defn remove-from-db
+  [& documents]
+  (let [puts (vec (map (fn [v] [::xt/delete v]) documents))]
+    (xt/submit-tx xtdb/node puts)))
 
 (defn with-xt-id
   "Attaches the user-id to a document"
@@ -74,31 +78,3 @@
                 :where [[?user :xt/id email]]
                 :in    [[email]]}
               email))
-
-(defn create-user-project
-  [user-project]
-  (put-in-db-and-wait user-project))
-
-(defn get-user-projects [user-email]
-  (query-db '{:find [(pull ?user-project [* :ile/user.project])]
-              :where [[?user-project :user.project/owner user-email]]
-              :in [[user-email]]}
-            user-email))
-
-(defn find-user-project [project-id]
-  (find-first '{:find [(pull ?user-project [* :ile/user.project])]
-              :where [[?user-project :xt/id project-id]]
-              :in [[project-id]]}
-              project-id))
-
-(comment
-  (get-user-projects "paul.freelancing@posteo.de")
-  (find-user "paul.freelancing@posteo.de")
-  (find-user "asdf@movie.de")
-  (find-user-project #uuid"ba24ebdc-00af-41df-ae4e-b1406d442926")
-  (password/check "12345678" "$2a$11$ABaDeXe5vCcHDoBInVJeu.jAPA6qc81TSOKyx87VDrbsUaqXPzmJe")
-  (put-in-db-and-wait {:user/password (password/encrypt "12345678"), :user/name "Paul", :xt/id {:user/email "paul.freelancing@posteo.de"}})
-  )
-
-(defn save-project [project]
-  (put-in-db-and-wait project))

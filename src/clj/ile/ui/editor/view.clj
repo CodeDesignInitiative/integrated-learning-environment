@@ -15,13 +15,13 @@
 (defn hidden-code [{:keys [html css]}]
   [:div#hidden-code
    [:#html-base
-    (:code/base html)]
+    html]
    [:#html-snippet
-    (:code/snippet html)]
+    html]
    [:#html-answer
     (:code/answer html)]
    [:#css-base
-    (:code/base css)]])
+    css]])
 
 (defn interaction-buttons [next]
   [:div#editor-interaction
@@ -34,42 +34,41 @@
       [:img {:src   "/img/icons/checkmark.svg"
              :title "Fertig"}]])])
 
-(defn nav-bar [lang next]
+(defn nav-bar [lang project-id]
+  (println project-id)
   [:nav
    [:a.button {:href (tr/url lang "/projekte")} "← " "Zurück"]
-   (when-not next
-     [:form {:action "/projekt/speichern"
-             :id     "save-form"
-             :method "post"}
-      [:input {:id    "__anti-forgery-token"
-               :name  "__anti-forgery-token"
-               :type  :hidden
-               :value *anti-forgery-token*}]
-      [:input {:name  "html"
-               :id    "html-input"
-               :type  :hidden
-               :value ""}]
-      [:input {:name  "css"
-               :id    "css-input"
-               :type  :hidden
-               :value ""}]
-      [:input {:name  "id"
-               :id    "id"
-               :type  :hidden
-               :value ""}]
-      [:button
-       {:onclick "save()"}
-       [:img {:src "/img/icons/save-outline.svg"}] "Speichern"]])])
+   [:form {:action (tr/url lang "/projekt/speichern")
+           :id     "save-form"
+           :method "post"}
+    [:input {:id    "__anti-forgery-token"
+             :name  "__anti-forgery-token"
+             :type  :hidden
+             :value *anti-forgery-token*}]
+    [:input {:name  "html"
+             :id    "html-input"
+             :type  :hidden
+             :value ""}]
+    [:input {:name  "css"
+             :id    "css-input"
+             :type  :hidden
+             :value ""}]
+    [:input {:name  "id"
+             :id    "id"
+             :type  :hidden
+             :value (str project-id)}]
+    [:button
+     {:onclick "save()"}
+     [:img {:src "/img/icons/save-outline.svg"}] "Speichern"]]])
 
-(defn editor-page [lang code next]
+(defn editor-page [lang code project-id]
   [:main#editor-screen
    [:aside#editor-sidebar
-    (nav-bar lang next)
+    (nav-bar lang project-id)
     (editor-tabs)
     [:div#editor-wrapper
      [:div#editor.w-full.h-full.language-html {:id "editor"}
-      (:code/line (:html code))]
-     #_(interaction-buttons next)]
+      (:html code)]]
     (hidden-code code)]
    [:div#editor-output
     [:iframe#output]]
@@ -78,4 +77,4 @@
    [:script {:src "/js/src-min-noconflict/ace.js"
              :type "text/javascript"
              :charset "utf-9"}]
-   [:script {:src "/js/editor.js"}]])
+   [:script {:src "/js/editor.js?v=1"}]])

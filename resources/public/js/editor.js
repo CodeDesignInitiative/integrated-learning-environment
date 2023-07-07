@@ -155,7 +155,7 @@ const save = () => {
     html_input.value = get_html_value();
     css_input.value = (current_language === "css") ? editor.getValue() : css_stored
 
-    id_input.value = params.id
+    // id_input.value = params.id
 
     save_form.submit()
 

@@ -12,7 +12,7 @@
     (view/templates-page templates)))
 
 (defn template-edit-page [request]
-  (let [template-id (util/get-path-param request :id)
+  (let [template-id (util/get-path-param-as-uuid request :id)
         template (templates/find-template template-id)]
     (view/template-edit-page template)))
 
@@ -25,7 +25,7 @@
                         :js   js_code}})
 
 (defn template-post-page [request]
-  (let [template-id (util/get-path-param request :id)
+  (let [template-id (util/get-path-param-as-uuid request :id)
         template (:form-params request)
         template' (map-template-form template)]
     (if-not (nil? template-id)

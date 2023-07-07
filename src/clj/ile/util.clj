@@ -15,7 +15,7 @@
 (defn send-email [sys recipent code]
   (hostinger-smtp recipent code))
 
-(defn get-path-param [request param]
+(defn get-path-param-as-uuid [request param]
   (-> (get-in request [:path-params param]) parse-uuid))
 
 (defn hidden-anti-forgery-field []
