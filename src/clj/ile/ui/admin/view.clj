@@ -61,6 +61,7 @@
    [:nav
     [:a.button {:href "/de/"} "Zu Startseite"]]
    [:main#admin-page
+    [:h1 "Admin Area"]
     [:a.button {:href "/admin/users"} "Users"]
     [:a.button {:href "/admin/templates"} "Templates"]
     [:a.button {:href "/admin/story"} "Story"]]])
