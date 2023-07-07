@@ -52,6 +52,17 @@
 (defn put-in-db-and-wait [& documents]
   (xt/await-tx xtdb/node (apply put-in-db documents)))
 
+
+(defn with-xt-id
+  "Attaches the user-id to a document"
+  [document]
+  (merge document {:xt/id (random-uuid)}))
+
+;; ----------------------------------------------- ;;
+
+;; refactor below to own persistence NS
+;;
+
 (defn create-user
   [user]
   (put-in-db-and-wait user)

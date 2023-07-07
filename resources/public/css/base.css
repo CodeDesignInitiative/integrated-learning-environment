@@ -105,12 +105,27 @@ nav a {
     border: 2px solid var(--dark-blue);
     padding:var(--d-3) var(--d-2);
     box-shadow: 4px 4px 0 var(--dark-blue);
-    max-width: 500px;
+    /*max-width: 500px;*/
 }
 
 label {
     font-size: 1.2rem;
     font-weight: 500;
+}
+
+textarea {
+    background-color: white;
+    color: var(--dark-blue);
+    border-radius: var(--d-2);
+    font-size: 1.2rem;
+
+    border: 2px solid var(--dark-blue);
+    padding: 8px 12px;
+    box-shadow: 4px 4px 0 var(--dark-blue);
+    margin-bottom: var(--d-2);
+
+    width: 500px;
+    height: 10rem;
 }
 
 input {

@@ -2,7 +2,7 @@
 /* legal */
 
 #legal {
-    position: absolute;
+    position: fixed;
     bottom: 4px;
     left: 4px;
     display: flex;
@@ -403,4 +403,16 @@ and (orientation: landscape) {
 
 #register-page > * {
     flex: 1;
+}
+
+/* ---------------------------------------------------- */
+
+/* admin pages */
+
+
+#template-editor {
+    padding: var(--d-3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
