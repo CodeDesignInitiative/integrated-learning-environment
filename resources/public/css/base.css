@@ -81,6 +81,18 @@ button, .button {
     align-items: center;
 }
 
+.button.spread, button.spread {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button.stacked, button.stacked {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
 button:hover, .button:hover {
     transform: translate(4px, 4px);
     box-shadow: 0 0 0 var(--dark-blue);

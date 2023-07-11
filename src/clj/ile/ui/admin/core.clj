@@ -1,7 +1,10 @@
 (ns ile.ui.admin.core
   (:require
+    [clojure.string :as string]
+    [ile.dictonary.translations :as tr]
     [ile.templates.core :as templates]
     [ile.ui.admin.view :as view]
+    [ile.story.core :as story]
     [ile.util :as util]))
 
 (defn users-page [request]
@@ -34,10 +37,74 @@
       (templates/create-template! template'))
     (template-edit-page request)))
 
-(defn story-editor-page [request]
-  (view/story-page))
+(defn stories-page [_request]
+  (let [missions (story/find-all-missions)]
+    (view/story-page (group-by :mission/world missions))))
 
-(defn admin-page [request]
+(defn mission-editor-page [request]
+  (let [mission-id (util/get-path-param-as-uuid request :id)
+        mission (story/find-mission mission-id)]
+    (view/edit-mission-page mission)))
+
+(defn vector-from-string-lines [input]
+  (if-not (empty? input)
+    (->> input
+         string/split-lines
+         (remove empty?)
+         (map string/trim)
+         vec)
+    []))
+
+(defn map-mission-form
+  [{:strs [mission_name _mission_world mission_step
+           mission_story-before mission_story-after
+           mission-content_easy mission-content_easy-wrong
+           mission-content_medium mission-content_medium-wrong
+           mission-content_hard mission-content_hard-wrong
+           mission-content_hidden-html-easy mission-content_hidden-css-easy
+           mission-content_hidden-html-medium mission-content_hidden-css-medium
+           mission-content_hidden-html-hard mission-content_hidden-css-hard] :as params}]
+  #:mission{:name         mission_name
+            :world        :html-css                         ; (keyword mission_world)
+            :step         (Integer/parseInt mission_step)
+            :story-before (vector-from-string-lines mission_story-after)
+            :story-after  (vector-from-string-lines mission_story-before)
+            :content      [#:mission.content{:difficulty   :easy
+                                             :mode         :html
+                                             :hidden-html  (or mission-content_hidden-html-easy "")
+                                             :hidden-css   (or mission-content_hidden-css-easy "")
+                                             :result       (vector-from-string-lines
+                                                             mission-content_easy)
+                                             :wrong-blocks (vector-from-string-lines
+                                                             mission-content_easy-wrong)}
+                           #:mission.content{:difficulty   :medium
+                                             :mode         :html
+                                             :hidden-html  (or mission-content_hidden-html-medium "")
+                                             :hidden-css   (or mission-content_hidden-css-medium "")
+                                             :result       (vector-from-string-lines
+                                                             mission-content_medium)
+                                             :wrong-blocks (vector-from-string-lines
+                                                             mission-content_medium-wrong)}
+                           #:mission.content{:difficulty   :hard
+                                             :mode         :html
+                                             :hidden-html  (or mission-content_hidden-html-hard "")
+                                             :hidden-css   (or mission-content_hidden-css-hard "")
+                                             :result       (vector-from-string-lines
+                                                             mission-content_hard)
+                                             :wrong-blocks (vector-from-string-lines
+                                                             mission-content_hard-wrong)}]})
+
+(defn mission-post-page [request]
+  (let [mission-id (util/get-path-param-as-uuid request :id)
+        mission (:form-params request)
+        mission' (map-mission-form mission)]
+    (if-not (nil? mission-id)
+      (story/update-mission
+        (merge {:xt/id mission-id} mission'))
+      (story/create-mission mission'))
+    (mission-editor-page request)))
+
+(defn admin-page [_request]
   (view/admin-page))
 
 (def routes
@@ -47,4 +114,6 @@
    ["/templates" {:get templates-page}]
    ["/template/:id" {:get  template-edit-page
                      :post template-post-page}]
-   ["/story" {:get story-editor-page}]])
+   ["/stories" {:get stories-page}]
+   ["/story/:id" {:get  mission-editor-page
+                  :post mission-post-page}]])

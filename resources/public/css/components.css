@@ -470,3 +470,11 @@ main#templates-page {
     flex-direction: column;
     gap: 16px;
 }
+
+#story-page {
+    padding: var(--d-3);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}

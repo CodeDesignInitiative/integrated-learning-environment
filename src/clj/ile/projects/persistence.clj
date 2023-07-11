@@ -24,7 +24,7 @@
   (p/query-db '{:find  [(pull ?user-project [* :ile/user.project])]
                 :where [[?user-project :user.project/owner any]]
                 })
-  #_(->>
+  #_  (->>
     (p/query-db '{:find  [(pull ?user-project [* :ile/user.project])]
                   :where [[?user-project :user.project/owner any?]]})
     (map #(:xt/id %))
