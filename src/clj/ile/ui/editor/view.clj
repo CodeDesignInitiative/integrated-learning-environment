@@ -88,8 +88,8 @@
 
 (defn block-editor [lang {:mission/keys [world step story-before
                                          story-after content] :as mission}]
-  (let [{:keys [hidden-html hidden-css
-                result mode wrong-blocks]} (first
+  (let [{:mission.content/keys [hidden-html hidden-css
+                result mode wrong-blocks] :as mission-content} (first
                                              (filter
                                                #(= (:mission.content/difficulty %) :easy)
                                                content))]
@@ -103,19 +103,19 @@
        [:div#editor.w-full.h-full.language-html
         [:div#target
          [:code.placeholder "?"]]
-        [:div#selection
-         [:code.tile "<h1>"]
-         [:code.tile "Hallo Welt"]
-         [:code.tile "</h1>"]]
+        [:div#selection]
         ]]
       [:button {:on-click "evaluate_code()"} "Prüfen"]
       (hidden-block-code hidden-html hidden-css result wrong-blocks)]
      [:div#editor-output
       [:iframe#output]]
 
+     [:div#tsparticles]
      ; add js editor scripts
      [:script {:src     "/js/Sortable.js"
                :type    "text/javascript"
                :charset "utf-9"}]
-     [:script {:src "/js/block-editor.js?v=1"}]])
+     [:script {:src     "/js/tsparticles.bundle.min.js"
+               :type    "text/javascript"}]
+     [:script {:src "/js/block-editor.js?v=2"}]])
   )

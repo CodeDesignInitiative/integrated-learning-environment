@@ -16,3 +16,5 @@
   (persistence/find-mission mission-id))
 
 (def routes handler/routes)
+
+(def api-routes handler/api-routes)

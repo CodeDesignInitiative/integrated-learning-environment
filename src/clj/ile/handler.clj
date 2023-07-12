@@ -21,7 +21,8 @@
   (ring/ring-handler
     (ring/router
       [routes/public-routes
-       routes/private-routes])
+       routes/private-routes
+       routes/api-routes])
     (ring/create-default-handler
       {:not-found
        (constantly (error-page {:status 404, :title "Oh nein. Diese Seite existiert nicht. 😱"}))

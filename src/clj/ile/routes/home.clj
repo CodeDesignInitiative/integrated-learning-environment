@@ -2,6 +2,8 @@
   (:require [buddy.auth :refer [authenticated?]]
             [clojure.pprint :refer [pprint]]
             [clojure.string :as string]
+            [muuntaja.middleware :as muuntaja-middleware]
+
             [ile.components.app :as app]
             [ile.courses.html-website :as html-website]
             [ile.projects.core :as projects]
@@ -202,3 +204,7 @@ img {
                :get  redirect-new-project}]]
    ["/editor" {:get app/editor}]
    ["/settings" {:get app/settings}]])
+
+(def api-routes
+  ["/api" {:middleware [muuntaja-middleware/wrap-format-response]}
+   story-page/api-routes])
