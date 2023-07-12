@@ -145,8 +145,7 @@
      ;mission-content_hidden-html-hard mission-content_hidden-css-hard
      [:label "Verstecktes HTML"]
      [:p "Valides HTML für innerhalb des Body Tags.\n
-     $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist.\n
-    "]
+     $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
      [:textarea {:value (get
                           (content-for-difficulty content :easy)
                           :mission.content/hidden-html)

@@ -416,6 +416,79 @@ and (orientation: landscape) {
 
 /* ---------------------------------------------------- */
 
+/* story, world & mission pages */
+
+#world-page {
+    padding: var(--d-3);
+    display: flex;
+    justify-content: space-evenly;
+    gap: var(--d-2);
+}
+
+#world-page .tile {
+    flex: 1;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: var(--d-2);
+    background-color: var(--lilac-primary);
+    justify-content: end;
+    align-items: end;
+    text-align: end;
+}
+
+#world-map-page {
+    padding: var(--d-3);
+    display: flex;
+    gap: var(--d-2);
+    flex-direction: column;
+
+}
+
+#mission-editor {
+    display: flex;
+    height: 100vh;
+    padding: var(--d-3);
+    gap: var(--d-2);
+}
+
+#mission-editor #target {
+    padding: var(--d-3);
+    display: flex;
+    gap: var(--d-2);
+    flex-wrap: wrap;
+
+}
+
+#mission-editor .placeholder {
+    background-color: var(--coral-primary);
+    border-radius: 999px;
+    width: 1rem;
+    text-align: center;
+    border: 2px solid var(--dark-blue);
+    padding: 8px 12px;
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+#mission-editor #selection {
+    padding: var(--d-3);
+    display: flex;
+    gap: var(--d-2);
+    flex-wrap: wrap;
+}
+
+#mission-editor #selection code.tile {
+    background-color: var(--sand-primary);
+    border-radius: var(--d-1);
+}
+
+#mission-editor #target code.tile {
+    background-color: var(--lilac-primary);
+    border-radius: var(--d-1);
+}
+
+/* ---------------------------------------------------- */
+
 /* login & register pages */
 
 

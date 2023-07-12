@@ -11,6 +11,8 @@
 (s/def :ile/mission.content
   (s/keys :req [:mission.content/result]
           :opt [:mission.content/wrong-blocks
+                :mission.content/mode
+                :mission.content/difficulty
                 :mission.content/hidden-html
                 :mission.content/hidden-css]))
 

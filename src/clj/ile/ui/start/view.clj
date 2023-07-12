@@ -16,6 +16,7 @@
       :alt "Happy emoji Icon"}]
     [:h2 (tr/tr lang :login/login)]]
    [:a.tile#story-area
+    {:href (tr/url lang "/worlds")}
     [:img#story-peep
      {:src "/img/peeps/story_peep.svg"
       :alt "Drawn person standing holding a laptop."}]

@@ -1,5 +1,6 @@
 (ns ile.story.core
   (:require
+    [ile.story.handler :as handler]
     [ile.story.persistence :as persistence]))
 
 (defn create-mission [mission]
@@ -13,3 +14,5 @@
 
 (defn find-mission [mission-id]
   (persistence/find-mission mission-id))
+
+(def routes handler/routes)

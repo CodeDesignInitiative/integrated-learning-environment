@@ -4,3 +4,6 @@
 
 (defn editor [lang code project-id]
   (view/editor-page lang code project-id))
+
+(defn block-editor [lang mission]
+  (view/block-editor lang mission))

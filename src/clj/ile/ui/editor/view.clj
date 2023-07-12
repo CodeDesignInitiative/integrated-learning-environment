@@ -27,7 +27,7 @@
   [:div#editor-interaction
    [:button.circular-button.neutral
     {:onclick "show_help()"}
-    [:img {:src "/img/icons/wiki.svg"
+    [:img {:src   "/img/icons/wiki.svg"
            :title "Wiki"}]]
    (when next
      [:button.circular-button.check {:onclick (str "validate('" next "')")}
@@ -74,7 +74,48 @@
     [:iframe#output]]
 
    ; add js editor scripts
-   [:script {:src "/js/src-min-noconflict/ace.js"
-             :type "text/javascript"
+   [:script {:src     "/js/src-min-noconflict/ace.js"
+             :type    "text/javascript"
              :charset "utf-9"}]
    [:script {:src "/js/editor.js?v=1"}]])
+
+(defn hidden-block-code [html css result wrong-blocks]
+  [:div#hidden-code
+   [:#html-base html]
+   [:#css-base css]
+   [:#result result]
+   [:#wrong wrong-blocks]])
+
+(defn block-editor [lang {:mission/keys [world step story-before
+                                         story-after content] :as mission}]
+  (let [{:keys [hidden-html hidden-css
+                result mode wrong-blocks]} (first
+                                             (filter
+                                               #(= (:mission.content/difficulty %) :easy)
+                                               content))]
+    [:div#mission-editor
+     [:aside#editor-sidebar
+      [:nav
+       [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
+       [:h3 (:mission/name mission)]]
+      (editor-tabs)
+      [:div#editor-wrapper
+       [:div#editor.w-full.h-full.language-html
+        [:div#target
+         [:code.placeholder "?"]]
+        [:div#selection
+         [:code.tile "<h1>"]
+         [:code.tile "Hallo Welt"]
+         [:code.tile "</h1>"]]
+        ]]
+      [:button {:on-click "evaluate_code()"} "Prüfen"]
+      (hidden-block-code hidden-html hidden-css result wrong-blocks)]
+     [:div#editor-output
+      [:iframe#output]]
+
+     ; add js editor scripts
+     [:script {:src     "/js/Sortable.js"
+               :type    "text/javascript"
+               :charset "utf-9"}]
+     [:script {:src "/js/block-editor.js?v=1"}]])
+  )

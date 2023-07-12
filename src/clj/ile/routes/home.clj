@@ -13,6 +13,7 @@
             [ile.ui.projects.core :as projects-page]
             [ile.ui.auth.core :as auth-page]
             [ile.ui.admin.core :as admin-page]
+            [ile.story.core :as story-page]
 
             [ile.ui.start.core :as start-page]
             [ile.ui.legal.core :as legal-page]))
@@ -186,6 +187,7 @@ img {
    start-page/routes
    projects-page/routes
    admin-page/routes
+   story-page/routes
    ["/datenschutz" {:get legal-page/privacy-statement
                     }]
    ["/chat" {:get chat-screen}]

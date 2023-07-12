@@ -25,7 +25,7 @@
     [:link {:rel  :stylesheet
             :href "/css/base.css?v=5"}]
     [:link {:rel  :stylesheet
-            :href "/css/components.css?v=6"}]
+            :href "/css/components.css?v=1"}]
     [:link {:rel  :stylesheet
             :href "/css/color.css?v=2"}]
     [:link {:rel  :stylesheet
