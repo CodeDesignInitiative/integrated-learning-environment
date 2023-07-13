@@ -2,9 +2,9 @@ let current_language = "html";
 
 const host = window.location.origin
 const mission_id = window.location.pathname.split("/").pop()
+const lang = window.location.pathname.split("/")[1]
 const fetch_url = host + "/api/mission/" + mission_id
 
-console.log(fetch_url)
 
 let mission = undefined;
 
@@ -17,7 +17,6 @@ const shuffleArray = (array) => {
 }
 
 
-
 const fill_mission_data = (mission) => {
     const easy_content = mission["mission/content"][0]
     const blocks = easy_content["mission.content/result"]
@@ -25,27 +24,25 @@ const fill_mission_data = (mission) => {
 
     const all_blocks = shuffleArray(blocks.concat(wrong_blocks))
 
-    all_blocks.forEach((child) =>
-    {
-        console.log(child)
+    all_blocks.forEach((child) => {
         const elem = document.createElement('code')
         elem.classList.add('tile')
         elem.innerText = child
         selection_list.appendChild(elem)
     })
-
-
-    console.log()
 }
 
 
 const html_editor = document.getElementById("editor")
-const html_base = document.getElementById("html-base").innerText
-const css_base = document.getElementById("css-base").innerText
-const result = document.getElementById("result").childNodes
-const wrong = document.getElementById("wrong").innerText
+// const html_base = document.getElementById("html-base").innerText
+// const css_base = document.getElementById("css-base").innerText
+// const result = document.getElementById("result").childNodes
+// const wrong = document.getElementById("wrong").innerText
 
 const output = document.getElementById("output")
+const overlay = document.getElementById("overlay")
+const chat = document.getElementById("chat")
+const chat_message = document.getElementById("chat-message")
 
 // import Sortable from 'lib/sortable.min.js';
 const target_list = document.getElementById('target');
@@ -55,6 +52,7 @@ fetch(host + "/api/mission/" + mission_id)
     .then((res) => res.json())
     .then((json) => {
         mission = json;
+        next_message();
         console.log(json);
         fill_mission_data(mission);
     })
@@ -68,12 +66,12 @@ new Sortable(target_list, {
     group: 'shared', // set both lists to same group
     filter: '.placeholder',
     animation: 150,
-    onSort:  (evt) => {
+    onSort: (evt) => {
         if (evt.to.childElementCount < 1) {
             evt.to.appendChild(placeholder)
         }
         if (evt.to.querySelector(".placeholder") != null
-            && evt.from.childElementCount > 1 ) {
+            && evt.from.childElementCount > 1) {
             evt.to.childNodes.forEach(child => child.className === "placeholder" ? evt.to.removeChild(child) : null)
         }
 
@@ -94,7 +92,7 @@ new Sortable(selection_list, {
             evt.from.appendChild(placeholder)
         }
         if (evt.from.querySelector(".placeholder") != null
-            && evt.from.childElementCount > 1 ) {
+            && evt.from.childElementCount > 1) {
             evt.from.childNodes.forEach(child => child.className === "placeholder" ? evt.from.removeChild(child) : null)
 
         }
@@ -109,7 +107,7 @@ const generate_html = () =>
         .from(target_list.childNodes)
         .reduce((acc, child) => acc + child.innerText, "")
 
-const generate_css = () => css_base
+const generate_css = () => "" // css_base
 
 
 const updateOutput = () =>
@@ -138,12 +136,9 @@ const evaluate_code = () => {
             .from(target_list.childNodes)
             .reduce((acc, child) => acc + child.innerText, "")
 
-            console.log(correct_result)
-            console.log(entered_result)
-            console.log(entered_result === correct_result)
-
     if (entered_result === correct_result) {
         party_hard()
+        overlay.classList.toggle("hidden")
     }
 }
 
@@ -277,3 +272,62 @@ const party_hard = () =>
             }
         }
     });
+
+let current_message = 0
+let story_after = false
+
+const next_message = () => {
+    if (!story_after) {
+        if (mission["mission/story-before"].length > 0) {
+            if (chat_message.innerText === "") {
+                chat_message.innerText = mission["mission/story-before"][0];
+            } else {
+                if (current_message < mission["mission/story-before"].length - 1) {
+                    chat_message.innerText = mission["mission/story-before"][current_message + 1]
+                    current_message = current_message + 1
+                } else {
+                    chat.classList.add("hidden");
+                    story_after = true;
+                    current_message = 0;
+                }
+            }
+        } else {
+            chat_message.classList.add("hidden");
+        }
+    } else {
+        if (current_message < mission["mission/story-after"].length ) {
+            chat_message.innerText = mission["mission/story-after"][current_message]
+            current_message = current_message + 1
+        } else {
+            next_mission()
+        }
+    }
+}
+
+
+const progress = () => {
+    overlay.classList.add("hidden");
+    chat.classList.remove("hidden");
+
+
+    if (mission["mission/story-after"].length > 0) {
+        next_message()
+    } else {
+        next_mission()
+    }
+}
+
+const next_mission = () => {
+    console.log("next mission")
+
+    const current_step = mission["mission/step"]
+    const current_world = mission["mission/world"]
+
+    fetch(host + "/api/next-mission/" + mission_id)
+        .then((res) => res.json())
+        .then((json) => {
+            let url = host + "/" + lang + "/world/mission/" + json["mission-id"]
+            console.log(url);
+            window.location.href = url;
+        })
+}

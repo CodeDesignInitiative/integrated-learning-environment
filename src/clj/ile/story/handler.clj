@@ -18,9 +18,9 @@
   (let [world-id (keyword (util/get-path-param request :id))
         missions (persistence/find-all-missions)
         lang (tr/lang request)]
-    (view/world-map-page lang {:name "HTML & CSS"
+    (view/world-map-page lang {:name     "HTML & CSS"
                                :subtitle "Einstieg"
-                               :target "html-css"} missions)))
+                               :target   "html-css"} missions)))
 
 (defn worlds-page [request]
   (let [lang (tr/lang request)]
@@ -38,5 +38,13 @@
         mission (persistence/find-mission mission-id)]
     (http-response/ok mission)))
 
+(defn get-next-mission [request]
+  (let [mission-id (util/get-path-param-as-uuid request :id)
+        mission (persistence/find-mission mission-id)
+        next-mission (persistence/find-next-mission mission)]
+    (http-response/ok {:mission-id (:xt/id next-mission)})))
+
 (def api-routes
-  ["/mission/:id" {:get get-mission-data}])
+  [""
+   ["/mission/:id" {:get get-mission-data}]
+   ["/next-mission/:id" {:get get-next-mission}]])

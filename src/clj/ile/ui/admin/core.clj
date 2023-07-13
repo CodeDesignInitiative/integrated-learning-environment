@@ -67,8 +67,8 @@
   #:mission{:name         mission_name
             :world        :html-css                         ; (keyword mission_world)
             :step         (Integer/parseInt mission_step)
-            :story-before (vector-from-string-lines mission_story-after)
-            :story-after  (vector-from-string-lines mission_story-before)
+            :story-before (vector-from-string-lines mission_story-before)
+            :story-after  (vector-from-string-lines mission_story-after)
             :content      [#:mission.content{:difficulty   :easy
                                              :mode         :html
                                              :hidden-html  (or mission-content_hidden-html-easy "")

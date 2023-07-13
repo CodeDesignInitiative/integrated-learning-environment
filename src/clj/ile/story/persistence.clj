@@ -29,6 +29,13 @@
                 mission-id))
 
 
+(defn find-next-mission [{:mission/keys [step world]}]
+  (p/find-first '{:find [(pull ?mission [* :ile/persistable-mission])]
+                  :where [[?mission :mission/step step]
+                          [?mission :mission/world world]]
+                  :in [[step world]]}
+                (+ step 1) world))
+
 (comment
   (create-mission
     #:mission{:world   :html-css
@@ -38,6 +45,7 @@
                                           :difficulty :easy}]})
 
   (find-all-missions)
-
   (find-mission #uuid"2de20310-4330-4b33-90db-99234b4d6b49")
+  (find-next-mission
+    (find-mission #uuid"2de20310-4330-4b33-90db-99234b4d6b49"))
   )

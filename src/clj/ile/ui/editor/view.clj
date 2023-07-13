@@ -93,29 +93,41 @@
                                              (filter
                                                #(= (:mission.content/difficulty %) :easy)
                                                content))]
-    [:div#mission-editor
-     [:aside#editor-sidebar
-      [:nav
-       [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
-       [:h3 (:mission/name mission)]]
-      (editor-tabs)
-      [:div#editor-wrapper
-       [:div#editor.w-full.h-full.language-html
-        [:div#target
-         [:code.placeholder "?"]]
-        [:div#selection]
-        ]]
-      [:button {:on-click "evaluate_code()"} "Prüfen"]
-      (hidden-block-code hidden-html hidden-css result wrong-blocks)]
-     [:div#editor-output
-      [:iframe#output]]
+    [:<>
+     [:div#mission-editor
+      [:aside#editor-sidebar
+       [:nav
+        [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
+        [:h3 (:mission/name mission)]]
+       [:div#editor
+        [:div
+         [:div#target
+          [:code.placeholder "?"]]]
+        [:div
+         [:div#selection]]]
+       [:div
+        [:button {:on-click "evaluate_code()"} "Prüfen"]]
+       #_(hidden-block-code hidden-html hidden-css result wrong-blocks)]
+      [:div#editor-output
+       [:iframe#output]]
 
-     [:div#tsparticles]
+      [:div#tsparticles]
+
+      ]
+     [:div#chat
+      [:div
+       [:p#chat-message ""]
+       [:button {:on-click "next_message()"} "Weiter"]]]
+     [:div#overlay.hidden
+      [:div
+       [:h2 "Gut gemacht!"]
+       [:button {:on-click "progress()"} "Weiter"]]]
+
      ; add js editor scripts
      [:script {:src     "/js/Sortable.js"
                :type    "text/javascript"
                :charset "utf-9"}]
-     [:script {:src     "/js/tsparticles.bundle.min.js"
-               :type    "text/javascript"}]
+     [:script {:src  "/js/tsparticles.bundle.min.js"
+               :type "text/javascript"}]
      [:script {:src "/js/block-editor.js?v=2"}]])
   )

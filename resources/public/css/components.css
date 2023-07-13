@@ -452,12 +452,27 @@ and (orientation: landscape) {
     gap: var(--d-2);
 }
 
+#mission-editor #editor {
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    gap: var(--d-3);
+}
+
 #mission-editor #target {
     padding: var(--d-3);
     display: flex;
     gap: var(--d-2);
     flex-wrap: wrap;
+    align-items: start;
 
+    outline: solid 4px var(--lilac-primary);
+    border-radius:  var(--d-2);
+    background-color: var(--lilac-4);
+    min-height: calc(44px * 2 + 16px);
 }
 
 #mission-editor .placeholder {
@@ -475,7 +490,11 @@ and (orientation: landscape) {
     display: flex;
     gap: var(--d-2);
     flex-wrap: wrap;
+
+    outline: solid 4px var(--blue-primary);
+    border-radius:  var(--d-2);
 }
+
 
 #mission-editor #selection code.tile {
     background-color: var(--sand-primary);
@@ -485,6 +504,46 @@ and (orientation: landscape) {
 #mission-editor #target code.tile {
     background-color: var(--lilac-primary);
     border-radius: var(--d-1);
+}
+
+.ghost {
+    opacity: .5;
+    background: var(--mint-1) !important;
+}
+
+#tsparticles {
+    z-index: 1000;
+}
+
+#overlay, #chat {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.69);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#overlay > div, #chat > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--d-3);
+
+    background-color: var(--mint-primary);
+    border-radius: var(--d-2);
+    border: 2px solid var(--dark-blue);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+    padding: var(--d-3);
+    z-index: 1001;
 }
 
 /* ---------------------------------------------------- */
