@@ -441,8 +441,77 @@ and (orientation: landscape) {
     padding: var(--d-3);
     display: flex;
     gap: var(--d-2);
-    flex-direction: column;
+    overflow-x: auto;
+    flex: 1;
+    align-items: center;
 
+}
+
+#world-map-page a  {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    gap: var(--d-2);
+    transition-duration: .4s;
+    outline-color: var(--blue-primary);
+    transition-property: transform, background-color, border-radius, outline, padding;
+}
+
+#world-map-page a:hover  {
+    border-radius: var(--d-3);
+    transition-delay: .6s;
+    transform: scale(1.1);
+    outline: solid 4px var(--blue-primary);
+    padding: var(--d-2);
+    z-index: 100;
+    background-color: var(--blue-3);
+}
+
+#world-map-page img.arrow {
+    width: 64px;
+}
+
+.map-info {
+    text-align: center;
+    margin-bottom: var(--d-3);
+}
+
+.map {
+    min-width: 300px;
+    min-height: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.level-number {
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--lilac-primary);
+    color: var(--dark-blue);
+    border-radius: 999px;
+    border: 2px solid var(--dark-blue);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+    text-align: center;
+    line-height: 3rem;
+    font-weight: bold;
+}
+
+.map.bg1 {
+    background-image: url("/img/map/island_1.svg");
+}
+.map.bg2 {
+    background-image: url("/img/map/island_2.svg");
+}
+.map.bg3 {
+    background-image: url("/img/map/island_3.svg");
+}
+.map.bg4 {
+    background-image: url("/img/map/island_4.svg");
 }
 
 #mission-editor {

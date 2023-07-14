@@ -72,7 +72,7 @@
                    (= difficulty given-difficulty)) content)))
 
 (defn edit-mission-page
-  [{:mission/keys [name world step content
+  [{:mission/keys [name _world step content
                    story-before story-after] :as template
     :xt/keys [id]}]
   [:<>
@@ -120,45 +120,57 @@
                  :name  "mission_story-after"}]
 
      [:h2 "Inhalte"]
-     [:h3 "Einfach"]
-     [:label "Lösung"]
-     [:p "Für jeden Block eine neue Zeile.\nReihenfolge = korrekte Lösung."]
-     [:textarea {:value    (->
+     (let [{:mission.content/keys [mode result]} (content-for-difficulty content :easy)]
+       (println mode)
+       [:<>
+        [:h3 "Einfach"]
+
+        [:label "Modus"]
+        [:select {:name "mission-content_mode-easy"}
+         [:option {:value    "html"
+                   :selected (when (= mode :html) "selected")} "HTML"]
+         [:option {:value    "css"
+                   :selected (when (= mode :css) "selected")} "CSS"]]
+
+        [:label "Lösung"]
+        [:p "Für jeden Block eine neue Zeile.\nReihenfolge = korrekte Lösung."]
+        [:textarea {:value    (vector-to-multiline result)
+                    :required true
+                    :name     "mission-content_easy"}]
+
+        [:label "Falsche Blöcke"]
+
+        [:p "Für jeden Block eine neue Zeile."]
+        [:textarea {:value (->
                              (content-for-difficulty content :easy)
-                             :mission.content/result
+                             :mission.content/wrong-blocks
                              vector-to-multiline)
-                 :required true
-                 :name     "mission-content_easy"}]
-
-     [:label "Falsche Blöcke"]
-
-     [:p "Für jeden Block eine neue Zeile."]
-     [:textarea {:value (->
-                          (content-for-difficulty content :easy)
-                          :mission.content/wrong-blocks
-                          vector-to-multiline)
-                 :name  "mission-content_easy-wrong"}]
+                    :name  "mission-content_easy-wrong"}]
 
 
-     ; mission-content_hidden-css-easy
-     ;mission-content_hidden-html-medium mission-content_hidden-css-medium
-     ;mission-content_hidden-html-hard mission-content_hidden-css-hard
-     [:label "Verstecktes HTML"]
-     [:p "Valides HTML für innerhalb des Body Tags.\n
+        ; mission-content_hidden-css-easy
+        ;mission-content_hidden-html-medium mission-content_hidden-css-medium
+        ;mission-content_hidden-html-hard mission-content_hidden-css-hard
+        [:label "Verstecktes HTML"]
+        [:p "Valides HTML für innerhalb des Body Tags.\n
      $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
-     [:textarea {:value (get
-                          (content-for-difficulty content :easy)
-                          :mission.content/hidden-html)
-                 :name  "mission-content_hidden-html-easy"}]
+        [:textarea {:value (get
+                             (content-for-difficulty content :easy)
+                             :mission.content/hidden-html)
+                    :name  "mission-content_hidden-html-easy"}]
 
-     [:label "Verstecktes CSS"]
-     [:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
-     [:textarea {:value (get
-                          (content-for-difficulty content :easy)
-                          :mission.content/hidden-css)
-                 :name  "mission-content_hidden-css-easy"}]
+        [:label "Verstecktes CSS"]
+        [:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
+        [:textarea {:value (get
+                             (content-for-difficulty content :easy)
+                             :mission.content/hidden-css)
+                    :name  "mission-content_hidden-css-easy"}]])
 
      [:h3 "Mittel"]
+     [:label "Modus"]
+     [:select {:name "mission-content_mode-medium"}
+      [:option {:value "html"} "HTML"]
+      [:option {:value "css"} "CSS"]]
      [:label "Mittelschwerer Code"]
      [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
      [:textarea {:value (->
@@ -181,6 +193,10 @@
      ;            :name  "mission-content_hidden-css-easy"}]
 
      [:h3 "Schwer"]
+     [:label "Modus"]
+     [:select {:name "mission-content_mode-hard"}
+      [:option {:value "html"} "HTML"]
+      [:option {:value "css"} "CSS"]]
      [:label "Schwieriger Code"]
      [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
      [:textarea {:value (->

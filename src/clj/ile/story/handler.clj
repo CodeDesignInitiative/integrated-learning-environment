@@ -11,8 +11,7 @@
   (let [mission-id (util/get-path-param-as-uuid request :id)
         mission (persistence/find-mission mission-id)
         lang (tr/lang request)]
-    (editor/block-editor lang mission)
-    #_(view/mission-editor-page lang mission)))
+    (editor/block-editor lang mission)))
 
 (defn world-map-page [request]
   (let [world-id (keyword (util/get-path-param request :id))
