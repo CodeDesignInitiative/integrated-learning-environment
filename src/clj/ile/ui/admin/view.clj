@@ -71,6 +71,36 @@
   (first (filter (fn [{:mission.content/keys [difficulty] :as c}]
                    (= difficulty given-difficulty)) content)))
 
+(defn- mission-content [{:mission.content/keys [mode result hidden-html hidden-css
+                                               wrong-blocks]}
+                        difficulty]
+  [:<>
+   [:label "Modus"]
+   [:select {:name (str "mission-content_mode-" difficulty)}
+    [:option {:value    "html"
+              :selected (when (= mode :html) "selected")} "HTML"]
+    [:option {:value    "css"
+              :selected (when (= mode :css) "selected")} "CSS"]]
+   [:label "Code"]
+   [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
+   [:textarea {:value (vector-to-multiline result)
+               :name  (str "mission-content_" difficulty)}]
+
+   [:label "Falsche Blöcke"]
+   [:p "Für jeden Block eine neue Zeile."]
+   [:textarea {:value (vector-to-multiline wrong-blocks)
+               :name  (str "mission-content_" difficulty "-wrong")}]
+   [:label "Verstecktes HTML"]
+   [:p "Valides HTML. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
+   [:textarea {:value hidden-html
+               :name  (str "mission-content_hidden-html-" difficulty)}]
+
+   [:label "Verstecktes CSS"]
+   [:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
+   [:textarea {:value hidden-css
+               :name  (str "mission-content_hidden-css-" difficulty)}]]
+  )
+
 (defn edit-mission-page
   [{:mission/keys [name _world step content
                    story-before story-after] :as template
@@ -120,104 +150,14 @@
                  :name  "mission_story-after"}]
 
      [:h2 "Inhalte"]
-     (let [{:mission.content/keys [mode result]} (content-for-difficulty content :easy)]
-       (println mode)
-       [:<>
-        [:h3 "Einfach"]
-
-        [:label "Modus"]
-        [:select {:name "mission-content_mode-easy"}
-         [:option {:value    "html"
-                   :selected (when (= mode :html) "selected")} "HTML"]
-         [:option {:value    "css"
-                   :selected (when (= mode :css) "selected")} "CSS"]]
-
-        [:label "Lösung"]
-        [:p "Für jeden Block eine neue Zeile.\nReihenfolge = korrekte Lösung."]
-        [:textarea {:value    (vector-to-multiline result)
-                    :required true
-                    :name     "mission-content_easy"}]
-
-        [:label "Falsche Blöcke"]
-
-        [:p "Für jeden Block eine neue Zeile."]
-        [:textarea {:value (->
-                             (content-for-difficulty content :easy)
-                             :mission.content/wrong-blocks
-                             vector-to-multiline)
-                    :name  "mission-content_easy-wrong"}]
-
-
-        ; mission-content_hidden-css-easy
-        ;mission-content_hidden-html-medium mission-content_hidden-css-medium
-        ;mission-content_hidden-html-hard mission-content_hidden-css-hard
-        [:label "Verstecktes HTML"]
-        [:p "Valides HTML für innerhalb des Body Tags.\n
-     $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
-        [:textarea {:value (get
-                             (content-for-difficulty content :easy)
-                             :mission.content/hidden-html)
-                    :name  "mission-content_hidden-html-easy"}]
-
-        [:label "Verstecktes CSS"]
-        [:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
-        [:textarea {:value (get
-                             (content-for-difficulty content :easy)
-                             :mission.content/hidden-css)
-                    :name  "mission-content_hidden-css-easy"}]])
+     (mission-content (content-for-difficulty content :easy) "easy")
 
      [:h3 "Mittel"]
-     [:label "Modus"]
-     [:select {:name "mission-content_mode-medium"}
-      [:option {:value "html"} "HTML"]
-      [:option {:value "css"} "CSS"]]
-     [:label "Mittelschwerer Code"]
-     [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
-     [:textarea {:value (->
-                          (content-for-difficulty content :medium)
-                          :mission.content/result
-                          vector-to-multiline)
-                 :name  "mission-content_medium"}]
-     ;[:label "Verstecktes HTML"]
-     ;[:p "Valides HTML. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
-     ;[:textarea {:value (get
-     ;                     (content-for-difficulty content :easy)
-     ;                     :mission.content/hidden-html)
-     ;            :name  "mission-content_hidden-html-easy"}]
-     ;
-     ;[:label "Verstecktes CSS"]
-     ;[:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
-     ;[:textarea {:value (get
-     ;                     (content-for-difficulty content :easy)
-     ;                     :mission.content/hidden-css)
-     ;            :name  "mission-content_hidden-css-easy"}]
+     (mission-content (content-for-difficulty content :medium) "medium")
 
      [:h3 "Schwer"]
-     [:label "Modus"]
-     [:select {:name "mission-content_mode-hard"}
-      [:option {:value "html"} "HTML"]
-      [:option {:value "css"} "CSS"]]
-     [:label "Schwieriger Code"]
-     [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
-     [:textarea {:value (->
-                          (content-for-difficulty content :hard)
-                          :mission.content/result
-                          vector-to-multiline)
-                 :name  "mission-content_hard"}]
-     ;
-     ;[:label "Verstecktes HTML"]
-     ;[:p "Valides HTML. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
-     ;[:textarea {:value (get
-     ;                     (content-for-difficulty content :easy)
-     ;                     :mission.content/hidden-html)
-     ;            :name  "mission-content_hidden-html-easy"}]
-     ;
-     ;[:label "Verstecktes CSS"]
-     ;[:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
-     ;[:textarea {:value (get
-     ;                     (content-for-difficulty content :easy)
-     ;                     :mission.content/hidden-css)
-     ;            :name  "mission-content_hidden-css-easy"}]
+     (mission-content (content-for-difficulty content :hard) "hard")
+
      [:button {:type :submit} "Speichern"]]]])
 
 (defn story-page [missions]
