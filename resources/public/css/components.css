@@ -613,6 +613,8 @@ and (orientation: landscape) {
     box-shadow: 4px 4px 0 var(--dark-blue);
     padding: var(--d-3);
     z-index: 1001;
+
+    width: 400px;
 }
 
 /* ---------------------------------------------------- */

@@ -7,6 +7,10 @@ const fetch_url = host + "/api/mission/" + mission_id
 
 
 let mission = undefined;
+let mode = undefined;
+let hidden_css = undefined;
+let hidden_html = undefined;
+
 
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -18,8 +22,12 @@ const shuffleArray = (array) => {
 
 
 const fill_mission_data = (mission) => {
+    console.log(mission);
     const easy_content = mission["mission/content"][0]
+    hidden_css = easy_content["mission.content/hidden-css"]
+    hidden_html = easy_content["mission.content/hidden-html"]
     const blocks = easy_content["mission.content/result"]
+    mode = easy_content["mission.content/mode"];
     const wrong_blocks = easy_content["mission.content/wrong-blocks"]
 
     const all_blocks = shuffleArray(blocks.concat(wrong_blocks))
@@ -55,6 +63,7 @@ fetch(host + "/api/mission/" + mission_id)
         next_message();
         console.log(json);
         fill_mission_data(mission);
+        on_input_change();
     })
 
 // const placeholder = html`<!--<code class="placeholder">?</code>-->`
@@ -107,7 +116,11 @@ const generate_html = () =>
         .from(target_list.childNodes)
         .reduce((acc, child) => acc + child.innerText, "")
 
-const generate_css = () => "" // css_base
+const generate_css = () =>
+    Array
+        .from(target_list.childNodes)
+        .reduce((acc, child) => acc + child.innerText, "")
+
 
 
 const updateOutput = () =>
@@ -115,8 +128,8 @@ const updateOutput = () =>
      <html lang="de">
         <head>
         <title>ILE Editor Website</title>
-        <style>${generate_css()}</style></head>
-        <body>${generate_html()}</body>
+        <style>${mode === "css" ? generate_css() : hidden_css}</style></head>
+        <body>${mode === "html" ? generate_html() : hidden_html}</body>
      </html>`.replace(/#/g, "%23")
 
 

@@ -19,8 +19,11 @@
     (s/explain :ile/persistable-mission story-mission)))
 
 (defn find-all-missions []
-  (p/query-db '{:find  [(pull ?mission [* :ile/persistable-mission])]
-                :where [[?mission :mission/name any?]]}))
+  (->>
+    (p/query-db '{:find  [(pull ?mission [* :ile/persistable-mission])]
+                  :where [[?mission :mission/name any?]]})
+    (sort-by :mission/step)
+    vec))
 
 (defn find-mission [mission-id]
   (p/find-first '{:find  [(pull ?mission [* :ile/persistable-mission])]
@@ -45,6 +48,8 @@
                                           :difficulty :easy}]})
 
   (find-all-missions)
+
+
   (find-mission #uuid"2de20310-4330-4b33-90db-99234b4d6b49")
   (find-next-mission
     (find-mission #uuid"2de20310-4330-4b33-90db-99234b4d6b49"))
