@@ -39,7 +39,7 @@
 
 (defn stories-page [_request]
   (let [missions (story/find-all-missions)]
-    (view/story-page (group-by :mission/world missions))))
+    (view/story-page (sort-by :mission/step (group-by :mission/world missions)))))
 
 (defn mission-editor-page [request]
   (let [mission-id (util/get-path-param-as-uuid request :id)
