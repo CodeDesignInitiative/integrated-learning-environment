@@ -111,16 +111,32 @@ new Sortable(selection_list, {
     chosenClass: 'chosen'
 });
 
-const generate_html = () =>
-    Array
+const generate_html = () => {
+    const user_input = Array
         .from(target_list.childNodes)
         .reduce((acc, child) => acc + child.innerText, "")
 
-const generate_css = () =>
-    Array
+    if (hidden_html === "") {
+        return user_input
+    } else {
+        return hidden_html
+            .replace("$$placeholder$$", user_input)
+    }
+}
+
+const generate_css = () => {
+    const user_input = Array
         .from(target_list.childNodes)
         .reduce((acc, child) => acc + child.innerText, "")
 
+
+    if (hidden_css === "") {
+        return user_input
+    } else {
+        return hidden_css
+            .replace("$$placeholder$$", user_input)
+    }
+}
 
 
 const updateOutput = () =>
@@ -308,7 +324,7 @@ const next_message = () => {
             chat_message.classList.add("hidden");
         }
     } else {
-        if (current_message < mission["mission/story-after"].length ) {
+        if (current_message < mission["mission/story-after"].length) {
             chat_message.innerText = mission["mission/story-after"][current_message]
             current_message = current_message + 1
         } else {
