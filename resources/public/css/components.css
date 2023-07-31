@@ -624,6 +624,16 @@ and (orientation: landscape) {
     padding: 2px 6px;
 }
 
+#finished-world-page {
+    padding: var(--d-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 60%;
+
+}
+
 /* ---------------------------------------------------- */
 
 /* login & register pages */

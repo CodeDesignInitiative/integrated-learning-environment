@@ -26,9 +26,14 @@
   (let [lang (tr/lang request)]
     (view/worlds-page lang)))
 
+(defn finished-world-page [request]
+  (let [lang (tr/lang request)]
+    (view/finished-world-page lang)))
+
 (def routes
   ["/:lang"
    ["/world"
+    ["/finished" {:get finished-world-page}]
     ["/map/:id" {:get world-map-page}]
     ["/mission/:id" {:get mission-page}]]
    ["/worlds" {:get worlds-page}]])
@@ -43,7 +48,9 @@
   (let [mission-id (util/get-path-param-as-uuid request :id)
         mission (persistence/find-mission mission-id)
         next-mission (persistence/find-next-mission mission)]
-    (http-response/ok {:mission-id (:xt/id next-mission)})))
+    (if next-mission
+      (http-response/ok {:mission-id (:xt/id next-mission)})
+      (http-response/ok {:status "last_mission"}))))
 
 (def api-routes
   [""

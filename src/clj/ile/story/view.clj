@@ -42,3 +42,17 @@
            [:.level-number (+ idx 1)]]]
          (when (< (+ idx 1) (count levels))
            [:img.arrow {:src "/img/map/i2i_arrow.svg"}])]))]])
+
+(defn finished-world-page [lang]
+  [:<>
+   [:nav
+    [:a.button {:href (tr/url lang "/worlds")} "Zurück zur Übersicht"]
+    [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]
+   [:main#finished-world-page
+    [:h1 "🎉 Fertig 🎉"]
+    [:p "Du hast die verfügbaren Mission durchgespielt."]
+    [:p "Bald geht es weiter mit neuen Inhalten."]
+    [:h2 "Nutze den freien Editor"]
+    [:p "Hier kannst du dich austoben und testen was du gelernt hast"]
+    [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]]
+  )

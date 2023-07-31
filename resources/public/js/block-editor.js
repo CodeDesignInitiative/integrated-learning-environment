@@ -373,9 +373,14 @@ const next_mission = () => {
     fetch(host + "/api/next-mission/" + mission_id)
         .then((res) => res.json())
         .then((json) => {
-            let url = host + "/" + lang + "/world/mission/" + json["mission-id"]
-            console.log(url);
-            window.location.href = url;
+            if (json["status"] === "last_mission") {
+                window.location.href = host + "/" + lang + "/world/finished";
+
+            } else {
+                let url = host + "/" + lang + "/world/mission/" + json["mission-id"]
+                console.log(url);
+                window.location.href = url;
+            }
         })
 }
 
