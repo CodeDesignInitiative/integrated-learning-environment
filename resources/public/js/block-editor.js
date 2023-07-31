@@ -5,12 +5,14 @@ const mission_id = window.location.pathname.split("/").pop()
 const lang = window.location.pathname.split("/")[1]
 const fetch_url = host + "/api/mission/" + mission_id
 
+const evaluate_btn = document.getElementById("evalute-btn")
+
 
 let mission = undefined;
 let mode = undefined;
 let hidden_css = undefined;
 let hidden_html = undefined;
-
+let difficulty = "easy";
 
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -21,16 +23,25 @@ const shuffleArray = (array) => {
 }
 
 
-const fill_mission_data = (mission) => {
+const fill_mission_data = (mission, difficulty = "easy") => {
     console.log(mission);
-    const easy_content = mission["mission/content"][0]
-    hidden_css = easy_content["mission.content/hidden-css"]
-    hidden_html = easy_content["mission.content/hidden-html"]
-    const blocks = easy_content["mission.content/result"]
-    mode = easy_content["mission.content/mode"];
-    const wrong_blocks = easy_content["mission.content/wrong-blocks"]
+
+    let content;
+    switch(difficulty) {
+        case "easy": content = mission["mission/content"][0]; break;
+        case "medium": content = mission["mission/content"][1]; break;
+        case "hard": content = mission["mission/content"][2]; break;
+        default: content = mission["mission/content"][0];
+    }
+    hidden_css = content["mission.content/hidden-css"]
+    hidden_html = content["mission.content/hidden-html"]
+    const blocks = content["mission.content/result"]
+    mode = content["mission.content/mode"];
+    const wrong_blocks = content["mission.content/wrong-blocks"]
 
     const all_blocks = shuffleArray(blocks.concat(wrong_blocks))
+
+    selection_list.innerHTML = "";
 
     all_blocks.forEach((child) => {
         const elem = document.createElement('code')
@@ -156,8 +167,13 @@ const on_input_change = () => {
 on_input_change()
 
 const evaluate_code = () => {
-    const easy_content = mission["mission/content"][0]
-    const correct_result = easy_content["mission.content/result"]
+    let content = mission["mission/content"][0]
+    if (difficulty === "medium") {
+        content = mission["mission/content"][1]
+    } else if (difficulty === "hard") {
+        content = mission["mission/content"][2]
+    }
+    const correct_result = content["mission.content/result"]
         .reduce((acc, child) => acc + child, "")
 
     const entered_result =
@@ -168,6 +184,8 @@ const evaluate_code = () => {
     if (entered_result === correct_result) {
         party_hard()
         overlay.classList.toggle("hidden")
+    } else {
+        alert("Das scheint nicht richtig zu sein. Versuche es noch einmal anders :)")
     }
 }
 
@@ -359,4 +377,9 @@ const next_mission = () => {
             console.log(url);
             window.location.href = url;
         })
+}
+
+const change_difficulty = (e) => {
+    const difficulty_level = e.target.value;
+    fill_mission_data(mission, difficulty_level)
 }

@@ -98,6 +98,12 @@
       [:aside#editor-sidebar
        [:nav
         [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
+        [:select {:on-change "change_difficulty(event)"}
+         [:option {:value :easy
+                   :selected true} "Einfach"]
+         [:option {:value :medium } "Mittel"]
+         [:option {:value :hard} "Schwer"]
+         ]
         [:h3 (:mission/name mission)]]
        [:div#editor
         [:div
@@ -106,7 +112,7 @@
         [:div
          [:div#selection]]]
        [:div
-        [:button {:on-click "evaluate_code()"} "Prüfen"]]
+        [:button#evaluate-btn {:on-click "evaluate_code()"} "Prüfen"]]
        #_(hidden-block-code hidden-html hidden-css result wrong-blocks)]
       [:div#editor-output
        [:iframe#output]]
