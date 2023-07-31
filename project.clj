@@ -12,6 +12,7 @@
                  [com.xtdb/xtdb-jdbc "1.23.1"]
                  [luminus-http-kit "0.2.0"]
                  [luminus/ring-ttl-session "0.3.3"]
+                 [markdown-clj "1.11.4"]
                  [metosin/muuntaja "0.6.8"]
                  [metosin/reitit "0.5.18"]
                  [metosin/ring-http-response "0.9.3"]

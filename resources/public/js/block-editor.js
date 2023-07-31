@@ -327,10 +327,10 @@ const next_message = () => {
     if (!story_after) {
         if (mission["mission/story-before"].length > 0) {
             if (chat_message.innerText === "") {
-                chat_message.innerText = mission["mission/story-before"][0];
+                chat_message.innerHTML = marked.parse(mission["mission/story-before"][0]);
             } else {
                 if (current_message < mission["mission/story-before"].length - 1) {
-                    chat_message.innerText = mission["mission/story-before"][current_message + 1]
+                    chat_message.innerHTML = marked.parse(mission["mission/story-before"][current_message + 1])
                     current_message = current_message + 1
                 } else {
                     chat.classList.add("hidden");
@@ -343,7 +343,7 @@ const next_message = () => {
         }
     } else {
         if (current_message < mission["mission/story-after"].length) {
-            chat_message.innerText = mission["mission/story-after"][current_message]
+            chat_message.innerHTML = marked.parse(mission["mission/story-after"][current_message])
             current_message = current_message + 1
         } else {
             next_mission()

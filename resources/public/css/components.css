@@ -617,6 +617,13 @@ and (orientation: landscape) {
     width: 400px;
 }
 
+#chat code {
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+
 /* ---------------------------------------------------- */
 
 /* login & register pages */

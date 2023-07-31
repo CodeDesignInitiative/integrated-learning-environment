@@ -135,5 +135,7 @@
                :charset "utf-9"}]
      [:script {:src  "/js/tsparticles.bundle.min.js"
                :type "text/javascript"}]
+     [:script {:src  "/js/marked.min.js"
+               :type "text/javascript"}]
      [:script {:src "/js/block-editor.js?v=2"}]])
   )

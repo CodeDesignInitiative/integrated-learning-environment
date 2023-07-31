@@ -1,6 +1,7 @@
 (ns ile.story.handler
   (:require
     [ring.util.http-response :as http-response]
+
     [ile.dictonary.translations :as tr]
     [ile.story.view :as view]
     [ile.story.persistence :as persistence]
@@ -31,6 +32,7 @@
     ["/map/:id" {:get world-map-page}]
     ["/mission/:id" {:get mission-page}]]
    ["/worlds" {:get worlds-page}]])
+
 
 (defn get-mission-data [request]
   (let [mission-id (util/get-path-param-as-uuid request :id)
