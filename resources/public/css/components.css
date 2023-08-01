@@ -690,7 +690,8 @@ and (orientation: landscape) {
     flex-direction: column;
     overflow-y: auto;
     flex: 1;
-    gap: var(--d-1)
+    gap: var(--d-1);
+    padding-bottom: 24px;
 }
 
 #chat .chat-message {
