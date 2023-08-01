@@ -688,10 +688,16 @@ and (orientation: landscape) {
 #chat > #phone > #chat-window > #chat-messages {
     display: flex;
     flex-direction: column;
+    align-items: start;
     overflow-y: auto;
     flex: 1;
     gap: var(--d-1);
     padding-bottom: 24px;
+}
+
+#chat > #phone > #chat-window > #chat-messages img {
+    max-height: 80%;
+    width: auto;
 }
 
 #chat .chat-message {

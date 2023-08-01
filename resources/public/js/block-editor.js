@@ -345,6 +345,15 @@ const enable_show_phone = () =>
 const disable_show_phone = () =>
     chat.onclick = {}
 
+const to_image_or_text = (msg) => {
+    console.log(msg)
+    console.log(msg.startsWith("[img]"))
+    if (msg.startsWith("[img]")) {
+        return `<img src="/img/story/${msg.slice(5)}" alt="${msg}">`
+    } else {
+        return chat_message_to_html(msg)
+    }
+}
 
 const next_message = () => {
     if (!story_after) {
@@ -352,10 +361,10 @@ const next_message = () => {
             if (mission["mission/story-before"].length > 0) {
                 if (chat_messages.innerText === "") {
                     chat_messages.innerHTML +=
-                        chat_message_to_html(mission["mission/story-before"][0])
+                        to_image_or_text(mission["mission/story-before"][0])
                 } else {
                     if (current_message < mission["mission/story-before"].length - 1) {
-                        chat_messages.innerHTML += chat_message_to_html(mission["mission/story-before"][current_message + 1])
+                        chat_messages.innerHTML += to_image_or_text(mission["mission/story-before"][current_message + 1])
                         current_message = current_message + 1
                     } else {
                         chat.classList.add("chat-hidden");
@@ -375,7 +384,7 @@ const next_message = () => {
         }
     } else {
         if (current_message < mission["mission/story-after"].length) {
-            chat_messages.innerHTML += chat_message_to_html(mission["mission/story-after"][current_message])
+            chat_messages.innerHTML += to_image_or_text(mission["mission/story-after"][current_message])
             current_message = current_message + 1;
             chat_messages.scrollTop = chat_messages.scrollHeight;
         } else {
