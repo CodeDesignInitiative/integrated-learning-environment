@@ -365,6 +365,7 @@ const next_message = () => {
                         setTimeout(() => enable_show_phone(), 200)
                     }
                 }
+                chat_messages.scrollTop = chat_messages.scrollHeight;
             } else {
                 chat_messages.classList.add("chat-hidden");
             }
