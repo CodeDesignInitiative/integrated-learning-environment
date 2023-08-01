@@ -376,7 +376,8 @@ const next_message = () => {
     } else {
         if (current_message < mission["mission/story-after"].length) {
             chat_messages.innerHTML += chat_message_to_html(mission["mission/story-after"][current_message])
-            current_message = current_message + 1
+            current_message = current_message + 1;
+            chat_messages.scrollTop = chat_messages.scrollHeight;
         } else {
             next_mission()
         }
