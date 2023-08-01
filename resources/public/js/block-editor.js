@@ -6,6 +6,9 @@ const lang = window.location.pathname.split("/")[1]
 const fetch_url = host + "/api/mission/" + mission_id
 
 const evaluate_btn = document.getElementById("evalute-btn")
+const chat_next_btn = document.getElementById("chat-next-btn")
+const phone = document.getElementById("phone")
+let phone_hidden = false;
 
 
 let mission = undefined;
@@ -27,11 +30,18 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     console.log(mission);
 
     let content;
-    switch(difficulty) {
-        case "easy": content = mission["mission/content"][0]; break;
-        case "medium": content = mission["mission/content"][1]; break;
-        case "hard": content = mission["mission/content"][2]; break;
-        default: content = mission["mission/content"][0];
+    switch (difficulty) {
+        case "easy":
+            content = mission["mission/content"][0];
+            break;
+        case "medium":
+            content = mission["mission/content"][1];
+            break;
+        case "hard":
+            content = mission["mission/content"][2];
+            break;
+        default:
+            content = mission["mission/content"][0];
     }
     hidden_css = content["mission.content/hidden-css"]
     hidden_html = content["mission.content/hidden-html"]
@@ -61,7 +71,7 @@ const html_editor = document.getElementById("editor")
 const output = document.getElementById("output")
 const overlay = document.getElementById("overlay")
 const chat = document.getElementById("chat")
-const chat_message = document.getElementById("chat-message")
+const chat_messages = document.getElementById("chat-messages")
 
 // import Sortable from 'lib/sortable.min.js';
 const target_list = document.getElementById('target');
@@ -182,7 +192,9 @@ const evaluate_code = () => {
             .reduce((acc, child) => acc + child.innerText, "")
 
     if (entered_result === correct_result) {
-        party_hard()
+        party_hard();
+        // chat_next_btn.classList.remove("hidden")
+        story_after = true;
         overlay.classList.toggle("hidden")
     } else {
         alert("Das scheint nicht richtig zu sein. Versuche es noch einmal anders :)")
@@ -322,28 +334,47 @@ const party_hard = () =>
 
 let current_message = 0
 let story_after = false
+let pre_mission_chat_done = false
+
+const chat_message_to_html = (msg) =>
+    `<div class="chat-message">${marked.parse(msg)} </div>`
+
+const enable_show_phone = () =>
+    chat.onclick = () => show_phone()
+
+const disable_show_phone = () =>
+    chat.onclick = {}
+
 
 const next_message = () => {
     if (!story_after) {
-        if (mission["mission/story-before"].length > 0) {
-            if (chat_message.innerText === "") {
-                chat_message.innerHTML = marked.parse(mission["mission/story-before"][0]);
-            } else {
-                if (current_message < mission["mission/story-before"].length - 1) {
-                    chat_message.innerHTML = marked.parse(mission["mission/story-before"][current_message + 1])
-                    current_message = current_message + 1
+        if (!pre_mission_chat_done) {
+            if (mission["mission/story-before"].length > 0) {
+                if (chat_messages.innerText === "") {
+                    chat_messages.innerHTML +=
+                        chat_message_to_html(mission["mission/story-before"][0])
                 } else {
-                    chat.classList.add("hidden");
-                    story_after = true;
-                    current_message = 0;
+                    if (current_message < mission["mission/story-before"].length - 1) {
+                        chat_messages.innerHTML += chat_message_to_html(mission["mission/story-before"][current_message + 1])
+                        current_message = current_message + 1
+                    } else {
+                        chat.classList.add("chat-hidden");
+                        // chat_next_btn.classList.add("hidden")
+                        pre_mission_chat_done = true;
+                        current_message = 0;
+                        setTimeout(() => enable_show_phone(), 200)
+                    }
                 }
+            } else {
+                chat_messages.classList.add("chat-hidden");
             }
         } else {
-            chat_message.classList.add("hidden");
+            chat.classList.add("chat-hidden");
+            setTimeout(() => enable_show_phone(), 200)
         }
     } else {
         if (current_message < mission["mission/story-after"].length) {
-            chat_message.innerHTML = marked.parse(mission["mission/story-after"][current_message])
+            chat_messages.innerHTML += chat_message_to_html(mission["mission/story-after"][current_message])
             current_message = current_message + 1
         } else {
             next_mission()
@@ -354,7 +385,7 @@ const next_message = () => {
 
 const progress = () => {
     overlay.classList.add("hidden");
-    chat.classList.remove("hidden");
+    chat.classList.remove("chat-hidden");
 
 
     if (mission["mission/story-after"].length > 0) {
@@ -387,4 +418,11 @@ const next_mission = () => {
 const change_difficulty = (e) => {
     const difficulty_level = e.target.value;
     fill_mission_data(mission, difficulty_level)
+}
+
+const show_phone = () => {
+
+    console.log("show phone!")
+    chat.classList.remove("chat-hidden")
+    disable_show_phone()
 }

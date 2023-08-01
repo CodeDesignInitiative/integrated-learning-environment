@@ -1,7 +1,9 @@
 (ns ile.ui.editor.view
   (:require [ile.ui.components :as components]
             [ile.dictonary.translations :as tr]
-            [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
+            [ring.middleware.anti-forgery :refer [*anti-forgery-token*]])
+  (:import (java.time LocalTime)
+           (java.time.format DateTimeFormatter)))
 
 (defn- editor-tabs
   "The editor tab bar"
@@ -93,7 +95,7 @@
                                              (filter
                                                #(= (:mission.content/difficulty %) :easy)
                                                content))]
-    [:<>
+    [:main#block-editor
      [:div#mission-editor
       [:aside#editor-sidebar
        [:nav
@@ -120,10 +122,19 @@
       [:div#tsparticles]
 
       ]
-     [:div#chat
-      [:div
-       [:p#chat-message ""]
-       [:button {:on-click "next_message()"} "Weiter"]]]
+     [:#chat
+      [:#phone
+       [:#status-bar
+        [:#time (.format (LocalTime/now) (DateTimeFormatter/ofPattern "HH:mm"))]]
+       [:#chat-window
+        [:#chat-messages ""]
+        [:button#chat-next-btn {:on-click "next_message()"} "Weiter"]]
+
+       [:#phone-on-btn]
+       [:#phone-volup-btn]
+       [:#phone-voldown-btn]]
+      [:#close-phone]
+      ]
      [:div#overlay.hidden
       [:div
        [:h2 "Gut gemacht!"]
