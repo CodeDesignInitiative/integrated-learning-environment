@@ -46,7 +46,7 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     }
     hidden_css = content["mission.content/hidden-css"]
     hidden_html = content["mission.content/hidden-html"]
-    explanation_node.innerHTML += content["mission.content/explanation"]
+    explanation_node.innerHTML += chat_message_to_html(content["mission.content/explanation"])
     const blocks = content["mission.content/result"]
     mode = content["mission.content/mode"];
     const wrong_blocks = content["mission.content/wrong-blocks"]
