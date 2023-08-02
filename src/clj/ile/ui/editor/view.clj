@@ -101,13 +101,13 @@
       [:aside#editor-sidebar
        [:nav
         [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
+        [:h3 (:mission/name mission)]
         [:select {:on-change "change_difficulty(event)"}
          [:option {:value    :easy
                    :selected true} "Einfach"]
          [:option {:value :medium} "Mittel"]
          [:option {:value :hard} "Schwer"]
-         ]
-        [:h3 (:mission/name mission)]]
+         ]]
        [:div#editor
         [:div
          [:div#target

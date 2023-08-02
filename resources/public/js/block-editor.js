@@ -28,8 +28,6 @@ const shuffleArray = (array) => {
 
 
 const fill_mission_data = (mission, difficulty = "easy") => {
-    console.log(mission);
-
     let content;
     switch (difficulty) {
         case "easy":
@@ -434,6 +432,7 @@ const next_mission = () => {
 const change_difficulty = (e) => {
     const difficulty_level = e.target.value;
     fill_mission_data(mission, difficulty_level)
+    target_list.innerHTML = `<code class="placeholder">?</code>`
 }
 
 const show_phone = () => {

@@ -303,6 +303,17 @@ and (orientation: landscape) {
 
 #editor-sidebar > nav {
     padding: 0 0 var(--d-3);
+    align-items: center;
+    gap: var(--d-2);
+}
+
+#editor-sidebar > nav select {
+    max-width: 120px;
+    align-self: stretch;
+}
+
+#editor-sidebar > nav h3 {
+    text-align: center;
 }
 
 #editor-tabs {
