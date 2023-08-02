@@ -366,22 +366,19 @@ const next_message = () => {
     if (!story_after) {
         if (!pre_mission_chat_done) {
             if (mission["mission/story-before"].length > 0) {
-                if (chat_messages.innerText === "") {
-                    chat_messages.innerHTML +=
-                        to_image_or_text(mission["mission/story-before"][0])
+                if (current_message < mission["mission/story-before"].length) {
+                    chat_messages.innerHTML += to_image_or_text(mission["mission/story-before"][current_message])
+                    current_message = current_message + 1
                 } else {
-                    if (current_message < mission["mission/story-before"].length - 1) {
-                        chat_messages.innerHTML += to_image_or_text(mission["mission/story-before"][current_message + 1])
-                        current_message = current_message + 1
-                    } else {
-                        chat.classList.add("chat-hidden");
-                        // chat_next_btn.classList.add("hidden")
-                        pre_mission_chat_done = true;
-                        current_message = 0;
-                        setTimeout(() => enable_show_phone(), 200)
-                    }
+                    chat.classList.add("chat-hidden");
+                    pre_mission_chat_done = true;
+                    current_message = 0;
+                    setTimeout(() => enable_show_phone(), 200)
                 }
-                chat_messages.scrollTop = chat_messages.scrollHeight;
+                setTimeout(() => {
+                    chat_messages.scrollTop = chat_messages.scrollHeight;
+                }, 200)
+
             } else {
                 chat_messages.classList.add("chat-hidden");
             }
@@ -393,6 +390,7 @@ const next_message = () => {
         if (current_message < mission["mission/story-after"].length) {
             chat_messages.innerHTML += to_image_or_text(mission["mission/story-after"][current_message])
             current_message = current_message + 1;
+            console.log("333")
             chat_messages.scrollTop = chat_messages.scrollHeight;
         } else {
             next_mission()

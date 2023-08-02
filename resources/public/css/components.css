@@ -705,6 +705,7 @@ and (orientation: landscape) {
 #chat > #phone > #chat-window > #chat-messages img {
     max-height: 80%;
     width: auto;
+    border-radius: 12px;
 }
 
 #chat .chat-message {
