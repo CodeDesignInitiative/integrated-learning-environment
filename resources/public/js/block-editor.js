@@ -8,6 +8,7 @@ const fetch_url = host + "/api/mission/" + mission_id
 const evaluate_btn = document.getElementById("evalute-btn")
 const chat_next_btn = document.getElementById("chat-next-btn")
 const phone = document.getElementById("phone")
+const explanation_node = document.getElementById("explanation")
 let phone_hidden = false;
 
 
@@ -45,6 +46,7 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     }
     hidden_css = content["mission.content/hidden-css"]
     hidden_html = content["mission.content/hidden-html"]
+    explanation_node.innerHTML += content["mission.content/explanation"]
     const blocks = content["mission.content/result"]
     mode = content["mission.content/mode"];
     const wrong_blocks = content["mission.content/wrong-blocks"]
@@ -197,7 +199,11 @@ const evaluate_code = () => {
         story_after = true;
         overlay.classList.toggle("hidden")
     } else {
-        alert("Das scheint nicht richtig zu sein. Versuche es noch einmal anders :)")
+        alert("Das scheint nicht richtig zu sein. " +
+            "Versuche es noch einmal anders :) \n \n" +
+            "So sollte es aussehen: \n" +
+            content["mission.content/hint"]
+        )
     }
 }
 

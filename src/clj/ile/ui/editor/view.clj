@@ -113,7 +113,10 @@
          [:div#target
           [:code.placeholder "?"]]]
         [:div
-         [:div#selection]]]
+         [:div#selection]]
+        [:div
+         [:p [:em "Hinweis"]]
+         [:#explanation]]]
        [:div
         [:button#evaluate-btn {:on-click "evaluate_code()"} "Prüfen"]]
        #_(hidden-block-code hidden-html hidden-css result wrong-blocks)]

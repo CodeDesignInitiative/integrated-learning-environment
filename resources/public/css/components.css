@@ -585,6 +585,11 @@ and (orientation: landscape) {
     border-radius: var(--d-1);
 }
 
+#mission-editor #explanation {
+    font-family: Inter, sans-serif;
+
+}
+
 .ghost {
     opacity: .5;
     background: var(--mint-1) !important;
@@ -604,6 +609,8 @@ and (orientation: landscape) {
     height: 100vh;
     z-index: 999;
     background: rgba(0, 0, 0, 0.69);
+    left: 0;
+    transition: left 0.3s ease-in-out, background-color 0.5s ease-in;
 }
 
 .hidden {
