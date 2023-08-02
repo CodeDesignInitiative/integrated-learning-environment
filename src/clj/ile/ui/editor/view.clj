@@ -91,19 +91,20 @@
 (defn block-editor [lang {:mission/keys [world step story-before
                                          story-after content] :as mission}]
   (let [{:mission.content/keys [hidden-html hidden-css
-                result mode wrong-blocks] :as mission-content} (first
-                                             (filter
-                                               #(= (:mission.content/difficulty %) :easy)
-                                               content))]
+                                result mode wrong-blocks] :as mission-content}
+        (first
+          (filter
+            #(= (:mission.content/difficulty %) :easy)
+            content))]
     [:main#block-editor
      [:div#mission-editor
       [:aside#editor-sidebar
        [:nav
         [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
         [:select {:on-change "change_difficulty(event)"}
-         [:option {:value :easy
+         [:option {:value    :easy
                    :selected true} "Einfach"]
-         [:option {:value :medium } "Mittel"]
+         [:option {:value :medium} "Mittel"]
          [:option {:value :hard} "Schwer"]
          ]
         [:h3 (:mission/name mission)]]

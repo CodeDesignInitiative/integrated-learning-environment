@@ -58,7 +58,17 @@
 (defn map-mission-form
   [{:strs [mission_name _mission_world mission_step
            mission_story-before mission_story-after
-           mission-content_mode-easy mission-content_mode-medium
+           mission-content_input-type-easy
+           mission-content_input-type-medium
+           mission-content_input-type-hard
+           mission-content_hint-easy
+           mission-content_hint-medium
+           mission-content_hint-hard
+           mission-content_explanation-easy
+           mission-content_explanation-medium
+           mission-content_explanation-hard
+           mission-content_mode-easy
+           mission-content_mode-medium
            mission-content_mode-hard
            mission-content_easy mission-content_easy-wrong
            mission-content_medium mission-content_medium-wrong
@@ -72,7 +82,12 @@
             :story-before (vector-from-string-lines mission_story-before)
             :story-after  (vector-from-string-lines mission_story-after)
             :content      [#:mission.content{:difficulty   :easy
+                                             :hint         mission-content_hint-easy
+                                             :explanation
+                                             mission-content_explanation-easy
                                              :mode         (keyword mission-content_mode-easy)
+                                             :input-type   (keyword
+                                                             mission-content_input-type-easy)
                                              :hidden-html  (or mission-content_hidden-html-easy "")
                                              :hidden-css   (or mission-content_hidden-css-easy "")
                                              :result       (vector-from-string-lines
@@ -80,7 +95,12 @@
                                              :wrong-blocks (vector-from-string-lines
                                                              mission-content_easy-wrong)}
                            #:mission.content{:difficulty   :medium
+                                             :hint         mission-content_hint-medium
+                                             :explanation
+                                             mission-content_explanation-medium
                                              :mode         (keyword mission-content_mode-medium)
+                                             :input-type   (keyword
+                                                             mission-content_input-type-medium)
                                              :hidden-html  (or mission-content_hidden-html-medium "")
                                              :hidden-css   (or mission-content_hidden-css-medium "")
                                              :result       (vector-from-string-lines
@@ -88,7 +108,12 @@
                                              :wrong-blocks (vector-from-string-lines
                                                              mission-content_medium-wrong)}
                            #:mission.content{:difficulty   :hard
+                                             :hint         mission-content_hint-hard
+                                             :explanation
+                                             mission-content_explanation-hard
                                              :mode         (keyword mission-content_mode-hard)
+                                             :input-type   (keyword
+                                                             mission-content_input-type-hard)
                                              :hidden-html  (or mission-content_hidden-html-hard "")
                                              :hidden-css   (or mission-content_hidden-css-hard "")
                                              :result       (vector-from-string-lines

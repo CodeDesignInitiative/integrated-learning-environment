@@ -203,6 +203,7 @@ const evaluate_code = () => {
 
 const party_hard = () =>
     tsParticles.load("tsparticles", {
+        "duration": 5,
         "fullScreen": {
             "zIndex": 1
         },

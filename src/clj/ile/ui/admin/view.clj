@@ -71,9 +71,11 @@
   (first (filter (fn [{:mission.content/keys [difficulty] :as c}]
                    (= difficulty given-difficulty)) content)))
 
-(defn- mission-content [{:mission.content/keys [mode result hidden-html hidden-css
-                                               wrong-blocks]}
-                        difficulty]
+(defn- mission-content
+  [{:mission.content/keys [mode result hidden-html hidden-css
+                           input-type
+                           wrong-blocks hint explanation]}
+   difficulty]
   [:<>
    [:label "Modus"]
    [:select {:name (str "mission-content_mode-" difficulty)}
@@ -81,6 +83,25 @@
               :selected (when (= mode :html) "selected")} "HTML"]
     [:option {:value    "css"
               :selected (when (= mode :css) "selected")} "CSS"]]
+
+
+   [:label "Eingabe Typ"]
+   [:select {:name (str "mission-content_input-type-" difficulty)}
+    [:option {:value    "block"
+              :selected (when (= input-type :block) "selected")} "Block Editor"]
+    [:option {:value    "text"
+              :selected (when (= input-type :text) "selected")} "Text Editor"]]
+
+   [:label "Erklärung"]
+   [:p "Erklärung für die Mission im Editor"]
+   [:textarea {:value explanation
+               :name  (str "mission-content_explanation-" difficulty)}]
+
+   [:label "Hinweis"]
+   [:p "Hinweis, wenn falsche Eingabe getätigt wurde."]
+   [:textarea {:value hint
+               :name  (str "mission-content_hint-" difficulty)}]
+
    [:label "Code"]
    [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
    [:textarea {:value (vector-to-multiline result)
