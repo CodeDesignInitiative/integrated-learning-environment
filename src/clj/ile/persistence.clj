@@ -67,14 +67,19 @@
 ;; refactor below to own persistence NS
 ;;
 
-(defn create-user
-  [user]
-  (put-in-db-and-wait user)
-  user)
 
 (defn find-user
   [email]
   (find-first '{:find  [(pull ?user [* :ile/user])]
-                :where [[?user :xt/id email]]
+                :where [(or [?user :xt/id email]
+                            [?user :user/email email])]
                 :in    [[email]]}
               email))
+
+(defn create-user
+  [{:xt/keys [id] :as user}]
+  (if (find-user id)
+    :user-already-exists
+    (do (put-in-db-and-wait user)
+        user))
+  )

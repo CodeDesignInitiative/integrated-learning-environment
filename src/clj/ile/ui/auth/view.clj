@@ -73,7 +73,7 @@
    [:button {:type "submit"}
     (tr/tr lang :login/register) " →"]])
 
-(defn register-page [lang]
+(defn register-page [lang & status]
   [:<>
    [:nav
     [:a.button {:href (tr/url lang "/")} "← " "Startseite"]
@@ -81,6 +81,8 @@
    [:main#register-page
     [:div
      [:h1 (tr/tr lang :login/register)]
+     (when status
+       [:p "Nutzer existiert schon"])
      (signup-form lang)]
     [:aside
      [:h2 (tr/tr lang :login/important)]

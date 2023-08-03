@@ -37,17 +37,21 @@
         username (get-in request [:form-params "username"])
         user (persistence/find-user email)
         session (:session request)]
+    (println "user")
     (println user)
     (if user
       (do
         (println "\nUser already exists\n\n")
         (response/redirect "/login"))
-      (let [user (persistence/create-user {:xt/id         email
+      (let [user (persistence/create-user {:xt/id         username
                                            :user/password (password/encrypt password)
-                                           :user/name     username})
-            updated-session (assoc session :identity (keyword email))]
-        (-> (response/redirect "/")
-            (assoc :session updated-session))))))
+                                           :user/mail     email})]
+        (if (not= user :user-already-exists)
+          (-> (response/redirect "/")
+              (assoc :session (assoc session :identity (keyword email))))
+          (let [lang (tr/lang request)]
+            (layout/render-page
+              (view/register-page lang :user-already-exists))))))))
 
 (defn logout
   [request]
@@ -61,7 +65,8 @@
                   [:link {:rel  :stylesheet
                           :href "/css/base.css?v=1"}]]
                  [:body.row.full-height
-                  [:h1 "Logged Out"]]])}
+                  [:h1 "Logged Out"]
+                  [:a {:href "/"} "Zum Start"]]])}
 
     "text/html; charset=utf-8")
   #_(-> (response/redirect "/login")
