@@ -97,19 +97,7 @@ new Sortable(target_list, {
     filter: '.placeholder',
     animation: 150,
     onSort: (evt) => {
-
-        setTimeout(() => {
-            if (evt.to.childElementCount < 1) {
-                evt.to.appendChild(placeholder)
-            }
-            if (evt.to.querySelector(".placeholder") != null
-                && evt.from.childElementCount > 1) {
-                evt.to.childNodes.forEach(child => child.className === "placeholder" ? evt.to.removeChild(child) : null)
-            }
-
             on_input_change()
-        }, 200)
-
     },
     ghostClass: 'ghost',
     dragClass: 'drag',
@@ -121,16 +109,6 @@ new Sortable(selection_list, {
     group: 'shared',
     filter: '.placeholder',
     animation: 150,
-    onSort: (evt) => {
-        if (evt.from.childElementCount < 1) {
-            evt.from.appendChild(placeholder)
-        }
-        if (evt.from.querySelector(".placeholder") != null
-            && evt.from.childElementCount > 1) {
-            evt.from.childNodes.forEach(child => child.className === "placeholder" ? evt.from.removeChild(child) : null)
-
-        }
-    },
     ghostClass: 'ghost',
     dragClass: 'drag',
     chosenClass: 'chosen'
@@ -436,7 +414,6 @@ const next_mission = () => {
 const change_difficulty = (e) => {
     const difficulty_level = e.target.value;
     fill_mission_data(mission, difficulty_level)
-    target_list.innerHTML = `<code class="placeholder">?</code>`
 }
 
 const show_phone = () => {

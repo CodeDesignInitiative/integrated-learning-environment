@@ -110,8 +110,9 @@
          ]]
        [:div#editor
         [:div
+         [:div#target-hint "Ziehe Blöcke hier hin"]
          [:div#target
-          [:code.placeholder "?"]]]
+          ]]
         [:div
          [:div#selection]]
         [:div

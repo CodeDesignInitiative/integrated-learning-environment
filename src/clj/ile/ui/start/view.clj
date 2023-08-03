@@ -10,11 +10,11 @@
      {:src "/img/logo_play_learn.svg"
       :alt "App Icon mit Aufschrift: play + learn"}]]
    [:a.tile#login-area
-    {:href (tr/url lang "/login")}
+    {:href "/logout"}
     [:img.icon
      {:src "/img/icons/happy-outline.svg"
       :alt "Happy emoji Icon"}]
-    [:h2 (tr/tr lang :login/login)]]
+    [:h2 (tr/tr lang :login/logout)]]
    [:a.tile#story-area
     {:href (tr/url lang "/worlds")}
     [:img#story-peep

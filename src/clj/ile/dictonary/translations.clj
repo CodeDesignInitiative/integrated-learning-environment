@@ -14,6 +14,7 @@
 
     :login
     {:login                  "Anmelden"
+     :logout                 "Abmelden"
      :register               "Konto erstellen"
      :no-account?            "Noch kein Konto?"
      :site-terms             "Nutzungsbedingungen"

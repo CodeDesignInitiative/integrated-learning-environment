@@ -565,14 +565,12 @@ and (orientation: landscape) {
     min-height: calc(44px * 2 + 16px);
 }
 
-#mission-editor .placeholder {
-    background-color: var(--coral-primary);
-    border-radius: 999px;
-    width: 1rem;
+#mission-editor #target-hint {
     text-align: center;
-    border: 2px solid var(--dark-blue);
     padding: 8px 12px;
-    box-shadow: 4px 4px 0 var(--dark-blue);
+    color: gray;
+    position: static;
+    font-size: 0.8rem;
 }
 
 #mission-editor #selection {
