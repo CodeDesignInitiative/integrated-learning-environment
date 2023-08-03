@@ -15,7 +15,6 @@
     [:img {:src "/img/icons/mail.svg"}]
     [:input#email
      {:name        "email"
-      :type        "email"
       :placeholder (tr/tr lang :login/user-name-placeholder)}]]
    #_[:label {:for "email"}
       (tr/tr lang :login/email)]
