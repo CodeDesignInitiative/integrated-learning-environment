@@ -97,15 +97,19 @@ new Sortable(target_list, {
     filter: '.placeholder',
     animation: 150,
     onSort: (evt) => {
-        if (evt.to.childElementCount < 1) {
-            evt.to.appendChild(placeholder)
-        }
-        if (evt.to.querySelector(".placeholder") != null
-            && evt.from.childElementCount > 1) {
-            evt.to.childNodes.forEach(child => child.className === "placeholder" ? evt.to.removeChild(child) : null)
-        }
 
-        on_input_change()
+        setTimeout(() => {
+            if (evt.to.childElementCount < 1) {
+                evt.to.appendChild(placeholder)
+            }
+            if (evt.to.querySelector(".placeholder") != null
+                && evt.from.childElementCount > 1) {
+                evt.to.childNodes.forEach(child => child.className === "placeholder" ? evt.to.removeChild(child) : null)
+            }
+
+            on_input_change()
+        }, 200)
+
     },
     ghostClass: 'ghost',
     dragClass: 'drag',
