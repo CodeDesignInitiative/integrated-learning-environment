@@ -225,7 +225,7 @@
   [:<>
    [:nav
     [:a.button {:href "/admin"} "Zurück"]
-    [:a.button {:href "/admin/story/new"} "Neue Mission"]]
+    [:a.button {:href "/admin/story/new/de"} "Neue Mission"]]
    [:main#story-page
     [:h1 "Stories"]
     (for [[world-key world-missions] missions]

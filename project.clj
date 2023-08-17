@@ -70,7 +70,7 @@
                                     [cheshire "5.11.0"]
                                     ; testcontainer
                                     [clj-test-containers "0.7.4"]
-                                    [org.testcontainers/postgresql "1.17.6"]
+                                    [org.testcontainers/postgresql "1.18.3"]
                                     ; kaocha
                                     [lambdaisland/kaocha "1.0.861"]
                                     [lambdaisland/kaocha-cloverage "1.0-45"]
