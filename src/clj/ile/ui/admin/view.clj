@@ -76,7 +76,8 @@
                            input-type
                            wrong-blocks hint explanation]}
    difficulty]
-  [:<>
+  [:div.form-cols.hidden
+   {:id (str "content-" difficulty)}
    [:label "Modus"]
    [:select {:name (str "mission-content_mode-" difficulty)}
     [:option {:value    "html"
@@ -92,32 +93,39 @@
     [:option {:value    "text"
               :selected (when (= input-type :text) "selected")} "Text Editor"]]
 
-   [:label "Erklärung"]
-   [:p "Erklärung für die Mission im Editor"]
+   [:div
+    [:label "Erklärung"]
+    [:p "Erklärung für die Mission im Editor"]]
    [:textarea {:value explanation
                :name  (str "mission-content_explanation-" difficulty)}]
 
-   [:label "Hinweis"]
-   [:p "Hinweis, wenn falsche Eingabe getätigt wurde."]
+   [:div
+    [:label "Hinweis"]
+    [:p "Hinweis, wenn falsche Eingabe getätigt wurde."]]
    [:textarea {:value hint
                :name  (str "mission-content_hint-" difficulty)}]
 
-   [:label "Code"]
-   [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]
+   [:div
+    [:label "Code"]
+    [:p "Für jeden Code Snippet eine neue Zeile.\nReihenfolge = korrekte Lösung."]]
    [:textarea {:value (vector-to-multiline result)
                :name  (str "mission-content_" difficulty)}]
 
-   [:label "Falsche Blöcke"]
-   [:p "Für jeden Block eine neue Zeile."]
+   [:div
+    [:label "Falsche Blöcke"]
+    [:p "Für jeden Block eine neue Zeile."]]
    [:textarea {:value (vector-to-multiline wrong-blocks)
                :name  (str "mission-content_" difficulty "-wrong")}]
-   [:label "Verstecktes HTML"]
-   [:p "Valides HTML. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]
+
+   [:div
+    [:label "Verstecktes HTML"]
+    [:p "Valides HTML. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn HTML Aufgabe ist."]]
    [:textarea {:value hidden-html
                :name  (str "mission-content_hidden-html-" difficulty)}]
 
-   [:label "Verstecktes CSS"]
-   [:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]
+   [:div
+    [:label "Verstecktes CSS"]
+    [:p "Valides CSS. $$placeholder$$ setzen wo Eingaben eingefügt werden, wenn CSS Aufgabe ist."]]
    [:textarea {:value hidden-css
                :name  (str "mission-content_hidden-css-" difficulty)}]]
   )
@@ -125,28 +133,39 @@
 (defn edit-mission-page
   [{:mission/keys [name _world step content
                    story-before story-after] :as template
-    :xt/keys [id]}]
-  [:<>
+    :xt/keys [id]}
+   lang]
+  [:form
+   {:action (str "/admin/story/" (or id "new") "/" (clojure.core/name lang))
+    :method :post}
    [:nav
-    [:a.button {:href "/admin/stories"} "Zurück / Abrechen"]]
-   [:main#template-editor
-    [:h1
+    [:a.button {:href "/admin/stories"} "Zurück"]
+    [:h3
      (if (nil? template)
        "Neue Mission anlegen"
-       (str "Mission \"" name "\" bearbeiten"))]
-    [:form.form-tile
-     {:action (str "/admin/story/" (or id "new"))
-      :method :post}
-     (util/hidden-anti-forgery-field)
-     [:label "Name"]
-     [:input {:value    name
-              :required true
-              :name     "mission_name"}]
-     #_[:label "Welt"]
-     ; make html css default for now
-     #_[:input {:value    world
-                :required true
-                :name     "mission_world"}]
+       (str "Mission \"" (lang name) "\" bearbeiten"))]
+    [:button {:type :submit} "Speichern"]]
+   [:main#story-editor
+    (util/hidden-anti-forgery-field)
+    [:div#tabs
+     [:button#general-btn.active
+      {:on-click "(e) => open_tab(e, 'general')"}
+      "Mission"]
+     [:button#story-btn
+      {:on-click "(e) => open_tab(e, 'story')"}
+      "Story"]
+     [:label
+      "Content"]
+     [:button#content-easy-btn
+      {:on-click "open_tab('content-easy')"}
+      "Einfach"]
+     [:button#content-medium-btn
+      {:on-click "open_tab('content-medium')"}
+      "Mittel"]
+     [:button#content-hard-btn
+      {:on-click "open_tab('content-hard')"}
+      "Schwer"]]
+    [:div#general.form-cols
      [:label "Schritt"]
      [:input {:value    step
               :required true
@@ -155,31 +174,52 @@
               :step     1
               :max      999
               :name     "mission_step"}]
-     [:label "Story vorher"]
-     [:p "Für jede Nachricht eine neue Zeile"]
+     [:label "Sprache"]
+     [:#language-select
+      [:a.button
+       {:href  "./de"
+        :class (when (= lang :de) "active")}
+       "Deutsch"]
+      [:a.button
+       {:href  "./ru"
+        :class (when (= lang :ru) "active")}
+       "Russisch"]]
 
-     [:textarea {:value (->
-                          story-before
-                          vector-to-multiline)
-                 :name  "mission_story-before"}]
+     [:label "Name"]
+     [:input {:value    (lang name)
+              :required true
+              :name     "mission_name"}]]
 
-     [:label "Story danach"]
-     [:p "Für jede Nachricht eine neue Zeile"]
-     [:textarea {:value (->
-                          story-after
-                          vector-to-multiline)
-                 :name  "mission_story-after"}]
+    [:#story.hidden
+     [:div.form-cols
+      [:div
+       [:label "Story vorher"]
+       [:p "Für jede Nachricht eine neue Zeile"]]
 
-     [:h2 "Inhalte"]
-     (mission-content (content-for-difficulty content :easy) "easy")
+      [:textarea {:value (->
+                           story-before
+                           lang
+                           vector-to-multiline)
+                  :name  "mission_story-before"}]
 
-     [:h3 "Mittel"]
-     (mission-content (content-for-difficulty content :medium) "medium")
+      [:div
+       [:label "Story danach"]
+       [:p "Für jede Nachricht eine neue Zeile"]]
+      [:textarea {:value (->
+                           story-after
+                           lang
+                           vector-to-multiline)
+                  :name  "mission_story-after"}]]]
 
-     [:h3 "Schwer"]
-     (mission-content (content-for-difficulty content :hard) "hard")
+    (mission-content (content-for-difficulty (lang content) :easy) "easy")
 
-     [:button {:type :submit} "Speichern"]]]])
+    (mission-content (content-for-difficulty (lang content) :medium) "medium")
+
+    (mission-content (content-for-difficulty (lang content) :hard) "hard")
+
+    ]
+   [:script {:src "/js/story-editor.js"}]
+   ])
 
 (defn story-page [missions]
   [:<>
@@ -194,9 +234,9 @@
        (for [{:mission/keys [_world step name]
               :xt/keys      [id]} world-missions]
          [:a.button.stacked
-          {:href (str "/admin/story/" id)}
+          {:href (str "/admin/story/" id "/de")}
           [:h5 (str "Level " step)]
-          [:h3 name]])])]])
+          [:h3 (:de name)]])])]])
 
 (defn admin-page []
   [:<>

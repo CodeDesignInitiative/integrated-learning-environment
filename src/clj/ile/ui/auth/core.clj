@@ -82,6 +82,7 @@
     (layout/render-page
       (view/register-page lang))))
 
+
 (defn redirect-lang-de [r]
   (response/redirect "/de/login"))
 
@@ -93,3 +94,9 @@
                     :get  login-page}]
    ["/:lang/register" {:post register
                        :get  register-page}]])
+
+
+
+(comment
+  (+ 1 1)
+  )

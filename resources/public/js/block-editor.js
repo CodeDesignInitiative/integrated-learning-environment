@@ -31,16 +31,16 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     let content;
     switch (difficulty) {
         case "easy":
-            content = mission["mission/content"][0];
+            content = mission["mission/content"][lang][0];
             break;
         case "medium":
-            content = mission["mission/content"][1];
+            content = mission["mission/content"][lang][1];
             break;
         case "hard":
-            content = mission["mission/content"][2];
+            content = mission["mission/content"][lang][2];
             break;
         default:
-            content = mission["mission/content"][0];
+            content = mission["mission/content"][lang][0];
     }
     hidden_css = content["mission.content/hidden-css"]
     hidden_html = content["mission.content/hidden-html"]
@@ -159,11 +159,11 @@ const on_input_change = () => {
 on_input_change()
 
 const evaluate_code = () => {
-    let content = mission["mission/content"][0]
+    let content = mission["mission/content"][lang][0]
     if (difficulty === "medium") {
-        content = mission["mission/content"][1]
+        content = mission["mission/content"][lang][1]
     } else if (difficulty === "hard") {
-        content = mission["mission/content"][2]
+        content = mission["mission/content"][lang][2]
     }
     const correct_result = content["mission.content/result"]
         .reduce((acc, child) => acc + child, "")
@@ -345,9 +345,9 @@ const to_image_or_text = (msg) => {
 const next_message = () => {
     if (!story_after) {
         if (!pre_mission_chat_done) {
-            if (mission["mission/story-before"].length > 0) {
-                if (current_message < mission["mission/story-before"].length) {
-                    chat_messages.innerHTML += to_image_or_text(mission["mission/story-before"][current_message])
+            if (mission["mission/story-before"][lang].length > 0) {
+                if (current_message < mission["mission/story-before"][lang].length) {
+                    chat_messages.innerHTML += to_image_or_text(mission["mission/story-before"][lang][current_message])
                     current_message = current_message + 1
                 } else {
                     chat.classList.add("chat-hidden");
@@ -367,8 +367,8 @@ const next_message = () => {
             setTimeout(() => enable_show_phone(), 200)
         }
     } else {
-        if (current_message < mission["mission/story-after"].length) {
-            chat_messages.innerHTML += to_image_or_text(mission["mission/story-after"][current_message])
+        if (current_message < mission["mission/story-after"][lang].length) {
+            chat_messages.innerHTML += to_image_or_text(mission["mission/story-after"][lang][current_message])
             current_message = current_message + 1;
             console.log("333")
             chat_messages.scrollTop = chat_messages.scrollHeight;
@@ -384,7 +384,7 @@ const progress = () => {
     chat.classList.remove("chat-hidden");
 
 
-    if (mission["mission/story-after"].length > 0) {
+    if (mission["mission/story-after"][lang].length > 0) {
         next_message()
     } else {
         next_mission()

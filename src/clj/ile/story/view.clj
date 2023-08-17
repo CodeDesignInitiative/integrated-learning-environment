@@ -37,7 +37,7 @@
              :xt/keys      [id]} (get levels idx)]
         [:a {:href (tr/url lang "/world/mission/" id)}
          [:div
-          [:.map-info [:h3 name]]
+          [:.map-info [:h3 (lang name)]]
           [:.map {:class (str "bg" (+ (mod idx 4) 1))}
            [:.level-number (+ idx 1)]]]
          (when (< (+ idx 1) (count levels))

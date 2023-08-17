@@ -83,3 +83,25 @@
     (do (put-in-db-and-wait user)
         user))
   )
+
+
+(defn get-user-password [a]
+  (get a :user/password))
+
+(defn render-html-page [{:keys [name _age height] :as _user}]
+  [:main
+   [:h1 "User"]
+   [:p (str "Name: " name)]
+   [:p (str "Height: " height)]
+   (when (> height 150)
+     [:h2 "Success, you are not a Hobbit!"])])
+
+(comment
+
+  (def user-marv {:name   "Marvin"
+                  :age    "Forever Young"
+                  :height 180})
+
+  (render-html-page user-marv)
+
+  )

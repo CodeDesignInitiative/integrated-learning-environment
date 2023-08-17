@@ -169,7 +169,7 @@ textarea {
     box-shadow: 4px 4px 0 var(--dark-blue);
     margin-bottom: var(--d-2);
 
-    width: 500px;
+    /*width: 500px;*/
     height: 10rem;
 }
 
@@ -194,6 +194,9 @@ input {
     color: var(--dark-blue);
     border-radius: 999px;
     font-size: 1.2rem;
+    border: 2px solid var(--dark-blue);
+    padding: 8px 12px;
+    box-shadow: 4px 4px 0 var(--dark-blue);
 }
 
 input:focus {
@@ -203,9 +206,6 @@ input:focus {
 
 form > input, .form-tile > input {
     width: 300px;
-    border: 2px solid var(--dark-blue);
-    padding: 8px 12px;
-    box-shadow: 4px 4px 0 var(--dark-blue);
     margin-bottom: var(--d-2);
 
 }

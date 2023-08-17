@@ -25,17 +25,19 @@
 
 (s/def :mission/world keyword?)
 (s/def :mission/step int?)
-(s/def :mission/name string?)
-(s/def :mission/content (s/coll-of :ile/mission.content))
-(s/def :mission/story-before vector?)
-(s/def :mission/story-after vector?)
+(s/def :mission/name (s/map-of keyword? string?))
+(s/def :mission/content (s/map-of keyword? (s/coll-of :ile/mission.content)))
+(s/def :mission/story-before (s/map-of keyword? vector?))
+(s/def :mission/story-after (s/map-of keyword? vector?))
+
 
 (s/def :ile/mission
   (s/keys :req [:mission/world
                 :mission/step
                 :mission/name
                 :mission/content]
-          :opt [:mission/story-after
+          :opt [:mission/language
+                :mission/story-after
                 :mission/story-before]))
 
 (s/def :ile/persistable-mission

@@ -4,7 +4,7 @@
 #legal {
     position: fixed;
     bottom: 4px;
-    left: 4px;
+    right: 4px;
     display: flex;
     gap: 12px;
     align-items: center;
@@ -803,4 +803,86 @@ main#templates-page {
     flex-direction: column;
     gap: 16px;
 
+}
+
+
+/* ---------------------------------------------------- */
+
+/* admin page */
+
+#story-editor {
+    display: flex;
+    flex-direction: column;
+    padding: var(--d-3);
+}
+
+#story-editor details {
+    border: 2px solid black;
+    padding: var(--d-2);
+    border-radius: var(--d-3);
+    background-color: white;
+}
+
+.form-cols {
+    display: grid;
+    gap: var(--d-3);
+    grid-template-columns: 1fr 2fr;
+    background-color: white;
+    border: 2px solid black;
+    padding: var(--d-3);
+    border-radius: 0 var(--d-3) var(--d-3) var(--d-3);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+#story-editor details > summary {
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#story-editor details label {
+    margin-top: var(--d-2);
+}
+
+#language-select {
+    display: flex;
+    gap: var(--d-2);
+}
+
+#language-select a.active {
+    background-color: var(--rose-1);
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+#tabs {
+    display: flex;
+    align-items: center;
+    gap: var(--d-2);
+}
+
+#tabs button {
+    border-radius: var(--d-3) var(--d-3) 0 0;
+    box-shadow: none;
+    border-bottom: none;
+}
+
+#tabs label {
+    margin-left: var(--d-2);
+}
+
+#tabs button:hover {
+    transform: none;
+    text-decoration: underline;
+    background-color: var(--lilac-4);
+}
+
+#tabs button.active {
+    margin-bottom: -4px;
+    z-index: 99;
+    background-color: white;
+    text-decoration: underline;
 }

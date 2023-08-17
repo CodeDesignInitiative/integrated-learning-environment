@@ -5,7 +5,8 @@
     [ile.templates.core :as templates]
     [ile.ui.admin.view :as view]
     [ile.story.core :as story]
-    [ile.util :as util]))
+    [ile.util :as util]
+    [ring.util.response :as response]))
 
 (defn users-page [request]
   (view/users-page))
@@ -41,10 +42,22 @@
   (let [missions (story/find-all-missions)]
     (view/story-page (sort-by :mission/step (group-by :mission/world missions)))))
 
+(defn- migrate-mission [{:mission/keys [name story-before story-after content] :as mission}]
+  (merge mission
+         #:mission{:name {:de name}
+                   :story-before {:de story-before}
+                   :story-after {:de story-after}
+                   :content {:de content}}))
+
 (defn mission-editor-page [request]
   (let [mission-id (util/get-path-param-as-uuid request :id)
+        lang (keyword (util/get-path-param request :lang))
         mission (story/find-mission mission-id)]
-    (view/edit-mission-page mission)))
+    (if (-> mission :mission/name map?)
+      (view/edit-mission-page mission lang)
+      (let [mission' (migrate-mission mission)]
+        (story/update-mission mission')
+        (view/edit-mission-page mission' lang)))))
 
 (defn vector-from-string-lines [input]
   (if-not (empty? input)
@@ -75,64 +88,79 @@
            mission-content_hard mission-content_hard-wrong
            mission-content_hidden-html-easy mission-content_hidden-css-easy
            mission-content_hidden-html-medium mission-content_hidden-css-medium
-           mission-content_hidden-html-hard mission-content_hidden-css-hard] :as params}]
-  #:mission{:name         mission_name
+           mission-content_hidden-html-hard mission-content_hidden-css-hard] :as params}
+   lang]
+  #:mission{:name         {lang mission_name}
             :world        :html-css                         ; (keyword mission_world)
             :step         (Integer/parseInt mission_step)
-            :story-before (vector-from-string-lines mission_story-before)
-            :story-after  (vector-from-string-lines mission_story-after)
-            :content      [#:mission.content{:difficulty   :easy
-                                             :hint         mission-content_hint-easy
-                                             :explanation
-                                             mission-content_explanation-easy
-                                             :mode         (keyword mission-content_mode-easy)
-                                             :input-type   (keyword
-                                                             mission-content_input-type-easy)
-                                             :hidden-html  (or mission-content_hidden-html-easy "")
-                                             :hidden-css   (or mission-content_hidden-css-easy "")
-                                             :result       (vector-from-string-lines
-                                                             mission-content_easy)
-                                             :wrong-blocks (vector-from-string-lines
-                                                             mission-content_easy-wrong)}
-                           #:mission.content{:difficulty   :medium
-                                             :hint         mission-content_hint-medium
-                                             :explanation
-                                             mission-content_explanation-medium
-                                             :mode         (keyword mission-content_mode-medium)
-                                             :input-type   (keyword
-                                                             mission-content_input-type-medium)
-                                             :hidden-html  (or mission-content_hidden-html-medium "")
-                                             :hidden-css   (or mission-content_hidden-css-medium "")
-                                             :result       (vector-from-string-lines
-                                                             mission-content_medium)
-                                             :wrong-blocks (vector-from-string-lines
-                                                             mission-content_medium-wrong)}
-                           #:mission.content{:difficulty   :hard
-                                             :hint         mission-content_hint-hard
-                                             :explanation
-                                             mission-content_explanation-hard
-                                             :mode         (keyword mission-content_mode-hard)
-                                             :input-type   (keyword
-                                                             mission-content_input-type-hard)
-                                             :hidden-html  (or mission-content_hidden-html-hard "")
-                                             :hidden-css   (or mission-content_hidden-css-hard "")
-                                             :result       (vector-from-string-lines
-                                                             mission-content_hard)
-                                             :wrong-blocks (vector-from-string-lines
-                                                             mission-content_hard-wrong)}]})
+            :story-before {lang (vector-from-string-lines mission_story-before)}
+            :story-after  {lang (vector-from-string-lines mission_story-after)}
+            :content      {lang [#:mission.content{:difficulty   :easy
+                                                   :hint         mission-content_hint-easy
+                                                   :explanation
+                                                   mission-content_explanation-easy
+                                                   :mode         (keyword mission-content_mode-easy)
+                                                   :input-type   (keyword
+                                                                   mission-content_input-type-easy)
+                                                   :hidden-html  (or mission-content_hidden-html-easy "")
+                                                   :hidden-css   (or mission-content_hidden-css-easy "")
+                                                   :result       (vector-from-string-lines
+                                                                   mission-content_easy)
+                                                   :wrong-blocks (vector-from-string-lines
+                                                                   mission-content_easy-wrong)}
+                                 #:mission.content{:difficulty   :medium
+                                                   :hint         mission-content_hint-medium
+                                                   :explanation
+                                                   mission-content_explanation-medium
+                                                   :mode         (keyword mission-content_mode-medium)
+                                                   :input-type   (keyword
+                                                                   mission-content_input-type-medium)
+                                                   :hidden-html  (or mission-content_hidden-html-medium "")
+                                                   :hidden-css   (or mission-content_hidden-css-medium "")
+                                                   :result       (vector-from-string-lines
+                                                                   mission-content_medium)
+                                                   :wrong-blocks (vector-from-string-lines
+                                                                   mission-content_medium-wrong)}
+                                 #:mission.content{:difficulty   :hard
+                                                   :hint         mission-content_hint-hard
+                                                   :explanation
+                                                   mission-content_explanation-hard
+                                                   :mode         (keyword mission-content_mode-hard)
+                                                   :input-type   (keyword
+                                                                   mission-content_input-type-hard)
+                                                   :hidden-html  (or mission-content_hidden-html-hard "")
+                                                   :hidden-css   (or mission-content_hidden-css-hard "")
+                                                   :result       (vector-from-string-lines
+                                                                   mission-content_hard)
+                                                   :wrong-blocks (vector-from-string-lines
+                                                                   mission-content_hard-wrong)}]}})
+
+(defn merge-mission [mission new-mission]
+  (-> (merge-with merge
+                  (dissoc mission :mission/world :mission/step :xt/id)
+                  (dissoc new-mission :mission/world :mission/step))
+      (assoc :mission/world (:mission/world new-mission))
+      (assoc :mission/step (:mission/step new-mission))
+      (assoc :xt/id (:xt/id mission))))
 
 (defn mission-post-page [request]
   (let [mission-id (util/get-path-param-as-uuid request :id)
-        mission (:form-params request)
-        mission' (map-mission-form mission)]
+        lang (keyword (util/get-path-param request :lang))
+        mission (story/find-mission mission-id)
+        posted-mission (:form-params request)
+        posted-mission' (map-mission-form posted-mission lang)]
+    (clojure.pprint/pprint posted-mission')
     (if-not (nil? mission-id)
       (story/update-mission
-        (merge {:xt/id mission-id} mission'))
-      (story/create-mission mission'))
+        (merge-mission mission posted-mission'))
+      (story/create-mission posted-mission'))
     (mission-editor-page request)))
 
 (defn admin-page [_request]
   (view/admin-page))
+
+(defn redirect-mission-editor-page [request]
+  (response/redirect (str (:uri request) "/de")))
 
 (def routes
   ["/admin"
@@ -142,5 +170,6 @@
    ["/template/:id" {:get  template-edit-page
                      :post template-post-page}]
    ["/stories" {:get stories-page}]
-   ["/story/:id" {:get  mission-editor-page
-                  :post mission-post-page}]])
+   ["/story/:id/" {:get redirect-mission-editor-page}]
+   ["/story/:id/:lang" {:get  mission-editor-page
+                        :post mission-post-page}]])

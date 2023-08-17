@@ -14,7 +14,6 @@
 (defn update-mission [story-mission]
   (if (s/valid? :ile/persistable-mission story-mission)
     (do (p/put-in-db-and-wait story-mission)
-        (println story-mission)
         story-mission)
     (s/explain :ile/persistable-mission story-mission)))
 
@@ -48,6 +47,7 @@
                                           :difficulty :easy}]})
 
   (find-all-missions)
+
 
 
   (find-mission #uuid"2de20310-4330-4b33-90db-99234b4d6b49")
