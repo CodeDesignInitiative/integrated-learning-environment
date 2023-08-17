@@ -93,7 +93,11 @@
 (defn login-page [lang]
   [:<>
    [:nav
-    [:a.button {:href (tr/url lang "/")} "← " "Zurück"]]
+    [:a.button
+     {:href "/ru/login"}
+     [:img {:src "/img/icons/language.svg"}]
+     (tr/tr lang :start/language-btn)]
+    #_[:a.button {:href (tr/url lang "/")} "← " (tr/tr lang :navigation/back)]]
    [:main#login-page
     #_[:div
        [:div

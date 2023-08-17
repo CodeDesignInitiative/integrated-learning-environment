@@ -5,6 +5,9 @@
   {:de
    {:missing ":de-de missing text"
 
+    :navigation
+    {:back "Zurück"}
+
     :start
     {:story-tile   "Story"
      :editor-tile  "Editor"
@@ -35,6 +38,9 @@
    :ru
    {:missing ":ru missing text"
 
+    :navigation
+    {:back "Назад"}
+
     :start
     {:story-tile   "Story"
      :editor-tile  "Редактор"
@@ -44,11 +50,16 @@
 
     :login
     {:login                 "регистр"
+     :logout                "Отчетность"
      :register              "зарегистрироваться"
-     ;:user-name "Nutzername"
+     :name-or-email          "Имя пользователя или электронная почта"
+     :no-account?            "Пока нет счета?"
      :user-name-placeholder "hacker_peep_3000 "
      :email                 "электронная почта"
      :email-placeholder     "name@example.com"
+     :no-email-warning       "Если вы не добавляете адрес электронной почты и забыли свой пароль, мы не можем помочь вам изменить ваш пароль."
+     :teacher-account        "Для учителей"
+     :learner-account        "Для учеников"
      :password              "пароль"
      :password-repeat       "повторить пароль"
      :username              "Имя пользователя"}}})

@@ -15,17 +15,18 @@
   (let [email (get-in request [:form-params "email"])
         password (get-in request [:form-params "password"])
         user (persistence/find-user email)
+        lang (tr/lang request)
         session (:session request)]
     (if user
       (if (password/check password (:user/password user))
-        (let [next-url (get-in request [:query-params "next"] "/")
+        (let [next-url (get-in request [:query-params "next"] (str "/" (name lang) "/"))
               updated-session (assoc session :identity (keyword email))]
           (println "\n\nPassword matched\n\n")
           (-> (response/redirect next-url)
               (assoc :session updated-session)))
         (do
           (println "\nWrong password\n\n")
-          (response/redirect "/login")))
+          (response/redirect (str "/" lang "/login"))))
 
       (do
         (println "\nUser does not exist\n\n")
