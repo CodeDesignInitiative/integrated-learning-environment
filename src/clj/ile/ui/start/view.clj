@@ -41,6 +41,7 @@
     [:h2 (tr/tr lang :start/wiki-tile)]]
    [:div#start-button-row
     [:a.button
+     {:href "/ru/"}
      [:img {:src "/img/icons/language.svg"}]
      (tr/tr lang :start/language-btn)]
     [:a.button
