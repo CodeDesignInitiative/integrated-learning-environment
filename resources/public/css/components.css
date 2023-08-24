@@ -886,3 +886,16 @@ main#templates-page {
     background-color: white;
     text-decoration: underline;
 }
+
+/* users */
+
+#users {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: var(--d-3);
+}
+
+#users .tile {
+    background-color: white;
+}

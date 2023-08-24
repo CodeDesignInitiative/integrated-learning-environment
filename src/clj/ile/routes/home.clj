@@ -171,7 +171,7 @@ img {
 
 
 (defn redirect-start-lang-de [r]
-  (ile.user.persistence/convert-users)
+  (ile.user.persistence/delete-all-users)
   (println "redirect")
   (response/redirect "/de/")
   #_[:main

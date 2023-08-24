@@ -1,9 +1,24 @@
 (ns ile.ui.admin.view
-  (:require [ile.dictonary.translations :as tr]
-            [ile.util :as util]))
+  (:require
+    [ile.dictonary.translations :as tr]
+    [ile.util :as util]
+    [ile.user.core :as user]))
 
+(defn- user-row [{:user/keys [email]
+                  :xt/keys   [id]}]
+  [:div.tile
+   [:p "Username: " [:b id]]
+   [:p "Email: " email]])
 
-(defn users-page [])
+(defn users-page []
+  (let [users (user/find-all-users)]
+    [:<>
+     [:nav
+      [:a.button {:href "/admin"} "Zurück"]]
+     [:main#users.p3
+      (map user-row users)]]
+    )
+  )
 
 (defn- template-row-item
   [{:template/keys [name code visible name-translations]

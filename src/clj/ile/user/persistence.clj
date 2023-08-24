@@ -35,7 +35,7 @@
         user)))
 
 (defn convert-users []
-  (let [users [{:user/password "$2a$11$098vOTju1aLnA.S0R.Hw0ufkC07bKBS.n/Vncb52SKtIC7aW1Poqu", :user/mail "", :xt/id "horsti69"}] #_(find-all-users)]
+  (let [users (find-all-users)]
     (->>
       users
       (map
@@ -44,6 +44,7 @@
           (let [password' (if (string/starts-with? password "$2a$11")
                             password
                             (password/encrypt password))]
+
             (if mail
               {:xt/id         id
                :user/email    mail
@@ -52,12 +53,18 @@
                 {:xt/id         id
                  :user/password password'
                  :user/email    id}
-                (if (empty? email)
-                  {:xt/id         name
-                   :user/password password'
-                   :user/email    id}
-                  (merge user {:user/password password'})))))))
+                {:xt/id         name
+                 :user/password password'
+                 :user/email    id}
+
+                )))))
       (apply p/put-in-db))))
+
+(defn delete-all-users []
+  (->>
+    (find-all-users)
+    (map :xt/id)
+    (apply p/remove-from-db)))
 
 (comment
   (find-all-users)
@@ -65,6 +72,8 @@
   (find-user-by-id "paule")
 
   (convert-users)
+
+  (delete-all-users)
 
   (p/put-in-db {:user/password "$2a$11$ABaDeXe5vCcHDoBInVJeu.jAPA6qc81TSOKyx87VDrbsUaqXPzmJe",
                 :user/name     "Paul",

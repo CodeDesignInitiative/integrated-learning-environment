@@ -9,5 +9,8 @@
 (defn find-user-by-email [user-email]
   (persistence/find-user-by-email user-email))
 
+(defn find-all-users []
+  (persistence/find-all-users))
+
 (defn create-user [user]
   (persistence/create-user user))
