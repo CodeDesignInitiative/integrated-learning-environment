@@ -166,16 +166,11 @@ img {
 
 
 (defn chat-screen [requset]
-  (chat-screen/chat-screen html-website/start-chat-with-edna 1 "website1" 1)
-  )
+  (chat-screen/chat-screen html-website/start-chat-with-edna 1 "website1" 1))
 
 
 (defn redirect-start-lang-de [r]
-  (ile.user.persistence/delete-all-users)
-  (println "redirect")
-  (response/redirect "/de/")
-  #_[:main
-   [:a {:href "/de/"} "Deutsch"]])
+  (response/redirect "/de/"))
 
 (def public-routes
   auth-page/routes)

@@ -6,6 +6,7 @@
     [ile.ui.admin.view :as view]
     [ile.story.core :as story]
     [ile.util :as util]
+    [ile.middleware :as middleware]
     [ring.util.response :as response]))
 
 (defn users-page [request]
@@ -164,7 +165,7 @@
   (response/redirect (str (:uri request) "/de")))
 
 (def routes
-  ["/admin"
+  ["/admin" {:middleware [#_middleware/admin-access]}
    ["" {:get admin-page}]
    ["/users" {:get users-page}]
    ["/templates" {:get templates-page}]

@@ -34,46 +34,11 @@
     (do (p/put-in-db-and-wait user)
         user)))
 
-(defn convert-users []
-  (let [users (find-all-users)]
-    (->>
-      users
-      (map
-        (fn [{:user/keys [password name email mail]
-              :xt/keys   [id] :as user}]
-          (let [password' (if (string/starts-with? password "$2a$11")
-                            password
-                            (password/encrypt password))]
-
-            (if mail
-              {:xt/id         id
-               :user/email    mail
-               :user/password password'}
-              (if (empty? name)
-                {:xt/id         id
-                 :user/password password'
-                 :user/email    id}
-                {:xt/id         name
-                 :user/password password'
-                 :user/email    id}
-
-                )))))
-      (apply p/put-in-db))))
-
-(defn delete-all-users []
-  (->>
-    (find-all-users)
-    (map :xt/id)
-    (apply p/remove-from-db)))
 
 (comment
   (find-all-users)
 
   (find-user-by-id "paule")
-
-  (convert-users)
-
-  (delete-all-users)
 
   (p/put-in-db {:user/password "$2a$11$ABaDeXe5vCcHDoBInVJeu.jAPA6qc81TSOKyx87VDrbsUaqXPzmJe",
                 :user/name     "Paul",

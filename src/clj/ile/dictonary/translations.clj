@@ -33,7 +33,7 @@
      :email-placeholder      "z.B. name@example.com"
      :password               "Passwort"
      :password-repeat        "Passwort wiederholen"
-     :username               "Name"}
+     :username               "Nutzer*in Name"}
 
     :register
     {:email "Email (freiwillig)"}}

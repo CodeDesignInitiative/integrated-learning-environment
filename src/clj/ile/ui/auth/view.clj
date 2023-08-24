@@ -9,6 +9,7 @@
   [:form.form-tile {:id     "signin-form"
                     :method :post
                     :action (str "/" (name lang) "/login")}
+   #_[:h3 "Mit Nutzername anmelden"]
    [:label {:for "user-name"}
     (tr/tr lang :login/username)]
    [:.icon-input
@@ -33,6 +34,7 @@
   [:form.form-tile {:id     "signin-form"
                     :method :post
                     :action (str "/" (name lang) "/login-email")}
+   [:h3 "Mit Email anmelden"]
    [:label {:for "email"}
     (tr/tr lang :login/email)]
    [:.icon-input
@@ -128,7 +130,7 @@
     [:div
      [:h1 (tr/tr lang :login/login)]
      (signin-form-user-name lang)
-     (signin-form-email lang)]
+     #_(signin-form-email lang)]
     [:aside
      [:h2 (tr/tr lang :login/no-account?)]
      [:a.button

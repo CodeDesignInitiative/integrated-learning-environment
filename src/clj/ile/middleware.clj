@@ -68,6 +68,15 @@
             "/de/login"
             (str "/login?next=" original-uri)))))))
 
+;(defn- is-admin? [email]
+;  (some #{email} ["paul.hempel@code.design"
+;                  ""])
+;  )
+;
+;(defn admin-access [handler]
+;  (fn [request]
+;    (if ())))
+
 
 (defn wrap-signed-in [handler]
   (fn [{:keys [session] :as req}]

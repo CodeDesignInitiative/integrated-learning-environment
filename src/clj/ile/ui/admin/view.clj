@@ -16,7 +16,7 @@
      [:nav
       [:a.button {:href "/admin"} "Zurück"]]
      [:main#users.p3
-      (map user-row users)]]
+      #_(map user-row users)]]
     )
   )
 
