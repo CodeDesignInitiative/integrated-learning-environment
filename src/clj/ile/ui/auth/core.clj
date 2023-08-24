@@ -1,6 +1,6 @@
 (ns ile.ui.auth.core
   (:require
-    [ile.persistence :as persistence]
+    [ile.user.core :as user]
     [ring.util.http-response :refer [content-type]]
     [crypto.password.bcrypt :as password]
     [ring.util.response :as response]
@@ -12,9 +12,30 @@
 
 
 (defn login [request]
+  (let [user-name (get-in request [:form-params "user-name"])
+        password (get-in request [:form-params "password"])
+        user (user/find-user-by-id user-name)
+        lang (tr/lang request)
+        session (:session request)]
+    (if user
+      (if (password/check password (:user/password user))
+        (let [next-url (get-in request [:query-params "next"] (str "/" (name lang) "/"))
+              updated-session (assoc session :identity (keyword user-name))]
+          (println "\n\nPassword matched\n\n")
+          (-> (response/redirect next-url)
+              (assoc :session updated-session)))
+        (do
+          (println "\nWrong password\n\n")
+          (response/redirect (str "/" lang "/login"))))
+
+      (do
+        (println "\nUser does not exist\n\n")
+        (response/redirect "/login")))))
+
+(defn login-email [request]
   (let [email (get-in request [:form-params "email"])
         password (get-in request [:form-params "password"])
-        user (persistence/find-user email)
+        user (user/find-user-by-email email)
         lang (tr/lang request)
         session (:session request)]
     (if user
@@ -36,7 +57,7 @@
   (let [email (get-in request [:form-params "email"])
         password (get-in request [:form-params "password"])
         username (get-in request [:form-params "username"])
-        user (persistence/find-user email)
+        user (user/find-user-by-id email)
         session (:session request)]
     (println "user")
     (println user)
@@ -44,9 +65,9 @@
       (do
         (println "\nUser already exists\n\n")
         (response/redirect "/login"))
-      (let [user (persistence/create-user {:xt/id         username
-                                           :user/password (password/encrypt password)
-                                           :user/mail     email})]
+      (let [user (user/create-user {:xt/id         username
+                                    :user/password (password/encrypt password)
+                                    :user/email    email})]
         (if (not= user :user-already-exists)
           (-> (response/redirect "/")
               (assoc :session (assoc session :identity (keyword email))))
@@ -93,6 +114,7 @@
    ["/login" {:get redirect-lang-de}]
    ["/:lang/login" {:post login
                     :get  login-page}]
+   ["/:lang/login-email" {:post login-email}]
    ["/:lang/register" {:post register
                        :get  register-page}]])
 

@@ -5,24 +5,43 @@
 
 
 
-(defn signin-form [lang]
+(defn signin-form-user-name [lang]
   [:form.form-tile {:id     "signin-form"
-                     :method :post
-                     :action (str "/" (name lang) "/login")}
+                    :method :post
+                    :action (str "/" (name lang) "/login")}
+   [:label {:for "user-name"}
+    (tr/tr lang :login/username)]
+   [:.icon-input
+    [:img {:src "/img/icons/mail.svg"}]
+    [:input#user-name
+     {:name        "user-name"
+      :placeholder (tr/tr lang :login/user-name-placeholder)}]]
+   [:label {:for "password"}
+    (tr/tr lang :login/password)]
+   [:.icon-input
+    [:img {:src "/img/icons/lock-closed.svg"}]
+    [:input
+     {:name        "password"
+      :required    true
+      :type        :password
+      :placeholder "**********"
+      :min-length  8}]]
+   [:button {:type "submit"}
+    (tr/tr lang :login/login) " →"]])
+
+(defn signin-form-email [lang]
+  [:form.form-tile {:id     "signin-form"
+                    :method :post
+                    :action (str "/" (name lang) "/login-email")}
    [:label {:for "email"}
-    (tr/tr lang :login/name-or-email)]
+    (tr/tr lang :login/email)]
    [:.icon-input
     [:img {:src "/img/icons/mail.svg"}]
     [:input#email
-     {:name        "email"
-      :placeholder (tr/tr lang :login/user-name-placeholder)}]]
-   #_[:label {:for "email"}
-      (tr/tr lang :login/email)]
-   #_[:input#email
-      {:name         "email"
-       :type         "email"
-       :autocomplete "email"
-       :placeholder  (tr/tr lang :login/email-placeholder)}]
+     {:name         "email"
+      :type         "email"
+      :autocomplete "email"
+      :placeholder  (tr/tr lang :login/email-placeholder)}]]
    [:label {:for "password"}
     (tr/tr lang :login/password)]
    [:.icon-input
@@ -38,8 +57,8 @@
 
 (defn signup-form [lang]
   [:form.form-tile {:id     "signup-form"
-                     :method :post
-                     :action (str "/" (name lang) "/register")}
+                    :method :post
+                    :action (str "/" (name lang) "/register")}
    [:label {:for "username"}
     (tr/tr lang :login/username)]
    [:input#email
@@ -47,7 +66,7 @@
      :required    true
      :placeholder (tr/tr lang :login/user-name-placeholder)}]
    [:label {:for "email"}
-    (tr/tr lang :login/email)]
+    (tr/tr lang :register/email)]
    [:input#email
     {:name         "email"
      :type         "email"
@@ -107,7 +126,8 @@
        ]
     [:div
      [:h1 (tr/tr lang :login/login)]
-     (signin-form lang)]
+     (signin-form-user-name lang)
+     (signin-form-email lang)]
     [:aside
      [:h2 (tr/tr lang :login/no-account?)]
      [:a.button
