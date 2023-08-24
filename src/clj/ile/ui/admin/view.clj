@@ -8,7 +8,7 @@
                   :xt/keys   [id]}]
   [:div.tile
    [:p "Username: " [:b id]]
-   [:p "Email: " email]])
+   #_[:p "Email: " email]])
 
 (defn users-page []
   (let [users (user/find-all-users)]
@@ -16,7 +16,7 @@
      [:nav
       [:a.button {:href "/admin"} "Zurück"]]
      [:main#users.p3
-      #_(map user-row users)]]
+      (map user-row users)]]
     )
   )
 
