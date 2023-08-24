@@ -100,9 +100,10 @@
    [:main#register-page
     [:div
      [:h1 (tr/tr lang :login/register)]
+
+     (signup-form lang)
      (when status
-       [:p "Nutzer existiert schon"])
-     (signup-form lang)]
+       [:p "Fehler: Nutzer existiert schon"])]
     [:aside
      [:h2 (tr/tr lang :login/important)]
      [:p (tr/tr lang :login/no-email-warning)]

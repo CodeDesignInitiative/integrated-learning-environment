@@ -8,8 +8,12 @@
   (let [story-mission' (p/with-xt-id story-mission)]
     (if (s/valid? :ile/persistable-mission story-mission')
       (do (p/put-in-db-and-wait story-mission')
-          story-mission')
-      (s/explain :ile/persistable-mission story-mission'))))
+          {:status :success
+           :data   story-mission'}
+          )
+      (do (s/explain :ile/persistable-mission story-mission')
+          {:status :invalid-spec
+           :data   (s/explain-data :ile/persistable-mission story-mission')}))))
 
 (defn update-mission [story-mission]
   (if (s/valid? :ile/persistable-mission story-mission)

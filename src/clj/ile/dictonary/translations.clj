@@ -33,10 +33,12 @@
      :email-placeholder      "z.B. name@example.com"
      :password               "Passwort"
      :password-repeat        "Passwort wiederholen"
-     :username               "Name"}}
+     :username               "Name"}
 
-   :register
-   {:email "Email (freiwillig)"}
+    :register
+    {:email "Email (freiwillig)"}}
+
+
 
    :ru
    {:missing ":ru missing text"

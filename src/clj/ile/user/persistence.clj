@@ -15,10 +15,10 @@
                 email))
 
 
-(defn find-user-by-name
+(defn find-user-by-id
   [id]
   (p/find-first '{:find  [(pull ?user [* :ile/user])]
-                  :where [(or [?user :user/name id])]
+                  :where [(or [?user :xt/id id])]
                   :in    [[id]]}
                 id))
 
@@ -29,7 +29,7 @@
 
 (defn create-user
   [{:xt/keys [id] :as user}]
-  (if (find-user-by-name id)
+  (if (find-user-by-id id)
     :user-already-exists
     (do (p/put-in-db-and-wait user)
         user)))
@@ -62,7 +62,7 @@
 (comment
   (find-all-users)
 
-  (find-user-by-name "test")
+  (find-user-by-id "paule")
 
   (convert-users)
 

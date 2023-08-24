@@ -49,18 +49,14 @@
                    :story-after {:de story-after}
                    :content {:de content}}))
 
-(defn mission-editor-page [request]
+(defn mission-editor-page [request & [error]]
   (let [mission-id (util/get-path-param-as-uuid request :id)
         lang (keyword (util/get-path-param request :lang))
         mission (story/find-mission mission-id)]
-    (if (-> mission :mission/name map?)
-      (view/edit-mission-page mission lang)
-      (let [mission' (migrate-mission mission)]
-        (story/update-mission mission')
-        (view/edit-mission-page mission' lang)))))
+    (view/edit-mission-page mission lang (when error error))))
 
 (defn vector-from-string-lines [input]
-  (if-not (empty? input)
+  (if (not-empty input)
     (->> input
          string/split-lines
          (remove empty?)
@@ -149,12 +145,17 @@
         mission (story/find-mission mission-id)
         posted-mission (:form-params request)
         posted-mission' (map-mission-form posted-mission lang)]
-    (clojure.pprint/pprint posted-mission')
-    (if-not (nil? mission-id)
-      (story/update-mission
-        (merge-mission mission posted-mission'))
-      (story/create-mission posted-mission'))
-    (mission-editor-page request)))
+    (if mission-id
+      (do
+        (story/update-mission (merge-mission mission posted-mission'))
+        (mission-editor-page request))
+      (let [{:keys [status data]} (story/create-mission posted-mission')]
+        (condp = status
+          :success
+          (doall
+            (response/redirect (str "/admin/story/" (:xt/id data) "/" (name lang))))
+          :invalid-spec
+          (mission-editor-page request))))))
 
 (defn admin-page [_request]
   (view/admin-page))

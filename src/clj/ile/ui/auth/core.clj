@@ -57,23 +57,16 @@
   (let [email (get-in request [:form-params "email"])
         password (get-in request [:form-params "password"])
         username (get-in request [:form-params "username"])
-        user (user/find-user-by-id email)
-        session (:session request)]
-    (println "user")
-    (println user)
+        user (user/find-user-by-id username)
+        session (:session request)
+        lang (tr/lang request)]
     (if user
-      (do
-        (println "\nUser already exists\n\n")
-        (response/redirect "/login"))
+      (layout/render-page (view/register-page lang :user-already-exists))
       (let [user (user/create-user {:xt/id         username
                                     :user/password (password/encrypt password)
                                     :user/email    email})]
-        (if (not= user :user-already-exists)
-          (-> (response/redirect "/")
-              (assoc :session (assoc session :identity (keyword email))))
-          (let [lang (tr/lang request)]
-            (layout/render-page
-              (view/register-page lang :user-already-exists))))))))
+        (-> (response/redirect "/")
+            (assoc :session (assoc session :identity (keyword email))))))))
 
 (defn logout
   [request]
@@ -91,8 +84,8 @@
                   [:a {:href "/"} "Zum Start"]]])}
 
     "text/html; charset=utf-8")
-  #_(-> (response/redirect "/login")
-        (assoc :session {})))
+  (-> (response/redirect "/login")
+      (assoc :session {})))
 
 (defn- login-page [request]
   (let [lang (tr/lang request)]

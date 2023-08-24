@@ -134,7 +134,8 @@
   [{:mission/keys [name _world step content
                    story-before story-after] :as template
     :xt/keys [id]}
-   lang]
+   lang
+   [error]]
   [:form
    {:action (str "/admin/story/" (or id "new") "/" (clojure.core/name lang))
     :method :post}
@@ -147,6 +148,8 @@
     [:button {:type :submit} "Speichern"]]
    [:main#story-editor
     (util/hidden-anti-forgery-field)
+    (when error
+      [:p error])
     [:div#tabs
      [:button#general-btn.active
       {:on-click "(e) => open_tab(e, 'general')"}
