@@ -1,9 +1,12 @@
-{:dev true
- :port 3003
+{:dev        true
+ :port       3003
  ;; when :nrepl-port is set the application starts the nREPL server on load
  :nrepl-port 7000
 
- :mail-pw "&KJ_$UFHBJPY^Az-m6yQm8Xkzh36RpwzJadn8qRs"}
+ :mail-pw    "&KJ_$UFHBJPY^Az-m6yQm8Xkzh36RpwzJadn8qRs"
+
+ :test-user  {:user/email "paul.hempel@code.design"
+              :xt/id      "paule"}}
 
 
 ; local user/pw:
