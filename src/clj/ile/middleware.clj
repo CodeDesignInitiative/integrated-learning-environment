@@ -134,6 +134,7 @@
     ((:middleware defaults) handler)
     wrap-security-header
     (wrap-authentication backend)
+    ;wrap-user-to-session
     wrap-session
     wrap-ile-defaults
     wrap-internal-error))

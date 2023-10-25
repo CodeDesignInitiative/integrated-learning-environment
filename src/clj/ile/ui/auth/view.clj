@@ -5,7 +5,7 @@
 
 
 
-(defn signin-form-user-name [lang]
+(defn signin-form-user-name [lang error]
   [:form.form-tile {:id     "signin-form"
                     :method :post
                     :action (str "/" (name lang) "/login")}
@@ -28,7 +28,14 @@
       :placeholder "**********"
       :min-length  8}]]
    [:button {:type "submit"}
-    (tr/tr lang :login/login) " →"]])
+    (tr/tr lang :login/login) " →"]
+   (when error
+     [:p.error [:strong "Fehler: "]
+      (condp = error
+        "user" "Nutzer*in existiert nicht"
+        "password" "Falsches Passwort"
+        :else "Unbekannter Fehler.")])
+   ])
 
 (defn signin-form-email [lang]
   [:form.form-tile {:id     "signin-form"
@@ -78,19 +85,19 @@
    [:label {:for "password"}
     (tr/tr lang :login/password)]
    [:input
-    {:name       "password"
-     :required   true
-     :type       :password
+    {:name        "password"
+     :required    true
+     :type        :password
      :placeholder "**********"
-     :min-length 8}]
+     :min-length  8}]
    [:label {:for "password2"}
     (tr/tr lang :login/password-repeat)]
    [:input
-    {:name       "password2"
-     :required   true
-     :type       :password
+    {:name        "password2"
+     :required    true
+     :type        :password
      :placeholder "**********"
-     :min-length 8}]
+     :min-length  8}]
    [:button {:type "submit"}
     (tr/tr lang :login/register) " →"]])
 
@@ -98,7 +105,7 @@
   [:<>
    [:nav
     [:a.button {:href (tr/url lang "/")} "← " "Startseite"]
-    [:a.button {:href (tr/url lang "/login") } "Zur Anmeldung →"]]
+    [:a.button {:href (tr/url lang "/login")} "Zur Anmeldung →"]]
    [:main#register-page
     [:div
      [:h1 (tr/tr lang :login/register)]
@@ -112,7 +119,7 @@
      [:h2 (tr/tr lang :login/site-terms)]
      [:p (tr/tr lang :login/site-terms-description)]]]])
 
-(defn login-page [lang]
+(defn login-page [lang error]
   [:<>
    [:nav
     [:a.button
@@ -129,7 +136,7 @@
        ]
     [:div
      [:h1 (tr/tr lang :login/login)]
-     (signin-form-user-name lang)
+     (signin-form-user-name lang error)
      #_(signin-form-email lang)]
     [:aside
      [:h2 (tr/tr lang :login/no-account?)]

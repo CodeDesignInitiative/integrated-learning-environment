@@ -45,7 +45,7 @@
          {:href "/admin"}
          [:img {:src "/img/icons/language.svg"}]
          "Admin Area"])
-    (when is-teacher?
+    (when (or is-teacher? is-admin?)
       [:a.button
        {:href "/admin"}
        [:img {:src "/img/icons/language.svg"}]

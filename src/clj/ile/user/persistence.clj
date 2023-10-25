@@ -42,19 +42,14 @@
 
   (p/remove-from-db "paule")
 
-  (p/put-in-db {:user/password (crypto.password.bcrypt/encrypt "test"),
-                :user/name     "test",
-                :xt/id         "test@test.de"}
+  (p/put-in-db {:xt/id         "root"
+                ; password is "rootroot", just encrypted
+                :user/password "$2a$11$CY6BFz9uHSSBZ2o9Q.NMx.dulI7qdrmCt2zLHNgU3vheiv5y3hdvG"
+                :user/email    "paul.hempel@code.design"
+                :user/roles    [:admin]}
                )
 
-  (p/remove-from-db "paul.freelancing@posteo.de"
-                    "paul.hempel@posteo.de"
-                    "asdf@movie.de"
-                    "horsti69"
-                    "Paul"
-                    "test"
-                    "test@test.de"
-                    "qwer@asdf.de")
+  (p/remove-from-db "root")
   )
 
 

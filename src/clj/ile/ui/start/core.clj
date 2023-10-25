@@ -8,6 +8,7 @@
         is-admin? (boolean (some #{:admin} (get-in request [:session :user :user/roles])))
         is-teacher? (boolean (some #{:teacher} (get-in request [:session :user :user/roles])))]
     (println (get-in request [:session :user :user/roles]))
+    (clojure.pprint/pprint (get-in request [:session]))
     (view/start-screen lang is-admin? is-teacher?)))
 
 (def routes

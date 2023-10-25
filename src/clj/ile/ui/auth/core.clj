@@ -1,6 +1,8 @@
 (ns ile.ui.auth.core
   (:require
+    [ile.mount.config :refer [env]]
     [ile.user.core :as user]
+    [ile.util :as util]
     [ring.util.http-response :refer [content-type]]
     [crypto.password.bcrypt :as password]
     [ring.util.response :as response]
@@ -20,17 +22,19 @@
     (if user
       (if (password/check password (:user/password user))
         (let [next-url (get-in request [:query-params "next"] (str "/" (name lang) "/"))
-              updated-session (assoc session :identity (keyword user-name))]
+              updated-session (-> session
+                                  (assoc :identity (keyword user-name))
+                                  (assoc :user user))]
           (println "\n\nPassword matched\n\n")
           (-> (response/redirect next-url)
               (assoc :session updated-session)))
         (do
           (println "\nWrong password\n\n")
-          (response/redirect (str "/" lang "/login"))))
+          (response/redirect (str "/" (name lang) "/login?error=password"))))
 
       (do
         (println "\nUser does not exist\n\n")
-        (response/redirect "/login")))))
+        (response/redirect (str "/" (name lang) "/login?error=user"))))))
 
 (defn login-email [request]
   (let [email (get-in request [:form-params "email"])
@@ -88,9 +92,10 @@
       (assoc :session {})))
 
 (defn- login-page [request]
-  (let [lang (tr/lang request)]
+  (let [lang (tr/lang request)
+        error (get-in request [:params :error])]
     (layout/render-page
-      (view/login-page lang))))
+      (view/login-page lang error))))
 
 (defn- register-page [request]
   (let [lang (tr/lang request)]
@@ -98,11 +103,17 @@
       (view/register-page lang))))
 
 
-(defn redirect-lang-de [r]
+(defn redirect-lang-de [_r]
   (response/redirect "/de/login"))
+
+(defn create-admin-from-credentials [request]
+  (let [admin-user (:admin-credentials env)]
+    (user/create-user admin-user)
+    (response/redirect "/login")))
 
 (def routes
   [""
+   ["/create-admin-from-credentials" {:get create-admin-from-credentials}]
    ["/logout" {:get logout}]
    ["/login" {:get redirect-lang-de}]
    ["/:lang/login" {:post login
