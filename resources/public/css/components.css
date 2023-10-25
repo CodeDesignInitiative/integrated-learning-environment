@@ -899,3 +899,14 @@ main#templates-page {
 #users .tile {
     background-color: white;
 }
+
+.badge {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 4px 12px;
+    background: var(--dusk);
+    border-radius: 999px;
+    margin-right: 8px;
+    font-weight: 600;
+    color: white;
+}

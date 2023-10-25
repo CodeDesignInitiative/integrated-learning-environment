@@ -14,3 +14,9 @@
 
 (defn create-user [user]
   (persistence/create-user user))
+
+(defn make-student [user-id]
+  (persistence/make-student user-id))
+
+(defn make-teacher [user-id]
+  (persistence/make-teacher user-id))

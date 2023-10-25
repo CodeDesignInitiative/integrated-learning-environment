@@ -3,7 +3,7 @@
     [ile.dictonary.translations :as tr]))
 
 
-(defn start-screen [lang]
+(defn start-screen [lang is-admin? is-teacher?]
   [:main#start-screen
    [:div#title
     [:img.logo
@@ -40,6 +40,16 @@
       :alt "Lesezeichen Icon"}]
     [:h2 (tr/tr lang :start/wiki-tile)]]
    [:div#start-button-row
+    #_(when is-admin?
+        [:a.button
+         {:href "/admin"}
+         [:img {:src "/img/icons/language.svg"}]
+         "Admin Area"])
+    (when is-teacher?
+      [:a.button
+       {:href "/admin"}
+       [:img {:src "/img/icons/language.svg"}]
+       "Teacher Area"])
     [:a.button
      {:href "/ru/"}
      [:img {:src "/img/icons/language.svg"}]

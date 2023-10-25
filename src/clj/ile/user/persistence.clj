@@ -38,20 +38,14 @@
 (comment
   (find-all-users)
 
-  (find-user-by-id "paule")
+  (dissoc (find-user-by-id "paule") :user/roles)
 
-  (p/put-in-db {:user/password "$2a$11$ABaDeXe5vCcHDoBInVJeu.jAPA6qc81TSOKyx87VDrbsUaqXPzmJe",
-                :user/name     "Paul",
-                :xt/id         "paul.freelancing@posteo.de"}
-               {:user/password "12345678", :user/name "", :xt/id "paul.hempel@posteo.de"}
-               {:user/password "test1234", :user/name "", :xt/id "asdf@movie.de"}
-               {:user/password "$2a$11$098vOTju1aLnA.S0R.Hw0ufkC07bKBS.n/Vncb52SKtIC7aW1Poqu", :user/mail "", :xt/id "horsti69"}
-               {:user/password "$2a$11$WKyRKzVXneDvHrYknWtQaeoK3xwVeH9z/G1auKZxr/Dvhp37r/fda",
+  (p/remove-from-db "paule")
+
+  (p/put-in-db {:user/password (crypto.password.bcrypt/encrypt "test"),
                 :user/name     "test",
                 :xt/id         "test@test.de"}
-               {:user/password "$2a$11$EZEIva7ENoc1CkM7xB7J1O4WbSeetkm4G0ANb1SpfG.ZH3aE0Kg2i",
-                :user/name     "Paul",
-                :xt/id         "qwer@asdf.de"})
+               )
 
   (p/remove-from-db "paul.freelancing@posteo.de"
                     "paul.hempel@posteo.de"
@@ -62,3 +56,15 @@
                     "test@test.de"
                     "qwer@asdf.de")
   )
+
+
+(defn make-student [user-id]
+  (let [user (find-user-by-id user-id)]
+    (when-not (some #{:admin} (:user/roles user))
+      (p/put-in-db-and-wait (dissoc user :user/roles)))))
+
+
+(defn make-teacher [user-id]
+  (let [user (find-user-by-id user-id)]
+    (when-not (some #{:admin} (:user/roles user))
+      (p/put-in-db-and-wait (merge user {:user/roles [:teacher]})))))

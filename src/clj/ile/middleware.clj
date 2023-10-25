@@ -72,10 +72,21 @@
 ;  (some #{email} ["paul.hempel@code.design"
 ;                  ""])
 ;  )
-;
-;(defn admin-access [handler]
-;  (fn [request]
-;    (if ())))
+
+(defn wrap-teacher-access [handler]
+  (fn [request]
+    (let [is-teacher-or-admin? (or (boolean (some #{:admin} (get-in request [:session :user :user/roles])))
+                                   (boolean (some #{:teacher} (get-in request [:session :user :user/roles]))))]
+      (if is-teacher-or-admin?
+        (handler request)
+        (response/redirect "/")))))
+
+(defn wrap-admin-access [handler]
+  (fn [request]
+    (let [is-admin? (some #{:admin} (get-in request [:session :user :user/roles]))]
+      (if is-admin?
+        (handler request)
+        (response/redirect "/")))))
 
 
 (defn wrap-signed-in [handler]
@@ -100,6 +111,11 @@
         ; enabling cookies for authentication cross-site requests
         (assoc-in [:session :cookie-attrs :same-site] :lax))))
 
+(defn wrap-render-htmx
+  [handler]
+  (fn [request]
+    (let [response (handler request)]
+      (layout/render-htmx response))))
 
 (defn wrap-security-header [handler]
   (fn [request]

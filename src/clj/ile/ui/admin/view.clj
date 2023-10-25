@@ -4,19 +4,33 @@
     [ile.util :as util]
     [ile.user.core :as user]))
 
-(defn- user-row [{:user/keys [email]
-                  :xt/keys   [id]}]
-  [:div.tile
+(defn- user-row [{:user/keys [roles]
+                  :xt/keys   [id]}
+                 is-admin?
+                 current-user]
+  [:div.tile.row.gap.align-center
    [:p "Username: " [:b id]]
+   [:div.row
+    (when (some #{:admin} roles) [:span.badge "Admin"])
+    (when (some #{:teacher} roles) [:span.badge "Teacher"])]
+   (when (and is-admin?
+              (not= id (:xt/id current-user)))
+     (if (some #{:teacher} roles)
+       [:button {:hx-post (str "/htmx/admin/make-student/" id)
+                 :hx-swap "none"}
+        "Make Student"]
+       [:button {:hx-post (str "/htmx/admin/make-teacher/" id)
+                 :hx-swap "none"}
+        "Make Teacher"]))
    #_[:p "Email: " email]])
 
-(defn users-page []
+(defn users-page [is-admin? current-user]
   (let [users (user/find-all-users)]
     [:<>
      [:nav
       [:a.button {:href "/admin"} "Zurück"]]
      [:main#users.p3
-      (map user-row users)]]
+      (map #(user-row % is-admin? current-user) users)]]
     )
   )
 

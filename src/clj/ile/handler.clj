@@ -21,6 +21,7 @@
   (ring/ring-handler
     (ring/router
       [routes/public-routes
+       routes/htmx-routes
        routes/private-routes
        routes/api-routes])
     (ring/create-default-handler

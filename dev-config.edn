@@ -5,8 +5,15 @@
 
  :mail-pw    "&KJ_$UFHBJPY^Az-m6yQm8Xkzh36RpwzJadn8qRs"
 
- :test-user  {:user/email "paul.hempel@code.design"
-              :xt/id      "paule"}}
+ :admin-credentials {:xt/id         "root"
+                     :user/password "root"
+                     :user/email    "paul.hempel@code.design"
+                     :user/roles    [:admin]}
+
+ :test-user {:user/email    "paul.hempel@code.design"
+             :user/roles    [:admin :teacher]
+             :user/password "lol"
+             :xt/id         "paule"}}
 
 
 ; local user/pw:

@@ -1,16 +1,19 @@
 (ns ile.ui.admin.core
   (:require
     [clojure.string :as string]
+    [ile.authentication.core :as authentication]
     [ile.dictonary.translations :as tr]
     [ile.templates.core :as templates]
     [ile.ui.admin.view :as view]
     [ile.story.core :as story]
+    [ile.user.core :as user]
     [ile.util :as util]
     [ile.middleware :as middleware]
     [ring.util.response :as response]))
 
 (defn users-page [request]
-  (view/users-page))
+  (view/users-page (authentication/is-admin? request)
+                   (get-in request [:session :user])))
 
 (defn templates-page [request]
   (let [templates (templates/find-all-templates)]
@@ -164,8 +167,20 @@
 (defn redirect-mission-editor-page [request]
   (response/redirect (str (:uri request) "/de")))
 
+(defn make-student [request]
+  (println "make student")
+  (let [user-id (util/get-path-param request :id)]
+    (user/make-student user-id)))
+
+
+(defn make-teacher [request]
+  (println "make teacher")
+  (let [user-id (util/get-path-param request :id)]
+    (println user-id)
+    (user/make-teacher user-id)))
+
 (def routes
-  ["/admin" {:middleware [#_middleware/admin-access]}
+  ["/admin" {:middleware [middleware/wrap-teacher-access]}
    ["" {:get admin-page}]
    ["/users" {:get users-page}]
    ["/templates" {:get templates-page}]
@@ -175,3 +190,9 @@
    ["/story/:id/" {:get redirect-mission-editor-page}]
    ["/story/:id/:lang" {:get  mission-editor-page
                         :post mission-post-page}]])
+
+(def htmx-routes
+  ["/admin" {:middleware [middleware/wrap-admin-access]}
+   ["/make-student/:id" {:post make-student}]
+   ["/make-teacher/:id" {:post make-teacher}]
+   ])

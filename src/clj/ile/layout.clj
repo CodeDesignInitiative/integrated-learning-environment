@@ -6,7 +6,7 @@
             [rum.core :as rum]))
 
 
-(defn page [page]
+(defn html-page-wrapper [page]
   [:html.full-height
    [:head
 
@@ -32,8 +32,15 @@
             :href "/css/font.css?v=2"}]
     [:link {:rel  :stylesheet
             :href "/css/layout.css?v=2"}]
-    ]
+
+    ; js
+    [:script {:src   "/js/htmx.min.js"
+              :defer "defer"}]]
    [:body
+    (when (bound? #'*anti-forgery-token*)
+      {:hx-headers (cheshire/generate-string
+                     {:x-csrf-token *anti-forgery-token*})
+       :hx-boost   "true"})
     page
 
     [:#legal
@@ -46,11 +53,18 @@
 
 (defn render-page
   "renders the page wrapped in the base HTML"
-  [p]
+  [hiccup-content]
   (content-type
     (ok (str "<!DOCTYPE html>\n"
              (rum/render-static-markup
-               (page p))))
+               (html-page-wrapper hiccup-content))))
+    "text/html; charset=utf-8"))
+
+(defn render-htmx
+  [hiccup-content]
+  (content-type
+    (ok (str "<!DOCTYPE html>\n"
+             (rum/render-static-markup hiccup-content)))
     "text/html; charset=utf-8"))
 
 

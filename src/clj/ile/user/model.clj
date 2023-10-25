@@ -8,8 +8,10 @@
 (s/def :user/email string?)
 (s/def :user/name string?)
 (s/def :user/password string?)
+(s/def :user/roles vector?)
 
 (s/def :ile/user
   (s/keys :req [[:xt/id :user/name]
                 :user/password
-                :user/name]))
+                :user/name]
+          :opt [:user/roles]))

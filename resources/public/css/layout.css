@@ -5,3 +5,25 @@
     --d-2: 16px;
     --d-3: 32px;
 }
+
+.row {
+    display: flex;
+}
+
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.gap {
+    gap: var(--d-3);
+}
+
+.justifiy-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-center: center;
+}

@@ -6,6 +6,8 @@
     [ring.middleware.reload :refer [wrap-reload]]
     [prone.middleware :refer [wrap-exceptions]]))
 
+(comment
+  (user/create-user (:test-user env)))
 
 (defn wrap-test-user
   "Add a test user to the session to circumvent login for local dev."

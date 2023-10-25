@@ -204,3 +204,11 @@ img {
 (def api-routes
   ["/api" {:middleware [muuntaja-middleware/wrap-format-response]}
    story-page/api-routes])
+
+(def htmx-routes
+  ["/htmx" {:middleware [middleware/wrap-render-htmx
+                         middleware/wrap-unauthorized-login-redirect
+                         middleware/wrap-csrf
+                         middleware/wrap-render-rum
+                         middleware/wrap-formats]}
+   admin-page/htmx-routes])
