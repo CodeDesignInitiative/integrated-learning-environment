@@ -299,10 +299,11 @@ and (orientation: landscape) {
     flex-direction: column;
     flex: 1;
     height: 100%;
+    gap: var(--d-2)
 }
 
 #editor-sidebar > nav {
-    padding: 0 0 var(--d-3);
+    padding: 0;
     align-items: center;
     gap: var(--d-2);
 }
@@ -539,17 +540,15 @@ and (orientation: landscape) {
 
 #mission-page {
     display: flex;
-    flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
     overflow: hidden;
-}
-
-#mission-page > div:first-child {
-    display: flex;
     height: 100vh;
     padding: var(--d-3);
     gap: var(--d-2);
+}
+
+#mission-page > div:first-child {
 }
 
 #mission-editor {
@@ -588,18 +587,24 @@ and (orientation: landscape) {
     display: flex;
     gap: var(--d-2);
     flex-wrap: wrap;
+    color: var(--dark-blue);
 
     outline: solid 4px var(--blue-primary);
     border-radius: var(--d-2);
+    background: var(--blue-3);
 }
 
 
 #mission-page #selection code.tile {
+    font-size: 1rem;
+    color: var(--dark-blue);
     background-color: var(--sand-primary);
     border-radius: var(--d-1);
 }
 
 #mission-page #target code.tile {
+    font-size: 1rem;
+    color: var(--dark-blue);
     background-color: var(--lilac-primary);
     border-radius: var(--d-1);
 }
@@ -607,6 +612,10 @@ and (orientation: landscape) {
 #mission-page #explanation {
     font-family: Inter, sans-serif;
 
+}
+
+#hint {
+    overflow-y: auto;
 }
 
 .ghost {

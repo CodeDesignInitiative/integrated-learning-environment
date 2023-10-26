@@ -63,7 +63,7 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     }
     hidden_css = content["mission.content/hidden-css"]
     hidden_html = content["mission.content/hidden-html"]
-    explanation_node.innerHTML = chat_message_to_html(content["mission.content/explanation"])
+    explanation_node.innerHTML = hint_message_to_html(content["mission.content/explanation"])
     const blocks = content["mission.content/result"]
     mode = content["mission.content/mode"];
     input_type = content["mission.content/input-type"];
@@ -354,6 +354,10 @@ let pre_mission_chat_done = false
 
 const chat_message_to_html = (msg) =>
     `<div class="chat-message">${marked.parse(msg)} </div>`
+
+const hint_message_to_html = (msg) =>
+    `${marked.parse(msg)}`
+
 
 const enable_show_phone = () =>
     chat.onclick = () => show_phone()

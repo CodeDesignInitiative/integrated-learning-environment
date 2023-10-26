@@ -97,37 +97,36 @@
             #(= (:mission.content/difficulty %) :easy)
             content))]
     [:main#mission-page
-     [:div
-      [:aside#editor-sidebar
-       [:nav
-        [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
-        [:h3 (:mission/name mission)]
-        [:select#difficulty {:on-change "change_difficulty(event)"}
-         [:option {:value    :easy
-                   :selected true} "Einfach"]
-         [:option {:value :medium} "Mittel"]
-         [:option {:value :hard} "Schwer"]
+     [:aside#editor-sidebar
+      [:nav
+       [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
+       [:h3 (:mission/name mission)]
+       [:select#difficulty {:on-change "change_difficulty(event)"}
+        [:option {:value    :easy
+                  :selected true} "Einfach"]
+        [:option {:value :medium} "Mittel"]
+        [:option {:value :hard} "Schwer"]
+        ]]
+      [:#mission-editor
+       [:#text-editor.hidden]
+       [:#block-editor-target
+        [:#target-hint "Ziehe Blöcke hier hin"]
+        [:#target
          ]]
-       [:#mission-editor
-        [:#text-editor.hidden]
-        [:#block-editor-target
-         [:#target-hint "Ziehe Blöcke hier hin"]
-         [:#target
-          ]]
-        [:#block-editor-selection
-         [:#selection]]]
-       [:div
-        [:p [:em "Hinweis"]]
-        [:#explanation]]
-       [:div
-        [:button#evaluate-btn {:on-click "evaluate_code()"} "Prüfen"]]
-       #_(hidden-block-code hidden-html hidden-css result wrong-blocks)]
-      [:#editor-output
-       [:iframe#output]]
+       [:#block-editor-selection
+        [:#selection]]]
+      [:span#hint
+       ;[:em "Hinweis: "]
+       [:span#explanation]]
+      [:div
+       [:button#evaluate-btn {:on-click "evaluate_code()"} "Prüfen"]]
+      #_(hidden-block-code hidden-html hidden-css result wrong-blocks)]
+     [:#editor-output
+      [:iframe#output]]
 
-      [:#tsparticles]
+     [:#tsparticles]
 
-      ]
+
      [:#chat
       [:#phone
        [:#status-bar
