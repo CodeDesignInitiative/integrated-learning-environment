@@ -600,6 +600,7 @@ and (orientation: landscape) {
     color: var(--dark-blue);
     background-color: var(--sand-primary);
     border-radius: var(--d-1);
+    cursor: move;
 }
 
 #mission-page #target code.tile {
@@ -607,6 +608,7 @@ and (orientation: landscape) {
     color: var(--dark-blue);
     background-color: var(--lilac-primary);
     border-radius: var(--d-1);
+    cursor: move;
 }
 
 #mission-page #explanation {

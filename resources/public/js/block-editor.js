@@ -88,11 +88,24 @@ const fill_mission_data = (mission, difficulty = "easy") => {
         all_blocks.forEach((child) => {
             const elem = document.createElement('code')
             elem.classList.add('tile')
+            elem.onclick = (e) => swap_block(e, elem)
             elem.innerText = child
             selection_list.appendChild(elem)
         })
     }
     on_input_change()
+}
+
+const swap_block = (event, element) => {
+    console.log(element.parentElement)
+    console.log(element.parentElement.id === "selection")
+    if (element.parentElement.id === "selection") {
+        target_list.appendChild(element)
+    } else {
+        selection_list.appendChild(element)
+    }
+    console.log(target_list.childNodes)
+    // element.remove()
 }
 
 const output = document.getElementById("output")
@@ -134,7 +147,7 @@ new Sortable(selection_list, {
     animation: 150,
     ghostClass: 'ghost',
     dragClass: 'drag',
-    chosenClass: 'chosen'
+    chosenClass: 'chosen',
 });
 
 const generate_html = () => {
