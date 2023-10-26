@@ -42,7 +42,8 @@
 
 (defn nav-bar [next]
   [:nav.row.space-between
-   [:a {:href "/"} "Zurück"]
+   [:a {:href       "/"
+        :hx-confirm "Nicht gespeicherte Änderungen gehen verloren. Sicher?"} "Zurück"]
    (when-not next
      [:form {:action "/projekt/speichern"
              :id     "save-form"
@@ -72,11 +73,12 @@
 
    [:div#editor-screen
     [:aside#editor-sidebar
-     (editor-tabs)
-     [:div#editor-wrapper
-      [:div#editor.w-full.h-full.language-html {:id "editor"}
-       (:code/line (:html code))]
-      (interaction-buttons next)]
+     [:div
+      (editor-tabs)
+      [:div#editor-wrapper
+       [:div#editor.w-full.h-full.language-html {:id "editor"}
+        (:code/line (:html code))]
+       (interaction-buttons next)]]
      (hidden-code code)
      (when notes
        (components/notes-widget notes))]

@@ -25,5 +25,9 @@
 }
 
 .align-center {
-    align-center: center;
+    align-items: center;
+}
+
+.grow {
+    flex-grow: 1;
 }

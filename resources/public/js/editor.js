@@ -22,6 +22,8 @@ const blank_css =
     font-family: sans-serif;
 }`
 
+window.onbeforeunload = (event) => event.preventDefault()
+
 const load_css_base_to_stored = () =>
      (css_base !== "") ? css_stored = css_base : {}
 

@@ -67,10 +67,11 @@
   [:main#editor-screen
    [:aside#editor-sidebar
     (nav-bar lang project-id)
-    (editor-tabs)
-    [:#editor-wrapper
-     [:#sandbox-editor.w-full.h-full.language-html {:id "editor"}
-      (:html code)]]
+    [:div.col.grow
+     (editor-tabs)
+     [:#editor-wrapper.grow
+      [:#sandbox-editor.w-full.h-full.language-html {:id "editor"}
+       (:html code)]]]
     (hidden-code code)]
    [:div#editor-output
     [:iframe#output]]
