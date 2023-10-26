@@ -68,8 +68,8 @@
    [:aside#editor-sidebar
     (nav-bar lang project-id)
     (editor-tabs)
-    [:div#editor-wrapper
-     [:div#editor.w-full.h-full.language-html {:id "editor"}
+    [:#editor-wrapper
+     [:#sandbox-editor.w-full.h-full.language-html {:id "editor"}
       (:html code)]]
     (hidden-code code)]
    [:div#editor-output
@@ -96,35 +96,36 @@
           (filter
             #(= (:mission.content/difficulty %) :easy)
             content))]
-    [:main#block-editor
-     [:div#mission-editor
+    [:main#mission-page
+     [:div
       [:aside#editor-sidebar
        [:nav
         [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
         [:h3 (:mission/name mission)]
-        [:select {:on-change "change_difficulty(event)"}
+        [:select#difficulty {:on-change "change_difficulty(event)"}
          [:option {:value    :easy
                    :selected true} "Einfach"]
          [:option {:value :medium} "Mittel"]
          [:option {:value :hard} "Schwer"]
          ]]
-       [:div#editor
-        [:div
-         [:div#target-hint "Ziehe Blöcke hier hin"]
-         [:div#target
+       [:#mission-editor
+        [:#text-editor.hidden]
+        [:#block-editor-target
+         [:#target-hint "Ziehe Blöcke hier hin"]
+         [:#target
           ]]
-        [:div
-         [:div#selection]]
-        [:div
-         [:p [:em "Hinweis"]]
-         [:#explanation]]]
+        [:#block-editor-selection
+         [:#selection]]]
+       [:div
+        [:p [:em "Hinweis"]]
+        [:#explanation]]
        [:div
         [:button#evaluate-btn {:on-click "evaluate_code()"} "Prüfen"]]
        #_(hidden-block-code hidden-html hidden-css result wrong-blocks)]
-      [:div#editor-output
+      [:#editor-output
        [:iframe#output]]
 
-      [:div#tsparticles]
+      [:#tsparticles]
 
       ]
      [:#chat
@@ -140,8 +141,8 @@
        [:#phone-voldown-btn]]
       [:#close-phone]
       ]
-     [:div#overlay.hidden
-      [:div
+     [:#overlay.hidden
+      [:.status-modal
        [:h2 "Gut gemacht!"]
        [:button {:on-click "progress()"} "Weiter"]]]
 
@@ -153,5 +154,8 @@
                :type "text/javascript"}]
      [:script {:src  "/js/marked.min.js"
                :type "text/javascript"}]
+     [:script {:src     "/js/src-min-noconflict/ace.js"
+               :type    "text/javascript"
+               :charset "utf-9"}]
      [:script {:src "/js/block-editor.js?v=2"}]])
   )

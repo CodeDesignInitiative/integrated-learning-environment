@@ -1,4 +1,4 @@
-const editor = ace.edit("editor");
+const editor = ace.edit("sandbox-editor");
 editor.setTheme("ace/theme/one_dark");
 editor.session.setMode("ace/mode/html");
 

@@ -1,23 +1,43 @@
-let current_language = "html";
-
+// path data
 const host = window.location.origin
 const mission_id = window.location.pathname.split("/").pop()
 const lang = window.location.pathname.split("/")[1]
-const fetch_url = host + "/api/mission/" + mission_id
 
+// elements
+const mission_editor = document.getElementById("mission-editor")
 const evaluate_btn = document.getElementById("evalute-btn")
 const chat_next_btn = document.getElementById("chat-next-btn")
 const phone = document.getElementById("phone")
 const explanation_node = document.getElementById("explanation")
+const block_editor_target = document.getElementById("block-editor-target")
+const block_editor_selection = document.getElementById("block-editor-selection")
+const text_editor = document.getElementById("text-editor")
+
+// state
+let content = undefined;
+
 let phone_hidden = false;
 
+const target_list = document.getElementById('target');
+const selection_list = document.getElementById('selection');
 
 let mission = undefined;
 let mode = undefined;
+let input_type = undefined;
 let hidden_css = undefined;
 let hidden_html = undefined;
 let difficulty = "easy";
 
+const is_text_mode = () => (input_type === "text")
+
+const editor = ace.edit("text-editor");
+editor.setTheme("ace/theme/one_dark");
+editor.session.setMode("ace/mode/html");
+editor.session.on("change", function (_d) {
+    on_input_change()
+})
+
+// functions
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -28,7 +48,6 @@ const shuffleArray = (array) => {
 
 
 const fill_mission_data = (mission, difficulty = "easy") => {
-    let content;
     switch (difficulty) {
         case "easy":
             content = mission["mission/content"][lang][0];
@@ -47,43 +66,46 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     explanation_node.innerHTML = chat_message_to_html(content["mission.content/explanation"])
     const blocks = content["mission.content/result"]
     mode = content["mission.content/mode"];
-    const wrong_blocks = content["mission.content/wrong-blocks"]
+    input_type = content["mission.content/input-type"];
+    if (input_type === "text") {
+        text_editor.classList.remove("hidden")
+        block_editor_target.classList.add("hidden")
+        block_editor_selection.classList.add("hidden")
+        text_editor.classList.remove("hidden")
+        editor.setValue("")
+        on_input_change()
+    } else {
+        editor.setValue("")
+        text_editor.classList.add("hidden")
+        block_editor_target.classList.remove("hidden")
+        block_editor_selection.classList.remove("hidden")
 
-    const all_blocks = shuffleArray(blocks.concat(wrong_blocks))
+        const wrong_blocks = content["mission.content/wrong-blocks"]
 
-    selection_list.innerHTML = "";
+        const all_blocks = shuffleArray(blocks.concat(wrong_blocks))
 
-    all_blocks.forEach((child) => {
-        const elem = document.createElement('code')
-        elem.classList.add('tile')
-        elem.innerText = child
-        selection_list.appendChild(elem)
-    })
+        selection_list.innerHTML = "";
+
+        all_blocks.forEach((child) => {
+            const elem = document.createElement('code')
+            elem.classList.add('tile')
+            elem.innerText = child
+            selection_list.appendChild(elem)
+        })
+    }
 }
-
-
-const html_editor = document.getElementById("editor")
-// const html_base = document.getElementById("html-base").innerText
-// const css_base = document.getElementById("css-base").innerText
-// const result = document.getElementById("result").childNodes
-// const wrong = document.getElementById("wrong").innerText
 
 const output = document.getElementById("output")
 const overlay = document.getElementById("overlay")
 const chat = document.getElementById("chat")
 const chat_messages = document.getElementById("chat-messages")
 
-// import Sortable from 'lib/sortable.min.js';
-const target_list = document.getElementById('target');
-const selection_list = document.getElementById('selection');
-
 fetch(host + "/api/mission/" + mission_id)
     .then((res) => res.json())
     .then((json) => {
         mission = json;
         next_message();
-        console.log(json);
-        fill_mission_data(mission);
+        fill_mission_data(mission, document.getElementById("difficulty").value);
         on_input_change();
     })
 
@@ -97,7 +119,8 @@ new Sortable(target_list, {
     filter: '.placeholder',
     animation: 150,
     onSort: (evt) => {
-            on_input_change()
+        console.log("sort", evt)
+        on_input_change()
     },
     ghostClass: 'ghost',
     dragClass: 'drag',
@@ -115,9 +138,11 @@ new Sortable(selection_list, {
 });
 
 const generate_html = () => {
-    const user_input = Array
-        .from(target_list.childNodes)
-        .reduce((acc, child) => acc + child.innerText, "")
+    const user_input = is_text_mode() ?
+        editor.getValue() :
+        Array
+            .from(target_list.childNodes)
+            .reduce((acc, child) => acc + child.innerText, "")
 
     if (hidden_html === "") {
         return user_input
@@ -128,9 +153,11 @@ const generate_html = () => {
 }
 
 const generate_css = () => {
-    const user_input = Array
-        .from(target_list.childNodes)
-        .reduce((acc, child) => acc + child.innerText, "")
+    const user_input = is_text_mode() ?
+        editor.getValue() :
+        Array
+            .from(target_list.childNodes)
+            .reduce((acc, child) => acc + child.innerText, "")
 
 
     if (hidden_css === "") {
@@ -142,7 +169,7 @@ const generate_css = () => {
 }
 
 
-const updateOutput = () =>
+const update_output = () =>
     `<!doctype HTML>
      <html lang="de">
         <head>
@@ -153,25 +180,27 @@ const updateOutput = () =>
 
 
 const on_input_change = () => {
-    output.src = "data:text/html;charset=utf-8," + updateOutput();
+    output.src = "data:text/html;charset=utf-8," + update_output();
 }
 
 on_input_change()
 
 const evaluate_code = () => {
-    let content = mission["mission/content"][lang][0]
-    if (difficulty === "medium") {
-        content = mission["mission/content"][lang][1]
-    } else if (difficulty === "hard") {
-        content = mission["mission/content"][lang][2]
-    }
+    // let content = mission["mission/content"][lang][0]
+    // if (difficulty === "medium") {
+    //     content = mission["mission/content"][lang][1]
+    // } else if (difficulty === "hard") {
+    //     content = mission["mission/content"][lang][2]
+    // }
     const correct_result = content["mission.content/result"]
         .reduce((acc, child) => acc + child, "")
 
     const entered_result =
-        Array
-            .from(target_list.childNodes)
-            .reduce((acc, child) => acc + child.innerText, "")
+        is_text_mode() ?
+            editor.getValue() :
+            Array
+                .from(target_list.childNodes)
+                .reduce((acc, child) => acc + child.innerText, "")
 
     if (entered_result === correct_result) {
         party_hard();
@@ -333,8 +362,6 @@ const disable_show_phone = () =>
     chat.onclick = {}
 
 const to_image_or_text = (msg) => {
-    console.log(msg)
-    console.log(msg.startsWith("[img]"))
     if (msg.startsWith("[img]")) {
         return `<img src="/img/story/${msg.slice(5)}" alt="${msg}">`
     } else {
@@ -370,7 +397,6 @@ const next_message = () => {
         if (current_message < mission["mission/story-after"][lang].length) {
             chat_messages.innerHTML += to_image_or_text(mission["mission/story-after"][lang][current_message])
             current_message = current_message + 1;
-            console.log("333")
             chat_messages.scrollTop = chat_messages.scrollHeight;
         } else {
             next_mission()
@@ -392,8 +418,6 @@ const progress = () => {
 }
 
 const next_mission = () => {
-    console.log("next mission")
-
     const current_step = mission["mission/step"]
     const current_world = mission["mission/world"]
 
@@ -405,7 +429,6 @@ const next_mission = () => {
 
             } else {
                 let url = host + "/" + lang + "/world/mission/" + json["mission-id"]
-                console.log(url);
                 window.location.href = url;
             }
         })
@@ -417,8 +440,17 @@ const change_difficulty = (e) => {
 }
 
 const show_phone = () => {
-
-    console.log("show phone!")
     chat.classList.remove("chat-hidden")
     disable_show_phone()
 }
+
+// define a handler
+function hide_phone_shortcut(event) {
+    if (!phone_hidden && (event.code === 'Escape')) {
+        chat.classList.add("chat-hidden");
+        setTimeout(() => enable_show_phone(), 200)
+    }
+}
+
+// register the handler
+document.addEventListener('keyup', hide_phone_shortcut, false);

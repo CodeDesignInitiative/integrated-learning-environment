@@ -351,8 +351,12 @@ and (orientation: landscape) {
     border-radius: var(--d-2);
 }
 
-#editor {
-    border-radius: 0 0 var(--d-2) var(--d-2);
+#mission-editor {
+    flex: 1;
+}
+
+.ace_editor {
+    border-radius: var(--d-2);
     height: 100%;
     font-family: "IBM Plex Mono", monospace;
     line-height: 1.5em;
@@ -363,8 +367,14 @@ and (orientation: landscape) {
     -moz-tab-size: 4;
     tab-size: 4;
     border: 2px solid var(--dark-blue);
-    border-top: none;
     box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+#sandbox-editor.ace_editor {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 100%;
 }
 
 #editor-wrapper {
@@ -527,7 +537,7 @@ and (orientation: landscape) {
     background-image: url("/img/map/island_4.svg");
 }
 
-#block-editor {
+#mission-page {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -535,14 +545,14 @@ and (orientation: landscape) {
     overflow: hidden;
 }
 
-#mission-editor {
+#mission-page > div:first-child {
     display: flex;
     height: 100vh;
     padding: var(--d-3);
     gap: var(--d-2);
 }
 
-#mission-editor #editor {
+#mission-editor {
     border: none;
     box-shadow: none;
     display: flex;
@@ -552,7 +562,7 @@ and (orientation: landscape) {
     gap: var(--d-3);
 }
 
-#mission-editor #target {
+#mission-page #target {
     padding: var(--d-3);
     display: flex;
     gap: var(--d-2);
@@ -565,7 +575,7 @@ and (orientation: landscape) {
     min-height: calc(44px * 2 + 16px);
 }
 
-#mission-editor #target-hint {
+#mission-page #target-hint {
     text-align: center;
     padding: 8px 12px;
     color: gray;
@@ -573,7 +583,7 @@ and (orientation: landscape) {
     font-size: 0.8rem;
 }
 
-#mission-editor #selection {
+#mission-page #selection {
     padding: var(--d-3);
     display: flex;
     gap: var(--d-2);
@@ -584,17 +594,17 @@ and (orientation: landscape) {
 }
 
 
-#mission-editor #selection code.tile {
+#mission-page #selection code.tile {
     background-color: var(--sand-primary);
     border-radius: var(--d-1);
 }
 
-#mission-editor #target code.tile {
+#mission-page #target code.tile {
     background-color: var(--lilac-primary);
     border-radius: var(--d-1);
 }
 
-#mission-editor #explanation {
+#mission-page #explanation {
     font-family: Inter, sans-serif;
 
 }
@@ -608,6 +618,18 @@ and (orientation: landscape) {
     z-index: 1000;
 }
 
+.status-modal {
+    display: flex;
+    flex-direction: column;
+    gap: var(--d-2);
+    align-items: center;
+    background: var(--blue-1);
+    padding: var(--d-2) var(--d-3);
+    border-radius: var(--d-2);
+    border: 2px solid var(--dark-blue);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
 #overlay, #chat {
     position: absolute;
     display: flex;
@@ -619,12 +641,12 @@ and (orientation: landscape) {
     z-index: 999;
     background: rgba(0, 0, 0, 0.69);
     left: 0;
-    transition: left 0.3s ease-in-out, background-color 0.5s ease-in;
+    transition: left 0.5s ease-out, background-color 0.5s ease-in;
 }
 
-.hidden {
-    visibility: hidden;
-}
+/*.hidden {*/
+/*    visibility: hidden;*/
+/*}*/
 
 #overlay > #phone, #chat > #phone {
     display: flex;
@@ -642,24 +664,31 @@ and (orientation: landscape) {
 
 #chat.chat-hidden {
     background: none;
-    transition: left 0.3s ease-in-out;
+    transition: left 0.5s ease-out;
+    left: 92%;
 }
 
 #chat.chat-hidden > #phone,
 #chat.chat-hidden .chat-message {
     background: black;
-    transition: left 0.3s ease-in-out;
+    /*transition: left 0.2s ease-out;*/
+}
+
+#chat.chat-hidden #chat-window {
+    visibility: hidden;
+    transition: visibility 0.8s ease-out;
+}
+
+#chat.chat-hidden #chat-window img {
+    filter: opacity(0%);
+    transition: filter 0.8s ease-out;
 }
 
 #chat.chat-hidden:hover {
     left: 89%;
-    transition: left 0.3s ease-in-out;
+    transition: left 0.5s ease-in;
 }
 
-#chat.chat-hidden {
-    left: 92%;
-    transition: left 0.3s ease-in-out;
-}
 
 #phone #status-bar {
     background-color: #0000005e;
@@ -855,7 +884,7 @@ main#templates-page {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 #tabs {

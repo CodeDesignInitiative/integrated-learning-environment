@@ -250,7 +250,7 @@
     (mission-content (content-for-difficulty (lang content) :hard) "hard")
 
     ]
-   [:script {:src "/js/story-editor.js"}]
+   #_[:script {:src "/js/story-editor.js"}]
    ])
 
 (defn story-page [missions]

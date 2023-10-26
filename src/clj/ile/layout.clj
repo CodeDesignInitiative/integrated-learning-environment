@@ -35,12 +35,15 @@
 
     ; js
     [:script {:src   "/js/htmx.min.js"
+              :defer "defer"}]
+    [:script {:src   "/js/story-editor.js"
               :defer "defer"}]]
+
    [:body
     (when (bound? #'*anti-forgery-token*)
       {:hx-headers (cheshire/generate-string
                      {:x-csrf-token *anti-forgery-token*})
-       :hx-boost   "true"})
+       #_#_:hx-boost "true"})
     page
 
     [:#legal
