@@ -752,7 +752,8 @@ and (orientation: landscape) {
     border-radius: var(--d-2);
 }
 
-#chat code {
+/*#chat */
+code {
     background-color: #333;
     color: white;
     border-radius: 4px;
