@@ -73,7 +73,6 @@ const fill_mission_data = (mission, difficulty = "easy") => {
         block_editor_selection.classList.add("hidden")
         text_editor.classList.remove("hidden")
         editor.setValue("")
-        on_input_change()
     } else {
         editor.setValue("")
         text_editor.classList.add("hidden")
@@ -93,6 +92,7 @@ const fill_mission_data = (mission, difficulty = "easy") => {
             selection_list.appendChild(elem)
         })
     }
+    on_input_change()
 }
 
 const output = document.getElementById("output")
