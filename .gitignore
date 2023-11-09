@@ -16,3 +16,5 @@
 /log/
 
 .DS_Store
+
+dev-config.edn
