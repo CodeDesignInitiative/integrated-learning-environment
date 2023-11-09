@@ -1,19 +1,23 @@
 (ns ile.middleware
   (:require
+    [ile.layout :refer [error-page] :as layout]
+    [ile.mount.config :refer [env]]
+    [ile.middleware.formats :as formats]
+
+    [buddy.auth :refer [authenticated?]]
+    [buddy.auth.backends :as backends]
+    [buddy.auth.middleware :refer [wrap-authentication]]
     [clojure.tools.logging :as log]
     [ile.env :refer [defaults]]
-    [ile.mount.config :refer [env]]
-    [ile.layout :refer [error-page] :as layout]
     [muuntaja.middleware :refer [wrap-format wrap-params]]
     [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-    [ile.middleware.formats :as formats]
-    [ring-ttl-session.core :refer [ttl-memory-store]]
-    [ring.util.response :as response]
     [ring.middleware.defaults :as ring-defaults]
-    [buddy.auth :refer [authenticated?]]
+    [ring.middleware.file :as ring-file]
+    [ring.middleware.multipart-params :refer [wrap-multipart-params]]
+    [ring.middleware.params :as ring-params]
     [ring.middleware.session :refer [wrap-session]]
-    [buddy.auth.backends :as backends]
-    [buddy.auth.middleware :refer [wrap-authentication]]))
+    [ring.util.response :as response]
+    [ring-ttl-session.core :refer [ttl-memory-store]]))
 
 (defn wrap-internal-error [handler]
   (let [error-result (fn [^Throwable t]
@@ -135,6 +139,9 @@
     wrap-security-header
     (wrap-authentication backend)
     ;wrap-user-to-session
+    ;ring-params/wrap-params
+    (ring-file/wrap-file "/Users/paule/.ile-file-storage")
+    wrap-multipart-params
     wrap-session
     wrap-ile-defaults
     wrap-internal-error))

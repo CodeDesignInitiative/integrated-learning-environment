@@ -1,9 +1,9 @@
-{:dev        true
- :port       3003
+{:dev               true
+ :port              3003
  ;; when :nrepl-port is set the application starts the nREPL server on load
- :nrepl-port 7000
+ :nrepl-port        7000
 
- :mail-pw    "&KJ_$UFHBJPY^Az-m6yQm8Xkzh36RpwzJadn8qRs"
+ :mail-pw           "&KJ_$UFHBJPY^Az-m6yQm8Xkzh36RpwzJadn8qRs"
 
  :admin-credentials {:xt/id         "root"
                      ; password is "rootroot", just encrypted
@@ -11,17 +11,13 @@
                      :user/email    "paul.hempel@code.design"
                      :user/roles    [:admin]}
 
- :a
- {:xt/id         "root"
-  ; password is "rootroot", just encrypted
-  :user/password "$2a$11$5W2USu6PznuCm2mzuaKU/.lfTNt/wd3rdM19SEh1lRBGIJlzUzJCy"
-  :user/email    "paul.hempel@code.design"
-  :user/roles    [:admin]}
+ :test-user         {:user/email    "paul.hempel@code.design"
+                     :user/roles    [:admin :teacher]
+                     :user/password "lol"
+                     :xt/id         "paule"}
 
- #_#_:test-user {:user/email    "paul.hempel@code.design"
-                 :user/roles    [:admin :teacher]
-                 :user/password "lol"
-                 :xt/id         "paule"}}
+ :asset-store-path  "/Users/paule/.ile-file-storage"}
+
 
 
 ; local user/pw:

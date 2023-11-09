@@ -1,14 +1,16 @@
 (ns ile.ui.admin.core
   (:require
-    [clojure.string :as string]
     [ile.authentication.core :as authentication]
-    [ile.dictonary.translations :as tr]
+    [ile.middleware :as middleware]
+    [ile.mount.config :refer [env]]
+    [ile.story.core :as story]
     [ile.templates.core :as templates]
     [ile.ui.admin.view :as view]
-    [ile.story.core :as story]
     [ile.user.core :as user]
     [ile.util :as util]
-    [ile.middleware :as middleware]
+
+    [clojure.java.io :as io]
+    [clojure.string :as string]
     [ring.util.response :as response]))
 
 (defn users-page [request]
@@ -48,10 +50,10 @@
 
 (defn- migrate-mission [{:mission/keys [name story-before story-after content] :as mission}]
   (merge mission
-         #:mission{:name {:de name}
+         #:mission{:name         {:de name}
                    :story-before {:de story-before}
-                   :story-after {:de story-after}
-                   :content {:de content}}))
+                   :story-after  {:de story-after}
+                   :content      {:de content}}))
 
 (defn mission-editor-page [request & [error]]
   (let [mission-id (util/get-path-param-as-uuid request :id)
@@ -168,20 +170,36 @@
   (response/redirect (str (:uri request) "/de")))
 
 (defn make-student [request]
-  (println "make student")
   (let [user-id (util/get-path-param request :id)]
     (user/make-student user-id)))
 
 
 (defn make-teacher [request]
-  (println "make teacher")
   (let [user-id (util/get-path-param request :id)]
     (println user-id)
     (user/make-teacher user-id)))
 
+(comment
+  (:asset-store-path env))
+
+(defn images-page [_request]
+  (let [directory (clojure.java.io/file (:asset-store-path env))
+        files (drop 1 (vec (file-seq directory)))]
+    (view/images-page files)))
+
+(defn file-path [file-name] (str (:asset-store-path env) "/" file-name))
+
+(defn upload-image [request]
+  (let [file-name (get-in request [:params :image-asset :filename])
+        tmpfilepath (:path (bean (get-in request [:params :image-asset :tempfile])))]
+    (io/copy (io/file tmpfilepath) (io/file (file-path file-name)))
+    (images-page request)))
+
 (def routes
   ["/admin" {:middleware [middleware/wrap-teacher-access]}
    ["" {:get admin-page}]
+   ["/images" {:get  images-page
+               :post upload-image}]
    ["/users" {:get users-page}]
    ["/templates" {:get templates-page}]
    ["/template/:id" {:get  template-edit-page

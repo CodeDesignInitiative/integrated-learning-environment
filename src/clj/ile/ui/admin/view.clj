@@ -2,7 +2,8 @@
   (:require
     [ile.dictonary.translations :as tr]
     [ile.util :as util]
-    [ile.user.core :as user]))
+    [ile.user.core :as user])
+  (:import (java.io File)))
 
 (defn- user-row [{:user/keys [roles]
                   :xt/keys   [id]}
@@ -269,6 +270,31 @@
           {:href (str "/admin/story/" id "/de")}
           [:h5 (str "Level " step)]
           [:h3 (:de name)]])])]])
+
+(defn images-page [images]
+  [:<>
+   [:nav
+    [:a.button {:href "/admin"} "Zurück"]]
+   [:main#images-page
+    [:h1 "Images"]
+    [:form.row {:action  "/admin/images"
+                :method  :post
+                :enctype "multipart/form-data"}
+     (util/hidden-anti-forgery-field)
+     [:label "File"]
+     [:input {:type   :file
+              :name   :image-asset
+              :accept "image/png, image/jpeg"}]
+     [:button {:type :submit} "Upload file"]]
+    [:div
+     (map
+       (fn [^File f]
+         [:figure
+
+          [:img {:src (str "/" (.getName f))}]
+          [:figcaption (.getName f)]])
+       images)
+     ]]])
 
 (defn admin-page []
   [:<>

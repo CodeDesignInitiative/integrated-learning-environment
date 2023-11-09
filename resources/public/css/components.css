@@ -952,3 +952,12 @@ main#templates-page {
     font-weight: 600;
     color: white;
 }
+
+
+#images-page {
+    padding: var(--d-3);
+}
+
+#images-page img {
+    width: 200px;
+}
