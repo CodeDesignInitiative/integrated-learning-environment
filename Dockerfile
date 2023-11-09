@@ -11,6 +11,8 @@ WORKDIR /root/
 
 COPY --from=builder /user/src/target/uberjar/ile.jar /ile/app.jar
 
+CMD ["mkdir", "/asset-store"]
+
 CMD ["java", "-Xmx400m", "-jar", "/ile/app.jar"]
 
 EXPOSE 3000
