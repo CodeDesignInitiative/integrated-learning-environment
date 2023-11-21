@@ -140,7 +140,7 @@
     (wrap-authentication backend)
     ;wrap-user-to-session
     ;ring-params/wrap-params
-    (ring-file/wrap-file "/assets-store")
+    #_(ring-file/wrap-file "/assets-store")
     wrap-multipart-params
     wrap-session
     wrap-ile-defaults
