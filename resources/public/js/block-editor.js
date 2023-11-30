@@ -222,6 +222,7 @@ const evaluate_code = () => {
         alert("Das scheint nicht richtig zu sein. " +
             "Versuche es noch einmal anders :) \n \n" +
             "So sollte es aussehen: \n" +
+            correct_result + "\n" +
             content["mission.content/hint"]
         )
     }
