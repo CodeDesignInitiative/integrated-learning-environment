@@ -87,6 +87,7 @@ const fill_mission_data = (mission, difficulty = "easy") => {
 
         all_blocks.forEach((child) => {
             const elem = document.createElement('code')
+
             elem.classList.add('tile')
             elem.onclick = (e) => swap_block(e, elem)
             elem.innerText = child
