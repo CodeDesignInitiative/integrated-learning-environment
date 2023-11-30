@@ -577,7 +577,7 @@ and (orientation: landscape) {
 #mission-page #target-hint {
     text-align: center;
     padding: 8px 12px;
-    color: gray;
+    color: #808080;
     position: static;
     font-size: 0.8rem;
 }

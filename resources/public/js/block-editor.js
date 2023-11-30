@@ -97,14 +97,12 @@ const fill_mission_data = (mission, difficulty = "easy") => {
 }
 
 const swap_block = (event, element) => {
-    console.log(element.parentElement)
-    console.log(element.parentElement.id === "selection")
     if (element.parentElement.id === "selection") {
         target_list.appendChild(element)
     } else {
         selection_list.appendChild(element)
     }
-    console.log(target_list.childNodes)
+    on_input_change()
     // element.remove()
 }
 
@@ -132,7 +130,6 @@ new Sortable(target_list, {
     filter: '.placeholder',
     animation: 150,
     onSort: (evt) => {
-        console.log("sort", evt)
         on_input_change()
     },
     ghostClass: 'ghost',
