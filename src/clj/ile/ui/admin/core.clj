@@ -195,9 +195,17 @@
     (io/copy (io/file tmpfilepath) (io/file (file-path file-name)))
     (images-page request)))
 
+(defn backup-page [request]
+  (let [missions (story/find-all-missions)
+        templates (templates/find-all-templates)]
+    [:div
+     [:div (str missions)]
+     [:div (str templates)]]))
+
 (def routes
   ["/admin" {:middleware [middleware/wrap-teacher-access]}
    ["" {:get admin-page}]
+   ["/backup" {:get backup-page}]
    ["/images" {:get  images-page
                :post upload-image}]
    ["/users" {:get users-page}]
