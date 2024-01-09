@@ -1,9 +1,7 @@
-(ns ile.persistence
+(ns ile.core.persistence
   (:require
     [ile.mount.xtdb :as xtdb]
-    [xtdb.api :as xt]
-    [crypto.password.bcrypt :as password]
-    ))
+    [xtdb.api :as xt]))
 
 (defn- flatten-result
   "Takes the XTDB typical result (a set containing vectors) and combines the
@@ -61,3 +59,9 @@
   "Attaches the user-id to a document"
   [document]
   (merge document {:xt/id (random-uuid)}))
+
+;; learning tracks
+
+(defn find-all-learning-tracks []
+  (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
+              :where [[?mission :mission/name any?]]}))

@@ -2,7 +2,7 @@
   (:require
     [clojure.string :as string]
     [crypto.password.bcrypt :as password]
-    [ile.persistence :as p])
+    [ile.core.persistence :as p])
   )
 
 

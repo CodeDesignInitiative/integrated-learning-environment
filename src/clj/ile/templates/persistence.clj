@@ -1,7 +1,7 @@
 (ns ile.templates.persistence
   (:require
     [clojure.spec.alpha :as spec]
-    [ile.persistence :as p]
+    [ile.core.persistence :as p]
     [ile.templates.model]))
 
 (defn find-all-templates []

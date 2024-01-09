@@ -1,5 +1,5 @@
 (ns ile.projects.persistence
-  (:require [ile.persistence :as p]))
+  (:require [ile.core.persistence :as p]))
 
 
 (defn create-user-project

@@ -1,7 +1,7 @@
 (ns ile.story.persistence
   (:require
     [clojure.spec.alpha :as s]
-    [ile.persistence :as p]
+    [ile.core.persistence :as p]
     [ile.story.model]))
 
 (defn create-mission [story-mission]

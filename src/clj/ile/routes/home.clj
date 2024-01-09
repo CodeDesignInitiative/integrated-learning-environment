@@ -1,6 +1,5 @@
 (ns ile.routes.home
   (:require
-    [ile.components.app :as app]
     [ile.middleware :as middleware]
     [ile.story.core :as story-page]
     [ile.ui.admin.core :as admin-page]
@@ -23,5 +22,4 @@
    projects-page/routes
    admin-page/routes
    story-page/routes
-   ["/datenschutz" {:get legal-page/privacy-statement}]
-   ["/editor" {:get app/editor}]])
+   ["/datenschutz" {:get legal-page/privacy-statement}]])

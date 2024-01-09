@@ -22,7 +22,15 @@ const blank_css =
     font-family: sans-serif;
 }`
 
-window.onbeforeunload = (event) => event.preventDefault()
+const beforeUnloadHandler = (event) => {
+    // Recommended
+    event.preventDefault();
+
+    // Included for legacy support, e.g. Chrome/Edge < 119
+    event.returnValue = true;
+};
+window.addEventListener("beforeunload", beforeUnloadHandler);
+
 
 const load_css_base_to_stored = () =>
      (css_base !== "") ? css_stored = css_base : {}
@@ -154,13 +162,14 @@ const get_html_value = () => {
 }
 
 const save = () => {
+    window.removeEventListener("beforeunload", beforeUnloadHandler);
+
     html_input.value = get_html_value();
     css_input.value = (current_language === "css") ? editor.getValue() : css_stored
 
-    // id_input.value = params.id
-
     save_form.submit()
 
+    window.addEventListener("beforeunload", beforeUnloadHandler);
 }
 
 
