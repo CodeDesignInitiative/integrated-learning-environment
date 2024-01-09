@@ -72,11 +72,6 @@
             "/de/login"
             (str "/login?next=" original-uri)))))))
 
-;(defn- is-admin? [email]
-;  (some #{email} ["paul.hempel@code.design"
-;                  ""])
-;  )
-
 (defn wrap-teacher-access [handler]
   (fn [request]
     (let [is-teacher-or-admin? (or (boolean (some #{:admin} (get-in request [:session :user :user/roles])))

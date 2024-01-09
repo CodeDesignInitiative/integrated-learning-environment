@@ -202,6 +202,11 @@
      [:div (str missions)]
      [:div (str templates)]]))
 
+(defn learning-tracks-page [request]
+  (let [leraning-tracks ()])
+  [:div]
+  )
+
 (def routes
   ["/admin" {:middleware [middleware/wrap-teacher-access]}
    ["" {:get admin-page}]
@@ -212,6 +217,7 @@
    ["/templates" {:get templates-page}]
    ["/template/:id" {:get  template-edit-page
                      :post template-post-page}]
+   ["/learning-tracks" {:get learning-tracks-page}]
    ["/stories" {:get stories-page}]
    ["/story/:id/" {:get redirect-mission-editor-page}]
    ["/story/:id/:lang" {:get  mission-editor-page

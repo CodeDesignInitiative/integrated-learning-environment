@@ -10,8 +10,8 @@
 
 (defn- projects-page [request]
   (let [lang (tr/lang request)
-        user-email (get-in request [:session :identity])
-        user-projects (if user-email (or (projects/find-user-projects (name user-email)) []) [])]
+        user-name (get-in request [:session :user :xt/id])
+        user-projects (if user-name (or (projects/find-user-projects (name user-name)) []) [])]
     (view/projects-page lang user-projects)))
 
 (defn- convert-project [{:user.project/keys [name css html owner]
@@ -60,9 +60,8 @@
 
 (defn post-new-project [request]
   (let [{:strs [project_name template]} (:form-params request)
-        user-name (name (get-in request [:session :identity]))
+        user-name (get-in request [:session :user :xt/id])
         lang (tr/lang request)]
-    (println template)
     (if (= template "__empty__")
       (create-project-and-redirect lang #:user.project{:name project_name
                                                        :owner user-name})

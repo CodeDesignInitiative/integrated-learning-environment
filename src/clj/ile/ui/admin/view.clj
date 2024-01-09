@@ -304,4 +304,5 @@
     [:h1 "Admin Area"]
     [:a.button {:href "/admin/users"} "Users"]
     [:a.button {:href "/admin/templates"} "Templates"]
-    [:a.button {:href "/admin/stories"} "Story"]]])
+    [:a.button {:href "/admin/learning-tracks"} "Learning Tracks"]
+    [:a.button {:href "/admin/stories"} "Story (to be deprecated)"]]])
