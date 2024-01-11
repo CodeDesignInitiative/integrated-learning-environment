@@ -14,6 +14,7 @@
 /.pg-data/
 /.lein-repl-history
 /log/
+/data
 
 .DS_Store
 
