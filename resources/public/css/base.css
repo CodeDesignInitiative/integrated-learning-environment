@@ -65,10 +65,11 @@ button, .button {
     background-color: white;
     color: var(--dark-blue);
     border-radius: 999px;
-    border: 2px solid var(--dark-blue);
+    outline: 2px solid var(--dark-blue);
+    outline-offset: -1px;
     padding: var(--d-2) var(--d-3);
     box-shadow: 4px 4px 0 var(--dark-blue);
-    transition: box-shadow 0.3s, transform 0.3s;
+    transition: box-shadow 0.15s, transform 0.15s;
     text-decoration: none;
     cursor: pointer;
     font-size: 1.4rem;

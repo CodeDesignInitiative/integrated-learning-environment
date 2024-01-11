@@ -45,12 +45,7 @@
                      {:x-csrf-token *anti-forgery-token*})
        #_#_:hx-boost "true"})
     page
-
-    [:#legal
-     [:a.link {:href "https://code.design/impressum"}
-      "Impressum"]
-     [:a.link {:href "/datenschutz"}
-      "Datenschutz"]]]])
+    ]])
 
 
 

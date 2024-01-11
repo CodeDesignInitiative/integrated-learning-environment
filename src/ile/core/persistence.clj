@@ -43,6 +43,17 @@
   (-> (apply query-db query args)
       first))
 
+(defn find-first-by-id
+  [id]
+  (find-first '{:find  [(pull ?data [*])]
+                :where [[?data :xt/id id]]
+                :in    [[id]]}
+              id))
+
+(comment
+  (find-first-by-id #uuid"bce63e65-7b46-4231-9135-45bf2c0a6475")
+  )
+
 (defn put-in-db [& documents]
   (let [puts (vec (map (fn [v] [::xt/put v]) documents))]
     (xt/submit-tx xtdb/node puts)))
@@ -64,4 +75,25 @@
 
 (defn find-all-learning-tracks []
   (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
-              :where [[?mission :mission/name any?]]}))
+              :where [[?learning-track :learning-track/name any?]]}))
+
+(defn find-learning-track [learning-track-id]
+  (find-first '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
+                :where [[?learning-track :xt/id learning-track-id]]
+                :in    [[learning-track-id]]}
+              learning-track-id))
+
+(defn create-learning-tracks [learning-track]
+  (put-in-db-and-wait (with-xt-id learning-track)))
+
+(defn update-learning-tracks [learning-track]
+  (put-in-db-and-wait learning-track))
+
+(comment
+  (find-all-learning-tracks)
+  (find-learning-track #uuid"47a3a22a-f737-404f-b01a-2b2d223449fc")
+  (->> (find-all-learning-tracks)
+       (map #(:xt/id %))
+       vec
+       (apply remove-from-db))
+  )

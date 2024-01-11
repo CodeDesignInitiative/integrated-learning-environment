@@ -1,6 +1,7 @@
 (ns ile.mount.xtdb
   "Mount configuration for XTDB"
-  (:require [xtdb.api :as xtdb]
+  (:require [clojure.java.io :as io]
+            [xtdb.api :as xtdb]
             [mount.core :refer [defstate]]
             [ile.mount.config :refer [env]]))
 
@@ -15,7 +16,15 @@
 (defn start-xtdb!
   "Starts our XTDB node"
   []
-  (if-let [db-spec (:db-spec env)]
+  (letfn [(kv-store [dir]
+            {:kv-store {:xtdb/module 'xtdb.rocksdb/->kv-store
+                        :db-dir      (io/file dir)
+                        :sync?       true}})]
+    (xtdb/start-node
+      {:xtdb/tx-log         (kv-store "data/dev/tx-log")
+       :xtdb/document-store (kv-store "data/dev/doc-store")
+       :xtdb/index-store    (kv-store "data/dev/index-store")}))
+  #_(if-let [db-spec (:db-spec env)]
     (xtdb/start-node
       {:xtdb.jdbc/connection-pool {:dialect {:xtdb/module 'xtdb.jdbc.psql/->dialect}
                                    :db-spec db-spec}

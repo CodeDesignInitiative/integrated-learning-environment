@@ -31,7 +31,7 @@
     vec
     (apply p/remove-from-db))
   (find-user-projects "test@test.de")
-  (find-user-project #uuid"ba24ebdc-00af-41df-ae4e-b1406d442926")
+  (find-user-project #uuid"2d576758-118e-4072-8fea-5dade965b8a8")
   )
 
 (defn save-project [project]

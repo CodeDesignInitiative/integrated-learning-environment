@@ -31,3 +31,11 @@
 .grow {
     flex-grow: 1;
 }
+
+.m3 {
+    margin: var(--d-3);
+}
+
+.p3 {
+    padding: var(--d-3);
+}

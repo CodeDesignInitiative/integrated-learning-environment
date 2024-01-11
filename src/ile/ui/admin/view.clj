@@ -1,7 +1,7 @@
 (ns ile.ui.admin.view
   (:require
     [ile.dictonary.translations :as tr]
-    [ile.util :as util]
+    [ile.core.util :as util]
     [ile.user.core :as user])
   (:import (java.io File)))
 

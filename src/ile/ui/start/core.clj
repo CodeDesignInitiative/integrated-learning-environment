@@ -7,9 +7,26 @@
   (let [lang (tr/lang request)
         is-admin? (boolean (some #{:admin} (get-in request [:session :user :user/roles])))
         is-teacher? (boolean (some #{:teacher} (get-in request [:session :user :user/roles])))]
-    (println (get-in request [:session :user :user/roles]))
-    (clojure.pprint/pprint (get-in request [:session]))
     (view/start-screen lang is-admin? is-teacher?)))
 
+(defn- info-screen [request]
+  [:<>
+   [:nav
+    [:a.button {:href "/"}
+     "Zurück"]]
+   [:main.m3
+    [:h1 "Info"]
+
+    [:ul
+     [:li
+      [:a.link {:href "https://code.design/impressum"}
+       "Impressum"]]
+     [:li
+      [:a.link {:href "/datenschutz"}
+       "Datenschutz"]]]]]
+  )
+
 (def routes
-  ["/:lang/" {:get start-screen}])
+  [""
+   ["/:lang/" {:get start-screen}]
+   ["/info" {:get info-screen}]])

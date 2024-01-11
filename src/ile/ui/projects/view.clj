@@ -1,7 +1,7 @@
 (ns ile.ui.projects.view
   (:require
     [ile.dictonary.translations :as tr]
-    [ile.util :as util]
+    [ile.core.util :as util]
     [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
 
 

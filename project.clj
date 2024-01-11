@@ -8,8 +8,9 @@
                  [org.clojure/core.async "1.6.673"]
                  [org.clojure/tools.cli "1.0.214"]
                  [ch.qos.logback/logback-classic "1.4.6"]
-                 [com.xtdb/xtdb-core "1.23.1"]
-                 [com.xtdb/xtdb-jdbc "1.23.1"]
+                 [com.xtdb/xtdb-core "1.24.3"]
+                 [com.xtdb/xtdb-jdbc "1.24.3"]
+                 [com.xtdb/xtdb-rocksdb "1.24.3"]
                  [luminus-http-kit "0.2.0"]
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.11.4"]
@@ -35,7 +36,7 @@
 
   :min-lein-version "2.0.0"
 
-  :source-paths ["src/clj"]
+  :source-paths ["src/"]
   :test-paths ["test/clj"]
   :resource-paths ["resources"]
   :target-path "target/%s/"

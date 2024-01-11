@@ -2,19 +2,17 @@
   (:require
     [ile.layout :refer [error-page] :as layout]
     [ile.mount.config :refer [env]]
-    [ile.middleware.formats :as formats]
-
     [buddy.auth :refer [authenticated?]]
     [buddy.auth.backends :as backends]
     [buddy.auth.middleware :refer [wrap-authentication]]
     [clojure.tools.logging :as log]
     [ile.env :refer [defaults]]
+    [muuntaja.core :as m]
     [muuntaja.middleware :refer [wrap-format wrap-params]]
     [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
     [ring.middleware.defaults :as ring-defaults]
     [ring.middleware.file :as ring-file]
     [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-    [ring.middleware.params :as ring-params]
     [ring.middleware.session :refer [wrap-session]]
     [ring.util.response :as response]
     [ring-ttl-session.core :refer [ttl-memory-store]]))
@@ -45,8 +43,11 @@
        {:status 403
         :title  "Invalid anti-forgery token"})}))
 
+(def instance
+  (m/create m/default-options))
+
 (defn wrap-formats [handler]
-  (let [wrapped (-> handler wrap-params (wrap-format formats/instance))]
+  (let [wrapped (-> handler wrap-params (wrap-format instance))]
     (fn [request]
       ;; disable wrap-formats for websockets
       ;; since they're not compatible with this middleware

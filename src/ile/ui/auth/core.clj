@@ -2,7 +2,7 @@
   (:require
     [ile.mount.config :refer [env]]
     [ile.user.core :as user]
-    [ile.util :as util]
+    [ile.core.util :as util]
     [ring.util.http-response :refer [content-type]]
     [crypto.password.bcrypt :as password]
     [ring.util.response :as response]

@@ -6,7 +6,7 @@
     [ile.story.view :as view]
     [ile.story.persistence :as persistence]
     [ile.ui.editor.core :as editor]
-    [ile.util :as util]))
+    [ile.core.util :as util]))
 
 (defn mission-page [request]
   (let [mission-id (util/get-path-param-as-uuid request :id)

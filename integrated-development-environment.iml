@@ -13,8 +13,8 @@
       <sourceFolder url="file://$MODULE_DIR$/dev-resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/env/dev/clj" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/env/dev/resources" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/clj" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/clj" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -56,8 +56,9 @@
     <orderEntry type="library" name="Leiningen: com.taoensso/encore:3.31.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.taoensso/tempura:1.5.3" level="project" />
     <orderEntry type="library" name="Leiningen: com.taoensso/truss:1.6.0" level="project" />
-    <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-core:1.23.1" level="project" />
-    <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-jdbc:1.23.1" level="project" />
+    <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-core:1.24.3" level="project" />
+    <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-jdbc:1.24.3" level="project" />
+    <orderEntry type="library" name="Leiningen: com.xtdb/xtdb-rocksdb:1.24.3" level="project" />
     <orderEntry type="library" name="Leiningen: com.zaxxer/HikariCP:3.4.5" level="project" />
     <orderEntry type="library" name="Leiningen: commons-codec:1.15" level="project" />
     <orderEntry type="library" name="Leiningen: commons-fileupload:1.4" level="project" />
@@ -166,6 +167,7 @@
     <orderEntry type="library" name="Leiningen: org.ow2.asm/asm:9.2" level="project" />
     <orderEntry type="library" name="Leiningen: org.postgresql/postgresql:42.5.4" level="project" />
     <orderEntry type="library" name="Leiningen: org.rnorth.duct-tape/duct-tape:1.0.8" level="project" />
+    <orderEntry type="library" name="Leiningen: org.rocksdb/rocksdbjni:7.7.3" level="project" />
     <orderEntry type="library" name="Leiningen: org.slf4j/slf4j-api:2.0.4" level="project" />
     <orderEntry type="library" name="Leiningen: org.tcrawley/dynapath:1.1.0" level="project" />
     <orderEntry type="library" name="Leiningen: org.testcontainers/database-commons:1.18.3" level="project" />

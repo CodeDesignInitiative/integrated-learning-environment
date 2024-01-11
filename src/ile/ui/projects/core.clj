@@ -5,7 +5,7 @@
     [ile.ui.editor.core :as editor]
     [ile.ui.projects.view :as view]
     [ile.projects.core :as projects]
-    [ile.util :as util]
+    [ile.core.util :as util]
     [ring.util.response :as response]))
 
 (defn- projects-page [request]
