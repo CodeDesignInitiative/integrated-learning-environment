@@ -34,7 +34,7 @@
 (def routes
   ["/:lang"
    ["/world"
-    ["/finished" {:get finished-world-page}]
+    ["/:id/finished" {:get finished-world-page}]
     ["/:id" {:get world-map-page}]
     ["/:id/mission/:m-id" {:get mission-page}]]
    ["/worlds" {:get worlds-page}]])
