@@ -233,6 +233,10 @@
              :required true
              :name     "learning-track/name"}]
 
+    [:label "Story Mode?"]
+    [:input {:name "learning-track/story-mode?"
+             :type :checkbox}]
+
     [:label "Description"]
     [:textarea {:id       "learning-track_description"
                 :required true
@@ -248,7 +252,7 @@
 
 (defn learning-tracks-edit-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
-        {:learning-track/keys [name description language visible?] :as learning-track}
+        {:learning-track/keys [name description language visible? story-mode?] :as learning-track}
         (persistence/find-learning-track learning-track-id)]
     [:<>
      [:nav
@@ -263,6 +267,11 @@
                 :required true
                 :value    name
                 :name     "learning-track/name"}]
+
+       [:label "Story Mode?"]
+       [:input {:name    "learning-track/story-mode?"
+                :checked story-mode?
+                :type    :checkbox}]
 
        [:label "Description"]
        [:textarea {:id       "learning-track_description"

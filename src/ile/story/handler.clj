@@ -1,7 +1,6 @@
 (ns ile.story.handler
   (:require
     [ring.util.http-response :as http-response]
-
     [ile.dictonary.translations :as tr]
     [ile.story.view :as view]
     [ile.story.persistence :as persistence]
@@ -40,20 +39,22 @@
    ["/worlds" {:get worlds-page}]])
 
 
-(defn get-mission-data [request]
-  (let [mission-id (util/get-path-param-as-uuid request :id)
-        mission (persistence/find-mission mission-id)]
-    (http-response/ok mission)))
+(defn get-learning-track-task [request]
+  (let [learning-track-task-id (util/get-path-param-as-uuid request :id)
+        learning-track-task (p/find-first-by-id learning-track-task-id)
+        learning-track (p/find-first-by-id (:learning-track-task/learning-track learning-track-task))]
+    (http-response/ok (merge learning-track-task learning-track))))
 
-(defn get-next-mission [request]
-  (let [mission-id (util/get-path-param-as-uuid request :id)
-        mission (persistence/find-mission mission-id)
-        next-mission (persistence/find-next-mission mission)]
-    (if next-mission
-      (http-response/ok {:mission-id (:xt/id next-mission)})
+(defn get-next-learning-track-task [request]
+  (let [learning-track-task-id (util/get-path-param-as-uuid request :id)
+        learning-track-task (p/find-first-by-id learning-track-task-id)
+        next-learning-track-task (p/find-next-learning-track-task learning-track-task)]
+    (clojure.pprint/pprint (:xt/id next-learning-track-task))
+    (if next-learning-track-task
+      (http-response/ok {:next-learning-track-task-id (:xt/id next-learning-track-task)})
       (http-response/ok {:status "last_mission"}))))
 
 (def api-routes
   [""
-   ["/mission/:id" {:get get-mission-data}]
-   ["/next-mission/:id" {:get get-next-mission}]])
+   ["/learning-track-task/:id" {:get get-learning-track-task}]
+   ["/next-learning-track-task/:id" {:get get-next-learning-track-task}]])

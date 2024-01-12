@@ -14,21 +14,20 @@ const block_editor_selection = document.getElementById("block-editor-selection")
 const text_editor = document.getElementById("text-editor")
 
 // state
-let content = undefined;
-
 let phone_hidden = false;
 
 const target_list = document.getElementById('target');
 const selection_list = document.getElementById('selection');
 
 let mission = undefined;
-let mode = undefined;
-let input_type = undefined;
-let hidden_css = undefined;
-let hidden_html = undefined;
+let is_block_mode = undefined;
+let input_type = "html";
+let hidden_css = "";
+let hidden_html = "";
 let difficulty = "easy";
+let is_story_mode = undefined;
 
-const is_text_mode = () => (input_type === "text")
+const is_text_mode = () => !is_block_mode
 
 const editor = ace.edit("text-editor");
 editor.setTheme("ace/theme/one_dark");
@@ -48,26 +47,27 @@ const shuffleArray = (array) => {
 
 
 const fill_mission_data = (mission, difficulty = "easy") => {
-    switch (difficulty) {
-        case "easy":
-            content = mission["mission/content"][lang][0];
-            break;
-        case "medium":
-            content = mission["mission/content"][lang][1];
-            break;
-        case "hard":
-            content = mission["mission/content"][lang][2];
-            break;
-        default:
-            content = mission["mission/content"][lang][0];
-    }
-    hidden_css = content["mission.content/hidden-css"]
-    hidden_html = content["mission.content/hidden-html"]
-    explanation_node.innerHTML = hint_message_to_html(content["mission.content/explanation"])
-    const blocks = content["mission.content/result"]
-    mode = content["mission.content/mode"];
-    input_type = content["mission.content/input-type"];
-    if (input_type === "text") {
+    // switch (difficulty) {
+    //     case "easy":
+    //         content = mission["mission/content"][lang][0];
+    //         break;
+    //     case "medium":
+    //         content = mission["mission/content"][lang][1];
+    //         break;
+    //     case "hard":
+    //         content = mission["mission/content"][lang][2];
+    //         break;
+    //     default:
+    //         content = mission["mission/content"][lang][0];
+    // }
+    hidden_css = mission["learning-track-task/hidden-css"]
+    hidden_html = mission["learning-track-task/hidden-html"]
+    explanation_node.innerHTML = hint_message_to_html(mission["learning-track-task/explanation"])
+    const solution = mission["learning-track-task/solution"]
+    is_block_mode = mission["learning-track-task/block-mode?"];
+    is_story_mode = mission["learning-track/story-mode?"];
+    // input_type = mission["mission.content/input-type"];
+    if (!is_block_mode) {
         text_editor.classList.remove("hidden")
         block_editor_target.classList.add("hidden")
         block_editor_selection.classList.add("hidden")
@@ -79,9 +79,9 @@ const fill_mission_data = (mission, difficulty = "easy") => {
         block_editor_target.classList.remove("hidden")
         block_editor_selection.classList.remove("hidden")
 
-        const wrong_blocks = content["mission.content/wrong-blocks"]
+        const wrong_blocks = mission["learning-track-task/wrong-blocks"].split('\n')
 
-        const all_blocks = shuffleArray(blocks.concat(wrong_blocks))
+        const all_blocks = shuffleArray(solution.split('\n').concat(wrong_blocks))
 
         selection_list.innerHTML = "";
 
@@ -112,12 +112,13 @@ const overlay = document.getElementById("overlay")
 const chat = document.getElementById("chat")
 const chat_messages = document.getElementById("chat-messages")
 
-fetch(host + "/api/mission/" + mission_id)
+fetch(host + "/api/learning-track-task/" + mission_id)
     .then((res) => res.json())
     .then((json) => {
         mission = json;
         next_message();
-        fill_mission_data(mission, document.getElementById("difficulty").value);
+        fill_mission_data(mission);
+        // fill_mission_data(mission, document.getElementById("difficulty").value);
         on_input_change();
     })
 
@@ -185,8 +186,8 @@ const update_output = () =>
      <html lang="de">
         <head>
         <title>ILE Editor Website</title>
-        <style>${mode === "css" ? generate_css() : hidden_css}</style></head>
-        <body>${mode === "html" ? generate_html() : hidden_html}</body>
+        <style>${input_type === "css" ? generate_css() : hidden_css}</style></head>
+        <body>${input_type === "html" ? generate_html() : hidden_html}</body>
      </html>`.replace(/#/g, "%23")
 
 
@@ -203,8 +204,10 @@ const evaluate_code = () => {
     // } else if (difficulty === "hard") {
     //     content = mission["mission/content"][lang][2]
     // }
-    const correct_result = content["mission.content/result"]
-        .reduce((acc, child) => acc + child, "")
+
+    const correct_result =
+        !is_block_mode ? mission["learning-track-task/solution"]
+            : mission["learning-track-task/solution"].replace(/\r/g, '').replace(/\n/g, '')
 
     const entered_result =
         is_text_mode() ?
@@ -212,6 +215,11 @@ const evaluate_code = () => {
             Array
                 .from(target_list.childNodes)
                 .reduce((acc, child) => acc + child.innerText, "")
+                .replace(/\r/g, '')
+                .replace(/\n/g, '')
+
+    console.log(correct_result)
+    console.log(entered_result)
 
     if (entered_result === correct_result) {
         party_hard();
@@ -223,7 +231,7 @@ const evaluate_code = () => {
             "Versuche es noch einmal anders :) \n \n" +
             "So sollte es aussehen: \n" +
             correct_result + "\n" +
-            content["mission.content/hint"]
+            mission["learning-track-task/hint"]
         )
     }
 }
@@ -371,8 +379,10 @@ const hint_message_to_html = (msg) =>
     `${marked.parse(msg)}`
 
 
-const enable_show_phone = () =>
+const enable_show_phone = () => {
     chat.onclick = () => show_phone()
+    console.log("Show phone!")
+}
 
 const disable_show_phone = () =>
     chat.onclick = {}
@@ -386,37 +396,41 @@ const to_image_or_text = (msg) => {
 }
 
 const next_message = () => {
-    if (!story_after) {
-        if (!pre_mission_chat_done) {
-            if (mission["mission/story-before"][lang].length > 0) {
-                if (current_message < mission["mission/story-before"][lang].length) {
-                    chat_messages.innerHTML += to_image_or_text(mission["mission/story-before"][lang][current_message])
-                    current_message = current_message + 1
-                } else {
-                    chat.classList.add("chat-hidden");
-                    pre_mission_chat_done = true;
-                    current_message = 0;
-                    setTimeout(() => enable_show_phone(), 200)
-                }
-                setTimeout(() => {
-                    chat_messages.scrollTop = chat_messages.scrollHeight;
-                }, 200)
+    if (is_story_mode) {
+        if (!story_after) {
+            if (!pre_mission_chat_done) {
+                if (mission["learning-track-task/messages-before"].length > 0) {
+                    if (current_message < mission["learning-track-task/messages-before"].length) {
+                        chat_messages.innerHTML += to_image_or_text(mission["learning-track-task/messages-before"][current_message])
+                        current_message = current_message + 1
+                    } else {
+                        chat.classList.add("chat-hidden");
+                        pre_mission_chat_done = true;
+                        current_message = 0;
+                        setTimeout(() => enable_show_phone(), 200)
+                    }
+                    setTimeout(() => {
+                        chat_messages.scrollTop = chat_messages.scrollHeight;
+                    }, 200)
 
+                } else {
+                    chat_messages.classList.add("chat-hidden");
+                }
             } else {
-                chat_messages.classList.add("chat-hidden");
+                chat.classList.add("chat-hidden");
+                setTimeout(() => enable_show_phone(), 200)
             }
         } else {
-            chat.classList.add("chat-hidden");
-            setTimeout(() => enable_show_phone(), 200)
+            if (current_message < mission["learning-track-task/messages-after"].length) {
+                chat_messages.innerHTML += to_image_or_text(mission["learning-track-task/messages-after"][current_message])
+                current_message = current_message + 1;
+                chat_messages.scrollTop = chat_messages.scrollHeight;
+            } else {
+                next_mission()
+            }
         }
     } else {
-        if (current_message < mission["mission/story-after"][lang].length) {
-            chat_messages.innerHTML += to_image_or_text(mission["mission/story-after"][lang][current_message])
-            current_message = current_message + 1;
-            chat_messages.scrollTop = chat_messages.scrollHeight;
-        } else {
-            next_mission()
-        }
+        chat.remove()
     }
 }
 
@@ -425,27 +439,25 @@ const progress = () => {
     overlay.classList.add("hidden");
     chat.classList.remove("chat-hidden");
 
-
-    if (mission["mission/story-after"][lang].length > 0) {
-        next_message()
-    } else {
-        next_mission()
-    }
+    next_mission()
 }
 
 const next_mission = () => {
-    const current_step = mission["mission/step"]
-    const current_world = mission["mission/world"]
+    const current_step = mission["learning-track-task/step"]
+    const learning_track = mission["learning-track-task/learning-track"]
 
-    fetch(host + "/api/next-mission/" + mission_id)
+    fetch(host + "/api/next-learning-track-task/" + mission_id)
         .then((res) => res.json())
         .then((json) => {
             if (json["status"] === "last_mission") {
-                window.location.href = host + "/" + lang + "/world/finished";
+                window.location.href = host + "/" + lang + "/world/" + learning_track + "/finished";
 
             } else {
-                let url = host + "/" + lang + "/world/mission/" + json["mission-id"]
-                window.location.href = url;
+                window.location.href =
+                    host
+                    + "/" + lang
+                    + "/world/" + learning_track
+                    + "/mission/" + json["next-learning-track-task-id"];
             }
         })
 }

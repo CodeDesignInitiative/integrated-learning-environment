@@ -423,19 +423,20 @@
 #world-page {
     padding: var(--d-3);
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     gap: var(--d-2);
 }
 
 #world-page .tile {
     flex: 1;
-    min-height: 300px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     padding: var(--d-2);
     background-color: var(--lilac-primary);
     justify-content: end;
-    align-items: end;
+    align-items: start;
     text-align: end;
 }
 

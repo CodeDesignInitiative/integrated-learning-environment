@@ -5,12 +5,14 @@
 (s/def :learning-track/language keyword?)
 (s/def :learning-track/description (s/and string? not-empty))
 (s/def :learning-track/visible? boolean?)
+(s/def :learning-track/story-mode? boolean?)
 
 (s/def :ile/learning-track
   (s/keys :req [:learning-track/name
                 :learning-track/language
                 :learning-track/description]
-          :opt [:learning-track/visible?]))
+          :opt [:learning-track/visible?
+                :learning-track/story-mode?]))
 
 (comment
   (s/describe :ile/learning-track)

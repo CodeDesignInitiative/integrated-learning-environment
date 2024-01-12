@@ -4,6 +4,7 @@
 (defn process-learning-track [learning-track]
   (-> learning-track
       (update :learning-track/language keyword)
+      (update :learning-track/story-mode? #(= % "on"))
       (assoc :learning-track/visible? false)))
 
 
@@ -22,4 +23,5 @@
   (-> learning-track
       (assoc :xt/id learning-track-id)
       (update :learning-track/language keyword)
-      (update :learning-track/visible? #(= % "on"))))
+      (update :learning-track/visible? #(= % "on"))
+      (update :learning-track/story-mode? #(= % "on"))))

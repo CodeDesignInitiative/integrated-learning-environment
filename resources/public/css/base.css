@@ -46,11 +46,12 @@ main {
 .tile {
     background-size: 100%;
     border-radius: 32px;
-    border: 2px solid var(--dark-blue);
+    outline: 2px solid var(--dark-blue);
     padding: 8px 12px;
     box-shadow: 4px 4px 0 var(--dark-blue);
     transition: box-shadow 0.3s, transform 0.3s,  background-size 1s;
     text-decoration: none;
+    outline-offset: -1px;
 }
 
 .tile:hover {

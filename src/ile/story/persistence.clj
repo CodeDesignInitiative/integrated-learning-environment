@@ -35,7 +35,7 @@
                 mission-id))
 
 
-(defn find-next-mission [{:mission/keys [step world]}]
+(defn find-next-mission [{:learning-track-task/keys [step world]}]
   (p/find-first '{:find [(pull ?mission [* :ile/persistable-mission])]
                   :where [[?mission :mission/step step]
                           [?mission :mission/world world]]

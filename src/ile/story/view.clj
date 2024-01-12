@@ -39,14 +39,20 @@
      [:h1 name]
      [:p description]]
     [:div]]
-   [:main
-    [:ol
-     (map
-       (fn [{:learning-track-task/keys [name]
-             :xt/keys                  [id]}]
-         [:li [:a {:href (tr/url lang "/world/" (:xt/id learning-track) "/mission/" id)}
-               name]])
-       learning-track-tasks)]]])
+   [:main.p3
+    [:h2 "Kapitel"]
+    (if (not-empty learning-track-tasks)
+      [:ol.col.gap
+       (map
+         (fn [{:learning-track-task/keys [name]
+               :xt/keys                  [id]}]
+           [:li [:a.button {:href (tr/url lang "/world/" (:xt/id learning-track) "/mission/" id)}
+                 name]])
+         learning-track-tasks)]
+      [:<>
+       [:p "Hups. Hier gibt es noch nichts zu tun. Schau dir erstmal die anderen Stories an!"]
+       [:a.button {:href (tr/url lang "/worlds")} "Zurück"]]
+      )]])
 
 (defn finished-world-page [lang]
   [:<>
@@ -55,8 +61,8 @@
     [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]
    [:main#finished-world-page
     [:h1 "🎉 Fertig 🎉"]
-    [:p "Du hast die verfügbaren Mission durchgespielt."]
-    [:p "Bald geht es weiter mit neuen Inhalten."]
+    [:p "Du hast diese Welt durchgespielt."]
+    [:p "Schaue dir andere Themen und Welten an, oder"]
     [:h2 "Nutze den freien Editor"]
     [:p "Hier kannst du dich austoben und testen was du gelernt hast"]
     [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]]

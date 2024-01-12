@@ -78,8 +78,8 @@
    [:#wrong wrong-blocks]])
 
 (defn block-editor [lang
-                    {:mission/keys [world step story-before
-                                    story-after content] :as mission}
+                    {:learning-track-task/keys [world step messages-before
+                                                messages-after content] :as mission}
                     learning-track-id]
   (let [{:mission.content/keys [hidden-html hidden-css
                                 result mode wrong-blocks] :as mission-content}
@@ -92,7 +92,7 @@
       [:nav
        [:a.button {:href (tr/url lang "/world/" learning-track-id)} "Zurück"]
        [:h3 (:mission/name mission)]
-       [:select#difficulty {:on-change "change_difficulty(event)"}
+       #_[:select#difficulty {:on-change "change_difficulty(event)"}
         [:option {:value    :easy
                   :selected true} "Einfach"]
         [:option {:value :medium} "Mittel"]
@@ -134,6 +134,7 @@
      [:#overlay.hidden
       [:.status-modal
        [:h2 "Gut gemacht!"]
+       [:p messages-after]
        [:button {:on-click "progress()"} "Weiter"]]]
 
      ; add js editor scripts

@@ -308,7 +308,7 @@
     [:a.button {:href "/admin/learning-tracks"} "Learning Tracks"]
     [:a.button {:href "/admin/stories"} "Story (to be deprecated)"]]])
 
-(defn learning-tracks-detail-page [{:learning-track/keys [name description language visible?]}
+(defn learning-tracks-detail-page [{:learning-track/keys [name description language visible? story-mode?]}
                                    learning-track-id
                                    learning-track-tasks]
   [:<>
@@ -318,6 +318,7 @@
    [:main#admin-page
     [:section
      [:h1 name]
+     [:p "Story mode: " story-mode?]
      [:p description]
      [:p "Language: " (clojure.core/name language)]
      [:p "Visible: " visible?]]

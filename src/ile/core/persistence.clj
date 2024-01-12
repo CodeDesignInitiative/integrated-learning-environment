@@ -121,6 +121,20 @@
               :in    [[learning-track-id]]}
             learning-track-id))
 
+(defn find-next-learning-track-task [{:learning-track-task/keys [step learning-track]}]
+  (find-first '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
+                :where [[?learning-track-task :learning-track-task/step step]
+                        [?learning-track-task :learning-track-task/learning-track learning-track]]
+                :in    [[step learning-track]]}
+              (+ step 1) learning-track))
+
+(comment
+  (find-next-learning-track-task
+    #:learning-track-task{:step           1
+                          :learning-track #uuid"bce63e65-7b46-4231-9135-45bf2c0a6475"})
+
+  )
+
 (defn create-learning-track-task [learning-track-task]
   (put-in-db-and-wait (with-xt-id learning-track-task)))
 
