@@ -208,7 +208,6 @@ input:focus {
 form > input, .form-tile > input {
     width: 300px;
     margin-bottom: var(--d-2);
-
 }
 
 form > div.icon-input {
@@ -238,6 +237,15 @@ form > button {
     align-self: end;
 }
 
+form .checkbox {
+    display: flex;
+    gap: var(--d-2);
+    margin-bottom: var(--d-2);
+}
+
+form > small {
+    margin-bottom: var(--d-3);
+}
 
 /* OLD */
 /* OLD */

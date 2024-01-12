@@ -77,6 +77,23 @@
   (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
               :where [[?learning-track :learning-track/name any?]]}))
 
+(defn find-all-active-learning-tracks []
+  (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
+              :where [[?learning-track :learning-track/name any?]
+                      [?learning-track :learning-track/visible? true]]}))
+
+(defn find-all-active-learning-tracks-for-language [language]
+  (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
+              :where [[?learning-track :learning-track/name any?]
+                      [?learning-track :learning-track/visible? true]
+                      [?learning-track :learning-track/language language]]
+              :in    [[language]]}
+            language))
+
+(comment
+
+  (find-all-active-learning-tracks-for-language :de))
+
 (defn find-learning-track [learning-track-id]
   (find-first '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
                 :where [[?learning-track :xt/id learning-track-id]]
@@ -89,11 +106,32 @@
 (defn update-learning-tracks [learning-track]
   (put-in-db-and-wait learning-track))
 
+
+
+(defn find-learning-track-tasks [learning-track-id]
+  (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
+              :where [[?learning-track-task :learning-track-task/learning-track learning-track-id]]
+              :in    [[learning-track-id]]}
+            learning-track-id))
+
+(defn find-active-learning-track-tasks [learning-track-id]
+  (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
+              :where [[?learning-track-task :learning-track-task/learning-track learning-track-id]
+                      [?learning-track-task :learning-track-task/active? true]]
+              :in    [[learning-track-id]]}
+            learning-track-id))
+
+(defn create-learning-track-task [learning-track-task]
+  (put-in-db-and-wait (with-xt-id learning-track-task)))
+
+(defn update-learning-track-task [learning-track-task]
+  (put-in-db-and-wait learning-track-task))
+
+
 (comment
   (find-all-learning-tracks)
   (find-learning-track #uuid"47a3a22a-f737-404f-b01a-2b2d223449fc")
   (->> (find-all-learning-tracks)
        (map #(:xt/id %))
        vec
-       (apply remove-from-db))
-  )
+       (apply remove-from-db)))

@@ -857,6 +857,22 @@ main#templates-page {
     box-shadow: 4px 4px 0 var(--dark-blue);
 }
 
+
+form.grid {
+    display: grid;
+    gap: var(--d-3);
+    grid-template-columns: 1fr 2fr;
+}
+
+form.container {
+    background-color: white;
+    border: 2px solid black;
+    padding: var(--d-3);
+    border-radius: var(--d-3);
+    box-shadow: 4px 4px 0 var(--dark-blue);
+}
+
+
 #story-editor details > summary {
     font-size: 1.2rem;
     font-weight: 500;

@@ -287,32 +287,9 @@
 (defn learning-tracks-detail-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
         {:learning-track/keys [name description language visible?] :as learning-track}
-        (persistence/find-learning-track learning-track-id)]
-    [:<>
-     [:nav
-      [:a.button {:href "/admin/learning-tracks"} "<- Back"]
-      [:a.button {:href (str "/admin/learning-track/edit/" learning-track-id)} "Edit"]]
-     [:main#admin-page
-
-      [:section
-       [:h1 name]
-       [:p description]
-       [:p "Language: " (clojure.core/name language)]
-       [:p "Visible: " visible?]]
-
-      [:a.button {:href (str "/admin/learning-track/" learning-track-id "/task/new")}
-       "New Task for Learning Track"]
-
-      [:section
-       [:h2 "Tasks"]
-       [:ol
-        [:li "-"]]
-
-       [:h2 "Hidden Tasks"]
-       [:ul
-        [:li "-"]]]]]))
-
-
+        (persistence/find-learning-track learning-track-id)
+        learning-track-tasks (group-by :learning-track-task/active? (persistence/find-learning-track-tasks learning-track-id))]
+    (view/learning-tracks-detail-page learning-track learning-track-id learning-track-tasks)))
 
 (defn learning-tracks-edit-page-posted [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
@@ -331,45 +308,44 @@
         (response/redirect "/admin/learning-tracks"))
       (learning-tracks-new-page request))))
 
-
 (defn new-learning-track-task-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
-        {:learning-track/keys [name description language]} (persistence/find-first-by-id learning-track-id)]
-    [:<>
-     [:nav
-      [:a.button {:href (str "/admin/learning-tack/" learning-track-id)} "Back"]]
-     [:main.m3
-      [:h1 "New Task for Learning Track " name " (" (clojure.core/name language) ")"]
-      [:p description]
+        learning-track (persistence/find-first-by-id learning-track-id)]
+    (view/new-learning-track-task-page learning-track)))
 
-      [:hr]
+(defn new-learning-track-task-page-posted [request]
+  (let [learning-track-id (util/get-path-param-as-uuid request :id)
+        learning-track-task (assoc (util/get-form-params request)
+                              :learning-track-task/learning-track learning-track-id)
+        new-task (processing/process-learning-track-task learning-track-task)]
+    (if (s/valid? :ile/learning-track-task new-task)
+      (do
+        (persistence/create-learning-track-task new-task)
+        (response/redirect (str "/admin/learning-track/" learning-track-id)))
+      (do
+        (view/new-learning-track-task-page (persistence/find-first-by-id learning-track-id))))))
 
-      [:form.col
-       [:label {:form "learning-track-task/name"} "Name"]
-       [:input {:name "learning-track-task/name"}]
-
-       [:label {:form "learning-track-task/step"} "Step"]
-       [:input {:name "learning-track-task/step"
-                :type :number
-                :step 1}]
-
-       [:label {:form "learning-track-task/explanation"} "Explanation"]
-       [:input {:name "learning-track-task/explanation"}]
-
-       [:label {:form "learning-track-task/active?"} "Active?"]
-       [:input {:name "learning-track-task/active?"
-                :type :checkbox}]
-
-       [:label {:form "learning-track-task/messages-before"} "Messages before"]
-       [:textarea {:name "learning-track-task/messages-before"}]
-
-       [:label {:form "learning-track-task/messages-after"} "Messages after"]
-       [:textarea {:name "learning-track-task/messages-after"}]
-
-       [:button {:type :submit} "Create Task"]
-       ]
-      ]])
+(defn edit-learning-track-task-page [request]
+  (let [learning-track-id (util/get-path-param-as-uuid request :id)
+        learning-track (persistence/find-first-by-id learning-track-id)
+        learning-track-task-id (util/get-path-param-as-uuid request :task-id)
+        learning-track-task (persistence/find-first-by-id learning-track-task-id)]
+    (view/new-learning-track-task-page learning-track learning-track-task))
   )
+
+(defn edit-learning-track-task-page-posted [request]
+  (let [learning-track-id (util/get-path-param-as-uuid request :id)
+        learning-track-task-id (util/get-path-param-as-uuid request :task-id)
+        learning-track-task (assoc (util/get-form-params request)
+                              :learning-track-task/learning-track learning-track-id)
+        new-task (processing/process-learning-track-task learning-track-task learning-track-task-id)]
+    (if (s/valid? :ile/persistable-learning-track-task new-task)
+      (do
+        (persistence/update-learning-track-task new-task)
+        (response/redirect (str "/admin/learning-track/" learning-track-id)))
+      (do
+        (clojure.pprint/pprint (s/explain :ile/persistable-learning-track new-task))
+        (view/new-learning-track-task-page (persistence/find-first-by-id learning-track-id) new-task)))))
 
 (def routes
   ["/admin" {:middleware [middleware/wrap-teacher-access]}
@@ -387,7 +363,10 @@
    ["/learning-track/:id" {:get learning-tracks-detail-page}]
    ["/learning-track/edit/:id" {:get  learning-tracks-edit-page
                                 :post learning-tracks-edit-page-posted}]
-   ["/learning-track/:id/task/new" {:get new-learning-track-task-page}]
+   ["/learning-track/:id/tasks/new" {:get  new-learning-track-task-page
+                                     :post new-learning-track-task-page-posted}]
+   ["/learning-track/:id/task/:task-id" {:get  edit-learning-track-task-page
+                                         :post edit-learning-track-task-page-posted}]
    ["/stories" {:get stories-page}]
    ["/story/:id/" {:get redirect-mission-editor-page}]
    ["/story/:id/:lang" {:get  mission-editor-page

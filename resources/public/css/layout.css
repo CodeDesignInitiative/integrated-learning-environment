@@ -16,7 +16,14 @@
     flex-direction: column;
 }
 
+.gap-s {
+    gap: var(--d-1)
+}
 .gap {
+    gap: var(--d-2);
+}
+
+.gap-l {
     gap: var(--d-3);
 }
 
@@ -26,6 +33,10 @@
 
 .align-center {
     align-items: center;
+}
+
+.align-start {
+    align-items: start;
 }
 
 .grow {

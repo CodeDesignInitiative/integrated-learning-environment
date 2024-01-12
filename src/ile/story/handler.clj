@@ -5,6 +5,7 @@
     [ile.dictonary.translations :as tr]
     [ile.story.view :as view]
     [ile.story.persistence :as persistence]
+    [ile.core.persistence :as p]
     [ile.ui.editor.core :as editor]
     [ile.core.util :as util]))
 
@@ -15,16 +16,15 @@
     (editor/block-editor lang mission)))
 
 (defn world-map-page [request]
-  (let [world-id (keyword (util/get-path-param request :id))
-        missions (persistence/find-all-missions)
+  (let [learning-track-id (util/get-path-param-as-uuid request :id)
+        learning-track (p/find-learning-track learning-track-id)
+        learning-track-tasks (p/find-active-learning-track-tasks learning-track-id)
         lang (tr/lang request)]
-    (view/world-map-page lang {:name     "HTML & CSS"
-                               :subtitle "Einstieg"
-                               :target   "html-css"} missions)))
+    (view/learning-track-tasks-page lang learning-track learning-track-tasks)))
 
 (defn worlds-page [request]
   (let [lang (tr/lang request)]
-    (view/worlds-page lang)))
+    (view/learning-tracks-page lang)))
 
 (defn finished-world-page [request]
   (let [lang (tr/lang request)]

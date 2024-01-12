@@ -14,6 +14,7 @@
 
 (comment
   (s/describe :ile/learning-track)
+  (s/valid? :learning-track/name "")
   )
 
 (s/def :ile/persistable-learning-track
@@ -24,21 +25,26 @@
 (s/def :learning-track-task/explanation string?)
 (s/def :learning-track-task/learning-track uuid?)
 (s/def :learning-track-task/step int?)
+(s/def :learning-track-task/solution string?)
+(s/def :learning-track-task/editor-modes (s/coll-of #{:html :css :js} :distinct true :min-count 1 :max-count 3))
 (s/def :learning-track-task/active? boolean?)
 (s/def :learning-track-task/messages-before string?)
 (s/def :learning-track-task/messages-after string?)
-(s/def :learning-track-task/solution string?)
 (s/def :learning-track-task/hint string?)
+(s/def :learning-track-task/visible-html string?)
 (s/def :learning-track-task/hidden-html string?)
+(s/def :learning-track-task/visible-css string?)
 (s/def :learning-track-task/hidden-css string?)
+(s/def :learning-track-task/visible-js string?)
 (s/def :learning-track-task/hidden-js string?)
-(s/def :learning-track-task/input-type #{:block :text})
-(s/def :learning-track-task/mode (s/coll-of #{:html :css :js}))
+(s/def :learning-track-task/block-mode? boolean?)
 (s/def :learning-track-task/wrong-blocks string?)
-(s/def :learning-track-task/visible? boolean?)
 
 (comment
-  (s/valid? :learning-track-task/mode [:html :css])
+  (s/valid? :learning-track-task/editor-modes [:html :css :js])
+  (s/valid? :learning-track-task/editor-modes [:html :css :js :js :js :js])
+  (s/valid? :learning-track-task/editor-modes ())
+  (s/valid? :learning-track-task/editor-modes [:nil])
   )
 
 (s/def :ile/learning-track-task
@@ -46,16 +52,24 @@
                 :learning-track-task/explanation
                 :learning-track-task/learning-track
                 :learning-track-task/step
-                :learning-track-task/result]
-          :opt [:learning-track-task/story-after
-                :learning-track-task/story-before
+                :learning-track-task/solution
+                :learning-track-task/editor-modes]
+          :opt [:learning-track-task/active?
+                :learning-track-task/messages-before
+                :learning-track-task/messages-after
                 :learning-track-task/hint
+                :learning-track-task/visible-html
                 :learning-track-task/hidden-html
+                :learning-track-task/visible-css
                 :learning-track-task/hidden-css
+                :learning-track-task/visible-js
                 :learning-track-task/hidden-js
-                :learning-track-task/input-type
-                :learning-track-task/mode
-                :learning-track-task/wrong]))
+                :learning-track-task/block-mode?
+                :learning-track-task/wrong-blocks]))
+
+(s/def :ile/persistable-learning-track-task
+  (s/merge :ile/learning-track-task
+           (s/keys :req [:xt/id])))
 
 (s/def :ile/persistable-mission
   (s/merge :ile/mission

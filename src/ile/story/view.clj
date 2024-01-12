@@ -1,5 +1,6 @@
 (ns ile.story.view
-  (:require [ile.dictonary.translations :as tr]))
+  (:require [ile.core.persistence :as persistence]
+            [ile.dictonary.translations :as tr]))
 
 (def worlds [{:name     "HTML & CSS"
               :subtitle "Einstieg"
@@ -11,37 +12,41 @@
               :subtitle "Fortgeschritten"
               :target   "games"}])
 
-(defn worlds-page [lang]
-  [:<>
-   [:nav
-    [:a.button {:href (tr/url lang "/")} "Zurück"]]
-   [:main#world-page
-    (for [{:keys [name subtitle target]} worlds]
-      [:a.tile#world-tile
-       {:href (tr/url lang "/world/map/" target)}
-       [:h3 subtitle]
-       [:h2 name]
-       ])]])
+(defn learning-tracks-page [lang]
+  (let [learning-tracks (persistence/find-all-active-learning-tracks-for-language lang)]
+    [:<>
+     [:nav
+      [:a.button {:href (tr/url lang "/")} "Zurück"]]
+     [:main#world-page
+      (map
+        (fn [{:learning-track/keys [name description]
+              :xt/keys             [id]}]
+          [:a.tile#world-tile
+           {:href (tr/url lang "/world/map/" id)}
+           [:h3 description]
+           [:h2 name]
+           ])
+        learning-tracks)]]))
 
-(defn world-map-page [lang {:keys [name subtitle] :as _world} levels]
+(defn learning-track-tasks-page [lang
+                                 {:learning-track/keys [name description]
+                                  :as                  learning-track}
+                                 learning-track-tasks]
   [:<>
    [:nav
     [:a.button {:href (tr/url lang "/worlds")} "Zurück"]
     [:div
-     [:h2 subtitle]
-     [:h1 name]]
+     [:h1 name]
+     [:p description]]
     [:div]]
-   [:main#world-map-page
-    (for [idx (range (count levels))]
-      (let [{:mission/keys [name]
-             :xt/keys      [id]} (get levels idx)]
-        [:a {:href (tr/url lang "/world/mission/" id)}
-         [:div
-          [:.map-info [:h3 (lang name)]]
-          [:.map {:class (str "bg" (+ (mod idx 4) 1))}
-           [:.level-number (+ idx 1)]]]
-         (when (< (+ idx 1) (count levels))
-           [:img.arrow {:src "/img/map/i2i_arrow.svg"}])]))]])
+   [:main
+    [:ol
+     (map
+       (fn [{:learning-track-task/keys [name]
+             :xt/keys                  [id]}]
+         [:li [:a {:href (tr/url lang "/world/" (:xt/id learning-track) "/mission/" id)}
+               name]])
+       learning-track-tasks)]]])
 
 (defn finished-world-page [lang]
   [:<>
