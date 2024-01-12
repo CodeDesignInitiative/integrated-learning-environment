@@ -22,7 +22,7 @@
         (fn [{:learning-track/keys [name description]
               :xt/keys             [id]}]
           [:a.tile#world-tile
-           {:href (tr/url lang "/world/map/" id)}
+           {:href (tr/url lang "/world/" id)}
            [:h3 description]
            [:h2 name]
            ])

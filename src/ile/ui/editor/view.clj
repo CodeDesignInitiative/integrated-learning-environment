@@ -77,8 +77,10 @@
    [:#result result]
    [:#wrong wrong-blocks]])
 
-(defn block-editor [lang {:mission/keys [world step story-before
-                                         story-after content] :as mission}]
+(defn block-editor [lang
+                    {:mission/keys [world step story-before
+                                    story-after content] :as mission}
+                    learning-track-id]
   (let [{:mission.content/keys [hidden-html hidden-css
                                 result mode wrong-blocks] :as mission-content}
         (first
@@ -88,7 +90,7 @@
     [:main#mission-page
      [:aside#editor-sidebar
       [:nav
-       [:a.button {:href (tr/url lang "/world/map/" (name world))} "Zurück"]
+       [:a.button {:href (tr/url lang "/world/" learning-track-id)} "Zurück"]
        [:h3 (:mission/name mission)]
        [:select#difficulty {:on-change "change_difficulty(event)"}
         [:option {:value    :easy

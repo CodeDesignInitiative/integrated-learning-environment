@@ -57,8 +57,11 @@
                    :resource-paths ["env/prod/resources"]}
 
 
+   :prod          [:project/prod :profiles/prod]
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
+
+   :project/prod  {:jvm-opts ["-Dconf=prod-config.edn"]}
 
    :project/dev   {:jvm-opts       ["-Dconf=dev-config.edn"]
                    :dependencies   [[org.clojure/tools.namespace "1.3.0"]
@@ -90,5 +93,6 @@
                                     (pjstadig.humane-test-output/activate!)]}
    :project/test  {:jvm-opts       ["-Dconf=test-config.edn"]
                    :resource-paths ["env/test/resources"]}
+   :profiles/prod {}
    :profiles/dev  {}
    :profiles/test {}})

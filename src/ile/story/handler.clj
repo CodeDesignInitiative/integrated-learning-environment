@@ -10,10 +10,11 @@
     [ile.core.util :as util]))
 
 (defn mission-page [request]
-  (let [mission-id (util/get-path-param-as-uuid request :id)
-        mission (persistence/find-mission mission-id)
+  (let [learning-track-id (util/get-path-param-as-uuid request :id)
+        learning-track-task-id (util/get-path-param-as-uuid request :m-id)
+        mission (p/find-first-by-id learning-track-task-id)
         lang (tr/lang request)]
-    (editor/block-editor lang mission)))
+    (editor/block-editor lang mission learning-track-id)))
 
 (defn world-map-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
@@ -34,8 +35,8 @@
   ["/:lang"
    ["/world"
     ["/finished" {:get finished-world-page}]
-    ["/map/:id" {:get world-map-page}]
-    ["/mission/:id" {:get mission-page}]]
+    ["/:id" {:get world-map-page}]
+    ["/:id/mission/:m-id" {:get mission-page}]]
    ["/worlds" {:get worlds-page}]])
 
 
