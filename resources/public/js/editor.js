@@ -1,6 +1,7 @@
 const editor = ace.edit("sandbox-editor");
 editor.setTheme("ace/theme/one_dark");
 editor.session.setMode("ace/mode/html");
+const host = window.location.origin
 
 let current_language = "html";
 
