@@ -13,10 +13,18 @@
   :start (start-xtdb!)
   :stop (stop-xtdb!))
 
+(defn db-spec []
+  (when (contains? env :db-user)
+    {:user     (:db-user env)
+     :password (:db-password env)
+     :host     (:db-host env)
+     :port     (:db-port env)
+     :database (:db-database env)}))
+
 (defn start-xtdb!
   "Starts our XTDB node"
   []
-  (if-let [db-spec (:db-spec env)]
+  (if-let [db-spec (db-spec)]
     (xtdb/start-node
       {:xtdb.jdbc/connection-pool {:dialect {:xtdb/module 'xtdb.jdbc.psql/->dialect}
                                    :db-spec db-spec}

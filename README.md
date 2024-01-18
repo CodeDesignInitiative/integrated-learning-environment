@@ -15,3 +15,8 @@ Visit http://play.code.design for the live application.
 
 1. Run `lein repl`
 2. Run `(start)` inside of REPL
+
+## Docker
+
+1. Run `docker build -t lms .` to create the latest image
+2. Run `docker-compose up -d` to launch the app with postgres

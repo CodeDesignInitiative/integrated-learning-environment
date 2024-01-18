@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  lms:
+    image: lms
+    environment:
+      - DB_HOST=postgres
+      - DB_PASSWORD=postgres
+      - DB_USER=postgres
+      - DB_DATABASE=lms
+      - DB_PORT=5432
+      - ASSET_STORE_PATH="/home/app/assets"
+    networks:
+      - lms
+    ports:
+      - 3000:3000
+
+  postgres:
+    image: postgres:15.2
+    restart: always
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - lms
+networks:
+  lms:

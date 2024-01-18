@@ -28,7 +28,8 @@
      [:a.button {:href  "/info"
                  :title "Info Page"}
       [:img {:src "/img/icons/info.svg"
-             :alt "Info icon: an i within a circle"}]]]]
+             :alt "Info icon: an i within a circle"}]
+      "Info"]]]
 
    [:#modes.row.gap-l.wrap
     [:a.tile#story-area
