@@ -164,7 +164,7 @@
         (condp = status
           :success
           (doall
-            (response/redirect (str "/admin/story/" (:xt/id data) "/" (name lang))))
+            (response/redirect (str "/en/admin/story/" (:xt/id data) "/" (name lang))))
           :invalid-spec
           (mission-editor-page request))))))
 
@@ -208,47 +208,69 @@
      [:div (str templates)]]))
 
 (defn learning-tracks-page [request]
-  (let [leraning-tracks (persistence/find-all-learning-tracks)]
-    [:main.p-2
-     [:nav.row
-      [:a.button {:href "/admin"} "Back"]
-      [:a.button {:href "/admin/learning-tracks/new"} "New Learning Track"]]
-     [:ul.col.gap
-      (map (fn [{:learning-track/keys [name visible? description language]
-                 :xt/keys             [id]}] [:li
-                                              [:a {:href (str "/admin/learning-track/" id)} name]
-                                              [:p [:small description]]
-                                              [:div "Lanuage: " (clojure.core/name language) " | Visble? " visible?]]) leraning-tracks)]]))
+  (let [learning-tracks (group-by :learning-track/story-mode? (persistence/find-all-learning-tracks))]
+    [:<>
+     [:header.p3
+      [:nav.row
+       [:a.button {:href "/en/admin"} "Back"]
+       [:h1 "Learning Tracks"]
+       [:a.button {:href "/en/admin/learning-tracks/new"} "New Learning Track"]]]
+     [:main.p3.col.gap
+      [:h2 "Learning Tracks"]
+      [:.col.gap
+       (map (fn [{:learning-track/keys [name visible? description language]
+                  :xt/keys             [id]}]
+              [:a.tile.p2.small {:href (str "/en/admin/learning-track/" id)}
+               [:h3 name]
+
+
+               [:p [:small description]]
+               [:div "Lanuage: " (clojure.core/name language) " | Visble? " visible?]]) (concat (get learning-tracks false)
+                                                                                                (get learning-tracks nil)))]
+
+      [:h2 "Story Tracks"]
+      [:.col.gap
+       (map (fn [{:learning-track/keys [name visible? description language]
+                  :xt/keys             [id]}]
+              [:a.tile.p2.small {:href (str "/en/admin/learning-track/" id)}
+               [:h3 name]
+
+
+               [:p [:small description]]
+               [:div "Lanuage: " (clojure.core/name language) " | Visble? " visible?]]) (get learning-tracks true))]]]))
 
 
 (defn learning-tracks-new-page [request]
-  [:main
-   [:a {:href "/admin/learning-tracks"} "<- Back"]
-   [:form.col {:action "/admin/learning-tracks/new"
-               :method :post}
-    (util/hidden-anti-forgery-field)
+  [:<>
+   [:header.p3
+    [:nav
+     [:a.button {:href "/en/admin/learning-tracks"} "<- Back"]]]
+   [:main.p3
+    [:form.col {:action "/en/admin/learning-tracks/new"
+                :method :post}
+     (util/hidden-anti-forgery-field)
 
-    [:label "Name"]
-    [:input {:id       "learning-track_name"
-             :required true
-             :name     "learning-track/name"}]
+     [:label "Name"]
+     [:input {:id       "learning-track_name"
+              :required true
+              :name     "learning-track/name"}]
 
-    [:label "Story Mode?"]
-    [:input {:name "learning-track/story-mode?"
-             :type :checkbox}]
+     [:label "Story Mode?"]
+     [:input {:name "learning-track/story-mode?"
+              :type :checkbox}]
 
-    [:label "Description"]
-    [:textarea {:id       "learning-track_description"
-                :required true
-                :name     "learning-track/description"}]
+     [:label "Description"]
+     [:textarea {:id       "learning-track_description"
+                 :required true
+                 :name     "learning-track/description"}]
 
-    [:label "Language"]
-    [:input {:id       "learning-track_language"
-             :required true
-             :name     "learning-track/language"}]
-    [:small "Use the two letter ISO coutry code, like 'de', 'en',.. (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)"]
+     [:label "Language"]
+     [:input {:id       "learning-track_language"
+              :required true
+              :name     "learning-track/language"}]
+     [:small "Use the two letter ISO coutry code, like 'de', 'en',.. (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)"]
 
-    [:button {:type :submit} "Create"]]])
+     [:button {:type :submit} "Create"]]]])
 
 (defn learning-tracks-edit-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
@@ -256,9 +278,9 @@
         (persistence/find-learning-track learning-track-id)]
     [:<>
      [:nav
-      [:a.button {:href (str "/admin/learning-track/" learning-track-id)} "<- Back"]]
+      [:a.button {:href (str "/en/admin/learning-track/" learning-track-id)} "<- Back"]]
      [:main#admin-page
-      [:form.col {:action (str "/admin/learning-track/edit/" learning-track-id)
+      [:form.col {:action (str "/en/admin/learning-track/edit/" learning-track-id)
                   :method :post}
        (util/hidden-anti-forgery-field)
 
@@ -306,7 +328,7 @@
     (if (s/valid? :ile/learning-track learning-track)
       (do
         (persistence/update-learning-tracks learning-track)
-        (response/redirect (str "/admin/learning-track/" learning-track-id)))
+        (response/redirect (str "/en/admin/learning-track/" learning-track-id)))
       (learning-tracks-edit-page request))))
 
 (defn learning-tracks-new-page-posted [request]
@@ -314,7 +336,7 @@
     (if (s/valid? :ile/learning-track learning-track)
       (do
         (persistence/create-learning-tracks learning-track)
-        (response/redirect "/admin/learning-tracks"))
+        (response/redirect "/en/admin/learning-tracks"))
       (learning-tracks-new-page request))))
 
 (defn new-learning-track-task-page [request]
@@ -330,7 +352,7 @@
     (if (s/valid? :ile/learning-track-task new-task)
       (do
         (persistence/create-learning-track-task new-task)
-        (response/redirect (str "/admin/learning-track/" learning-track-id)))
+        (response/redirect (str "/en/admin/learning-track/" learning-track-id)))
       (do
         (view/new-learning-track-task-page (persistence/find-first-by-id learning-track-id))))))
 
@@ -351,13 +373,13 @@
     (if (s/valid? :ile/persistable-learning-track-task new-task)
       (do
         (persistence/update-learning-track-task new-task)
-        (response/redirect (str "/admin/learning-track/" learning-track-id)))
+        (response/redirect (str "/en/admin/learning-track/" learning-track-id)))
       (do
         (clojure.pprint/pprint (s/explain :ile/persistable-learning-track new-task))
         (view/new-learning-track-task-page (persistence/find-first-by-id learning-track-id) new-task)))))
 
 (def routes
-  ["/admin" {:middleware [middleware/wrap-teacher-access]}
+  ["/:lang/admin" {:middleware [middleware/wrap-teacher-access]}
    ["" {:get admin-page}]
    ["/backup" {:get backup-page}]
    ["/images" {:get  images-page

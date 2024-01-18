@@ -5,9 +5,10 @@
 
 (defn- start-screen [request]
   (let [lang (tr/lang request)
+        logged-in? (some? (get-in request [:session :user]))
         is-admin? (boolean (some #{:admin} (get-in request [:session :user :user/roles])))
         is-teacher? (boolean (some #{:teacher} (get-in request [:session :user :user/roles])))]
-    (view/start-screen lang is-admin? is-teacher?)))
+    (view/start-screen lang logged-in? is-admin? is-teacher?)))
 
 (defn- info-screen [request]
   [:<>

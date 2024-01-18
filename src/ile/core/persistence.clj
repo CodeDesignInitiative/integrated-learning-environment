@@ -86,13 +86,26 @@
   (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
               :where [[?learning-track :learning-track/name any?]
                       [?learning-track :learning-track/visible? true]
-                      [?learning-track :learning-track/language language]]
+                      [?learning-track :learning-track/language language]
+                      [?learning-track :learning-track/story-mode? false]]
+              :in    [[language]]}
+            language))
+
+(defn find-all-active-story-tracks-for-language [language]
+  (query-db '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]
+              :where [[?learning-track :learning-track/name any?]
+                      [?learning-track :learning-track/visible? true]
+                      [?learning-track :learning-track/language language]
+                      [?learning-track :learning-track/story-mode? true]]
               :in    [[language]]}
             language))
 
 (comment
 
-  (find-all-active-learning-tracks-for-language :de))
+  (group-by :learning-track/story-mode? (find-all-learning-tracks))
+
+  (find-all-active-learning-tracks-for-language :de)
+  (find-all-active-story-tracks-for-language :de))
 
 (defn find-learning-track [learning-track-id]
   (find-first '{:find  [(pull ?learning-track [* :ile/persistable-learning-track])]

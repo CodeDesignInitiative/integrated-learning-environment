@@ -4,7 +4,6 @@ editor.session.setMode("ace/mode/html");
 
 let current_language = "html";
 
-const html_editor = document.getElementById("editor")
 const html_base = document.getElementById("html-base").innerText
 const html_snippet = document.getElementById("html-snippet").innerText
 const html_answer = document.getElementById("html-answer").innerText
@@ -16,8 +15,18 @@ const output = document.getElementById("output")
 let html_stored = editor.getValue();
 let css_stored = "";
 
+const projects = JSON.parse(localStorage.getItem("projects"))
+const project_id = window.location.pathname.split("/").pop()
+const project = projects.find((p) => (p.id === project_id))
+
+if (project !== null) {
+    html_stored = project.html
+    editor.setValue(project.html, 1)
+    css_stored = project.css
+}
+
 const blank_css =
-`body {
+    `body {
     background-color: white;
     font-family: sans-serif;
 }`
@@ -33,35 +42,33 @@ window.addEventListener("beforeunload", beforeUnloadHandler);
 
 
 const load_css_base_to_stored = () =>
-     (css_base !== "") ? css_stored = css_base : {}
+    (css_base !== "") ? css_stored = css_base : {}
 
 window.onload = (event) => {
     load_css_base_to_stored()
 }
 
 const change_language = (lang) => {
-    if (current_language !== lang) {
-        if (current_language === "html") {
-            html_stored = editor.getValue();
-            if (css_stored === "") {
-                if (css_base === "") {
-                    editor.setValue(blank_css)
-                } else {
-                    editor.setValue(css_base)
-                }
+    if (current_language === "html") {
+        html_stored = editor.getValue();
+        if (css_stored === "") {
+            if (css_base === "") {
+                editor.setValue(blank_css, 1)
             } else {
-                editor.setValue(css_stored);
+                editor.setValue(css_base, 1)
             }
-            editor.session.setMode("ace/mode/css");
         } else {
-            css_stored = editor.getValue();
-            editor.setValue(html_stored);
-            editor.session.setMode("ace/mode/html");
+            editor.setValue(css_stored, 1);
         }
-
-        current_language = lang;
-        on_input_change()
+        editor.session.setMode("ace/mode/css");
+    } else {
+        css_stored = editor.getValue();
+        editor.setValue(html_stored, 1);
+        editor.session.setMode("ace/mode/html");
     }
+
+    current_language = lang;
+    on_input_change()
 }
 
 
@@ -88,7 +95,7 @@ const generate_html = () => {
             return editor.getValue()
         } else {
             return html_base.replace("$$placeholder$$", html_snippet)
-            .replace("$placeholder$", editor.getValue())
+                .replace("$placeholder$", editor.getValue())
         }
 
     } else {

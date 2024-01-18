@@ -12,17 +12,20 @@
               :subtitle "Fortgeschritten"
               :target   "games"}])
 
-(defn learning-tracks-page [lang]
-  (let [learning-tracks (persistence/find-all-active-learning-tracks-for-language lang)]
+(defn learning-tracks-page [lang mode]
+  (let [learning-tracks (if (= mode :story)
+                          (persistence/find-all-active-story-tracks-for-language lang)
+                          (persistence/find-all-active-learning-tracks-for-language lang))]
     [:<>
-     [:nav
-      [:a.button {:href (tr/url lang "/")} "Zurück"]]
+     [:header
+      [:nav.p3
+       [:a.button {:href (tr/url lang "/")} "Zurück"]]]
      [:main#world-page
       (map
         (fn [{:learning-track/keys [name description]
               :xt/keys             [id]}]
           [:a.tile#world-tile
-           {:href (tr/url lang "/world/" id)}
+           {:href (tr/url lang (if (= mode :story) "/world/" "/learning-track/") id)}
            [:h3 description]
            [:h2 name]
            ])
@@ -31,14 +34,16 @@
 (defn learning-track-tasks-page [lang
                                  {:learning-track/keys [name description]
                                   :as                  learning-track}
-                                 learning-track-tasks]
+                                 learning-track-tasks
+                                 story-mode?]
   [:<>
-   [:nav
-    [:a.button {:href (tr/url lang "/worlds")} "Zurück"]
-    [:div
-     [:h1 name]
-     [:p description]]
-    [:div]]
+   [:header.p3
+    [:nav
+     [:a.button {:href (tr/url lang (if story-mode? "/worlds" "/learn"))} "Zurück"]
+     [:div
+      [:h1 name]
+      [:p description]]
+     [:div]]]
    [:main.p3
     [:h2 "Kapitel"]
     (if (not-empty learning-track-tasks)
@@ -46,7 +51,9 @@
        (map
          (fn [{:learning-track-task/keys [name]
                :xt/keys                  [id]}]
-           [:li [:a.button {:href (tr/url lang "/world/" (:xt/id learning-track) "/mission/" id)}
+           [:li [:a.button {:href (tr/url lang (if story-mode?
+                                                 (str "/world/" (:xt/id learning-track) "/mission/")
+                                                 (str "/learning-track/" (:xt/id learning-track) "/task/")) id)}
                  name]])
          learning-track-tasks)]
       [:<>
@@ -56,9 +63,9 @@
 
 (defn finished-world-page [lang]
   [:<>
-   [:nav
-    [:a.button {:href (tr/url lang "/worlds")} "Zurück zur Übersicht"]
-    [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]
+   [:header.p3
+    [:nav
+     [:a.button {:href (tr/url lang "/")} "Zurück zum Start"]]]
    [:main#finished-world-page
     [:h1 "🎉 Fertig 🎉"]
     [:p "Du hast diese Welt durchgespielt."]

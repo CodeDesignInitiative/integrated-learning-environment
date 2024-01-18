@@ -51,17 +51,8 @@
 /* start page */
 
 #start-screen {
-    display: grid;
-    grid-template-areas:
-            "nav nav"
-            "story editor";
-
-    grid-template-rows: auto 1fr;
-    grid-template-columns: 2fr 2fr;
-
-    height: calc(100vh - var(--d-3) * 2);
-    gap: 1rem;
-    padding: var(--d-3);
+    height: 100vh;
+    /*height: calc(100vh - var(--d-3) * 2);*/
 
     background-image: url("/img/bg/bg.svg");
     background-position: -300px bottom;
@@ -82,44 +73,68 @@
     }
 }
 
-#start-screen > a {
+#modes {
+    flex: 1;
+}
+
+#modes > a {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 16px 24px;
+    min-width: 300px;
 }
 
-#start-screen > * > h2 {
+#modes > a > h2 {
     font-size: 5rem;
     margin: 0;
 }
 
+#modes > a > img.icon {
+    height: 12em;
+
+}
 
 #start-screen #title {
     display: flex;
     justify-content: start;
 }
 
-#start-screen #title img {
-    width: 140px;
+img.logo {
+    width: 120px;
 }
 
 #start-screen #story-area {
-    grid-area: story;
     position: relative;
     background-color: var(--lilac-primary);
     background-image: url("/img/bg/story_bg.svg");
     background-position: bottom;
-    /*background-size: contain;*/
     background-repeat: no-repeat;
-    margin: var(--d-3);
     overflow: hidden;
 }
 
-#start-screen > * > img.icon {
-    height: 9em;
+#learn-area {
+    background-color: var(--mint-1);
+    background-image: url("/img/bg/story_bg.svg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-blend-mode: luminosity;
+    position: relative;
+    overflow: hidden;
 }
+
+
+#learn-area #learn-peep {
+    position: absolute;
+    max-height: 60%;
+    max-width: 40%;
+    left: 0;
+    bottom: -15px;
+    mix-blend-mode: overlay;
+}
+
 
 #start-screen #story-area #story-peep {
     position: absolute;
@@ -136,15 +151,9 @@
     background-color: var(--rose-1);
     background-image: url("/img/bg/editor_bg.svg");
     background-position: bottom;
-    /*background-size: contain;*/
     background-repeat: no-repeat;
-    margin: var(--d-3);
     overflow: hidden;
 }
-
-/*#start-screen #editor-area h2 {*/
-/*    z-index: 10;*/
-/*}*/
 
 #start-screen #editor-area #editor-peep {
     position: absolute;

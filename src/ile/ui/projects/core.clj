@@ -10,9 +10,10 @@
 
 (defn- projects-page [request]
   (let [lang (tr/lang request)
+        logged-in? (some? (get-in request [:session :user]))
         user-name (get-in request [:session :user :xt/id])
         user-projects (if user-name (or (projects/find-user-projects (name user-name)) []) [])]
-    (view/projects-page lang user-projects)))
+    (view/projects-page lang logged-in? user-projects)))
 
 (defn- convert-project [{:user.project/keys [name css html owner]
                          :xt/keys [id]}]
@@ -26,13 +27,14 @@
 
 (defn project-editor [request]
   (let [lang (tr/lang request)
+        logged-in? (some? (get-in request [:session :user]))
         project-id (util/get-path-param-as-uuid request :id)
         project (projects/find-user-project project-id)]
     (if (contains? project :user.project/html)
       (do
         (convert-project project)
         (response/redirect (tr/url lang "/projekt/editor/" project-id)))
-      (editor/editor lang (:user.project/code project) project-id))))
+      (editor/editor lang logged-in? (:user.project/code project) project-id))))
 
 
 (defn save-project [request]
@@ -51,8 +53,9 @@
 
 (defn new-project-page [request]
   (let [lang (tr/lang request)
+        logged-in? (some? (get-in request [:session :user]))
         templates (templates/find-all-templates)]
-    (view/new-project-page lang templates)))
+    (view/new-project-page lang logged-in? templates)))
 
 (defn create-project-and-redirect [lang project]
   (let [project (projects/create-user-project project)]

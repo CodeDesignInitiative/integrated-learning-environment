@@ -1,15 +1,11 @@
 (ns ile.ui.auth.view
   (:require
-    [ile.dictonary.translations :as tr]
-    [ile.layout :as layout]))
-
-
+    [ile.dictonary.translations :as tr]))
 
 (defn signin-form-user-name [lang error]
   [:form.form-tile {:id     "signin-form"
                     :method :post
                     :action (str "/" (name lang) "/login")}
-   #_[:h3 "Mit Nutzername anmelden"]
    [:label {:for "user-name"}
     (tr/tr lang :login/username)]
    [:.icon-input
@@ -121,19 +117,16 @@
 
 (defn login-page [lang error]
   [:<>
-   [:nav
-    [:a.button
-     {:href "/ru/login"}
-     [:img {:src "/img/icons/language.svg"}]
-     (tr/tr lang :start/language-btn)]
-    #_[:a.button {:href (tr/url lang "/")} "← " (tr/tr lang :navigation/back)]]
+   [:header.p3
+    [:nav.row.spread
+     [:a.button
+      {:href "/"}
+      "Ohne Account weitermachen"]
+     [:a.button
+      {:href "/ru/login"}
+      [:img {:src "/img/icons/language.svg"}]
+      (tr/tr lang :start/language-btn)]]]
    [:main#login-page
-    #_[:div
-       [:div
-        [:a {:href "/ru/login"} "RU"]]
-       [:div
-        [:a {:href "/de/login"} "DE"]]
-       ]
     [:div
      [:h1 (tr/tr lang :login/login)]
      (signin-form-user-name lang error)

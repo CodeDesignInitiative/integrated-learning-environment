@@ -5,7 +5,6 @@
 
 (def routes
   ["/htmx" {:middleware [middleware/wrap-render-htmx
-                         middleware/wrap-unauthorized-login-redirect
                          middleware/wrap-csrf
                          middleware/wrap-render-rum
                          middleware/wrap-formats]}

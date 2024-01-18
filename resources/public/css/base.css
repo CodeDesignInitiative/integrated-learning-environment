@@ -22,6 +22,10 @@ main {
     animation-fill-mode: forwards;
 }
 
+a, a:visited {
+    color: black;
+}
+
 @keyframes fadeInAnimation {
     0% {
         opacity: 0;
@@ -52,6 +56,11 @@ main {
     transition: box-shadow 0.3s, transform 0.3s,  background-size 1s;
     text-decoration: none;
     outline-offset: -1px;
+    background-color: white;
+}
+
+.tile.small {
+    border-radius: 16px;
 }
 
 .tile:hover {
@@ -130,7 +139,6 @@ and (orientation: landscape)  {
 
 
 nav {
-    padding: var(--d-3);
     display: flex;
     justify-content: space-between;
     align-items: start;
@@ -138,7 +146,6 @@ nav {
 
 nav a {
     text-decoration: none;
-    color: white;
 }
 
 .form-tile {

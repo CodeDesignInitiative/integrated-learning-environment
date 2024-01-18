@@ -12,8 +12,7 @@
   (response/redirect "/de/"))
 
 (def routes
-  ["" {:middleware [middleware/wrap-unauthorized-login-redirect
-                    middleware/wrap-csrf
+  ["" {:middleware [middleware/wrap-csrf
                     middleware/wrap-render-rum
                     middleware/wrap-formats]}
 

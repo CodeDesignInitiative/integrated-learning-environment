@@ -25,36 +25,41 @@
    [:#css-base
     css]])
 
-(defn nav-bar [lang project-id]
+(defn nav-bar [lang logged-in? project-id]
   [:nav
    [:a.button {:href (tr/url lang "/projekte")} "← " "Zurück"]
-   [:form {:action (tr/url lang "/projekt/speichern")
-           :id     "save-form"
-           :method "post"}
-    [:input {:id    "__anti-forgery-token"
-             :name  "__anti-forgery-token"
-             :type  :hidden
-             :value *anti-forgery-token*}]
-    [:input {:name  "html"
-             :id    "html-input"
-             :type  :hidden
-             :value ""}]
-    [:input {:name  "css"
-             :id    "css-input"
-             :type  :hidden
-             :value ""}]
-    [:input {:name  "id"
-             :id    "id"
-             :type  :hidden
-             :value (str project-id)}]
-    [:button
-     {:onclick "save()"}
-     [:img {:src "/img/icons/save-outline.svg"}] "Speichern"]]])
+   (if logged-in?
+     [:form {:action (tr/url lang "/projekt/speichern")
+             :id     "save-form"
+             :method "post"}
+      [:input {:id    "__anti-forgery-token"
+               :name  "__anti-forgery-token"
+               :type  :hidden
+               :value *anti-forgery-token*}]
+      [:input {:name  "html"
+               :id    "html-input"
+               :type  :hidden
+               :value ""}]
+      [:input {:name  "css"
+               :id    "css-input"
+               :type  :hidden
+               :value ""}]
+      [:input {:name  "id"
+               :id    "id"
+               :type  :hidden
+               :value (str project-id)}]
+      [:button
+       {:onclick "save()"}
+       [:img {:src "/img/icons/save-outline.svg"}] "Speichern"]]
+     [:button
+      {:onclick "project_save()"}
+      [:img {:src "/img/icons/save-outline.svg"}]
+      "Speichern"])])
 
-(defn editor-page [lang code project-id]
+(defn editor-page [lang logged-in? code project-id]
   [:main#editor-screen
    [:aside#editor-sidebar
-    (nav-bar lang project-id)
+    (nav-bar lang logged-in? project-id)
     [:div.col.grow
      (editor-tabs)
      [:#editor-wrapper.grow
@@ -64,11 +69,15 @@
    [:div#editor-output
     [:iframe#output]]
 
+
+   (when-not logged-in?
+     [:script {:src "/js/projects.js"}])
    ; add js editor scripts
    [:script {:src     "/js/src-min-noconflict/ace.js"
              :type    "text/javascript"
              :charset "utf-9"}]
-   [:script {:src "/js/editor.js?v=1"}]])
+   [:script {:src "/js/editor.js?v=1"}]
+   ])
 
 (defn hidden-block-code [html css result wrong-blocks]
   [:div#hidden-code
@@ -80,7 +89,8 @@
 (defn block-editor [lang
                     {:learning-track-task/keys [world step messages-before
                                                 messages-after content] :as mission}
-                    learning-track-id]
+                    learning-track-id
+                    story-mode?]
   (let [{:mission.content/keys [hidden-html hidden-css
                                 result mode wrong-blocks] :as mission-content}
         (first
@@ -90,7 +100,7 @@
     [:main#mission-page
      [:aside#editor-sidebar
       [:nav
-       [:a.button {:href (tr/url lang "/world/" learning-track-id)} "Zurück"]
+       [:a.button {:href (tr/url lang (if story-mode? "/world/" "/learning-track/") learning-track-id)} "Zurück"]
        [:h3 (:mission/name mission)]
        #_[:select#difficulty {:on-change "change_difficulty(event)"}
         [:option {:value    :easy
@@ -118,7 +128,7 @@
      [:#tsparticles]
 
 
-     [:#chat
+     [:#overlay.hidden#chat
       [:#phone
        [:#status-bar
         [:#time (.format (LocalTime/now) (DateTimeFormatter/ofPattern "HH:mm"))]]

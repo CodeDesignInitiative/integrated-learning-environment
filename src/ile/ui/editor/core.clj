@@ -2,8 +2,8 @@
   (:require
     [ile.ui.editor.view :as view]))
 
-(defn editor [lang code project-id]
-  (view/editor-page lang code project-id))
+(defn editor [lang logged-in? code project-id]
+  (view/editor-page lang logged-in? code project-id))
 
-(defn block-editor [lang mission learning-track-id]
-  (view/block-editor lang mission learning-track-id))
+(defn block-editor [lang mission learning-track-id story-mode?]
+  (view/block-editor lang mission learning-track-id story-mode?))

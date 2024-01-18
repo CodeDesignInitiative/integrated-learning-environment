@@ -30,7 +30,7 @@
   (let [users (user/find-all-users)]
     [:<>
      [:nav
-      [:a.button {:href "/admin"} "Zurück"]]
+      [:a.button {:href "/en/admin"} "Zurück"]]
      [:main#users.p3
       (map #(user-row % is-admin? current-user) users)]]
     )
@@ -39,14 +39,14 @@
 (defn- template-row-item
   [{:template/keys [name code visible name-translations]
     :xt/keys       [id]}]
-  [:a.button {:href (str "/admin/template/" id)}
+  [:a.button {:href (str "/en/admin/template/" id)}
    name])
 
 (defn templates-page [templates]
   [:<>
    [:nav
-    [:a.button {:href "/admin"} "Zurück"]
-    [:a.button {:href "/admin/template/new"} "Neues Template"]]
+    [:a.button {:href "/en/admin"} "Zurück"]
+    [:a.button {:href "/en/admin/template/new"} "Neues Template"]]
    [:main#templates-page
     [:h1 "All templates"]
     (map template-row-item templates)]])
@@ -56,14 +56,14 @@
     :xt/keys       [id]}]
   [:<>
    [:nav
-    [:a.button {:href "/admin/templates"} "Zurück / Abrechen"]]
+    [:a.button {:href "/en/admin/templates"} "Zurück / Abrechen"]]
    [:main#template-editor
     [:h1
      (if (nil? template)
        "Neues Template anlegen"
        (str "Template \"" name "\" bearbeiten"))]
     [:form.form-tile
-     {:action (str "/admin/template/" (or id "new"))
+     {:action (str "/en/admin/template/" (or id "new"))
       :method :post}
      (util/hidden-anti-forgery-field)
      [:label "Name"]
@@ -168,10 +168,10 @@
    lang
    [error]]
   [:form
-   {:action (str "/admin/story/" (or id "new") "/" (clojure.core/name lang))
+   {:action (str "/en/admin/story/" (or id "new") "/" (clojure.core/name lang))
     :method :post}
    [:nav
-    [:a.button {:href "/admin/stories"} "Zurück"]
+    [:a.button {:href "/en/admin/stories"} "Zurück"]
     [:h3
      (if (nil? template)
        "Neue Mission anlegen"
@@ -258,8 +258,8 @@
 (defn story-page [missions]
   [:<>
    [:nav
-    [:a.button {:href "/admin"} "Zurück"]
-    [:a.button {:href "/admin/story/new/de"} "Neue Mission"]]
+    [:a.button {:href "/en/admin"} "Zurück"]
+    [:a.button {:href "/en/admin/story/new/de"} "Neue Mission"]]
    [:main#story-page
     [:h1 "Stories"]
     (for [[world-key world-missions] missions]
@@ -268,17 +268,17 @@
        (for [{:mission/keys [_world step name]
               :xt/keys      [id]} world-missions]
          [:a.button.stacked
-          {:href (str "/admin/story/" id "/de")}
+          {:href (str "/en/admin/story/" id "/de")}
           [:h5 (str "Level " step)]
           [:h3 (:de name)]])])]])
 
 (defn images-page [images]
   [:<>
    [:nav
-    [:a.button {:href "/admin"} "Zurück"]]
+    [:a.button {:href "/en/admin"} "Zurück"]]
    [:main#images-page
     [:h1 "Images"]
-    [:form.row {:action  "/admin/images"
+    [:form.row {:action  "/en/admin/images"
                 :method  :post
                 :enctype "multipart/form-data"}
      (util/hidden-anti-forgery-field)
@@ -299,22 +299,23 @@
 
 (defn admin-page []
   [:<>
-   [:nav
-    [:a.button {:href "/de/"} "Zu Startseite"]]
+   [:header.p3
+    [:nav
+     [:a.button {:href "/de/"} "Zu Startseite"]]]
    [:main#admin-page
     [:h1 "Admin Area"]
-    [:a.button {:href "/admin/users"} "Users"]
-    [:a.button {:href "/admin/templates"} "Templates"]
-    [:a.button {:href "/admin/learning-tracks"} "Learning Tracks"]
-    [:a.button {:href "/admin/stories"} "Story (to be deprecated)"]]])
+    [:a.button {:href "/en/admin/users"} "Users"]
+    [:a.button {:href "/en/admin/templates"} "Templates"]
+    [:a.button {:href "/en/admin/learning-tracks"} "Learning Tracks"]
+    [:a.button {:href "/en/admin/stories"} "Story (to be deprecated)"]]])
 
 (defn learning-tracks-detail-page [{:learning-track/keys [name description language visible? story-mode?]}
                                    learning-track-id
                                    learning-track-tasks]
   [:<>
    [:nav
-    [:a.button {:href "/admin/learning-tracks"} "<- Back"]
-    [:a.button {:href (str "/admin/learning-track/edit/" learning-track-id)} "Edit"]]
+    [:a.button {:href "/en/admin/learning-tracks"} "<- Back"]
+    [:a.button {:href (str "/en/admin/learning-track/edit/" learning-track-id)} "Edit"]]
    [:main#admin-page
     [:section
      [:h1 name]
@@ -322,7 +323,7 @@
      [:p description]
      [:p "Language: " (clojure.core/name language)]
      [:p "Visible: " visible?]]
-    [:a.button {:href (str "/admin/learning-track/" learning-track-id "/tasks/new")}
+    [:a.button {:href (str "/en/admin/learning-track/" learning-track-id "/tasks/new")}
      "New Task for Learning Track"]
     [:section
      [:h2 "Tasks"]
@@ -335,7 +336,7 @@
               [:p "Step: " step]
               [:p "Block mode: " (if block-mode? block-mode? false)]
               [:p "Editor modes: " (str editor-modes)]
-              [:a {:href (str "/admin/learning-track/" learning-track-id "/task/" id)} "Edit"]])
+              [:a {:href (str "/en/admin/learning-track/" learning-track-id "/task/" id)} "Edit"]])
            (get learning-track-tasks true))]
      [:h2 "Tasks"]
      [:h3 "Deactivated Tasks"]
@@ -347,7 +348,7 @@
               [:p "Step: " step]
               [:p "Block mode: " (if block-mode? block-mode? false)]
               [:p "Editor modes: " (str editor-modes)]
-              [:a {:href (str "/admin/learning-track/" learning-track-id "/task/" id)} "Edit"]])
+              [:a {:href (str "/en/admin/learning-track/" learning-track-id "/task/" id)} "Edit"]])
            (concat (get learning-track-tasks nil) (get learning-track-tasks false)))]]]])
 
 
@@ -356,7 +357,7 @@
                                     & [learning-track-task]]
   [:<>
    [:nav
-    [:a.button {:href (str "/admin/learning-track/" id)} "Back"]]
+    [:a.button {:href (str "/en/admin/learning-track/" id)} "Back"]]
    [:main.p3
     (if learning-track-task
       [:h1 "Edit Task"]
@@ -365,7 +366,7 @@
     [:p "Language: " [:strong (string/upper-case (clojure.core/name language))]]
     [:p "Description: " [:strong description]]
 
-    [:form.grid.container {:action (str "/admin/learning-track/" id
+    [:form.grid.container {:action (str "/en/admin/learning-track/" id
                                         (if learning-track-task
                                           (str "/task/" (:xt/id learning-track-task))
                                           "/tasks/new"))

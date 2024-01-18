@@ -24,23 +24,28 @@
             :name "template"
             :value id}]])
 
-(defn new-project-page [lang templates]
+(defn new-project-page [lang logged-in? templates]
   [:<>
-   [:nav
-    [:a.button {:href (tr/url lang "/projekte")} "Abbrechen"]
-    [:h2 "Neues Projekt erstellen"]
-    [:div]]
+   [:header.p3
+    [:nav
+     [:a.button {:href (tr/url lang "/projekte")} "Abbrechen"]
+     [:h2 "Neues Projekt erstellen"]
+     [:div]]]
    [:main#new-project-page
     [:form#new-project-form
-     {:action (tr/url lang "/projekt/neu")
-      :method :post}
+     (when logged-in?
+       {:action (tr/url lang "/projekt/neu")
+        :method :post})
      (util/hidden-anti-forgery-field)
      [:.form-tile
       [:label "Projekt Name"]
       [:input {:placeholder "Mein Projekt"
+               :required    true
+               :id          "project_name"
                :name "project_name"}]
 
-      [:button {:type :submit}
+      [:button
+       {:type :submit}
        "Erstellen"]]
      [:div
       [:div.tile#empty-project-option
@@ -50,21 +55,26 @@
                 :name "template"
                 :checked true
                 :value "__empty__"}]]
-      (map template-option templates)]]]])
+      (map template-option templates)]]
+    (when-not logged-in?
+      [:script {:src "/js/projects.js"}])]])
 
 (defn projects-page
   "Page containing projects that a specific user created.
   Can direct to create-project page."
-  [lang projects]
+  [lang logged-in? projects]
   [:<>
-   [:nav
-    [:a.button {:href (tr/url lang "/")} "← " "Zurück"]
-    [:h1 "Editor"]
-    [:a.button {:href (tr/url lang "/projekt/neu")}
-     "Neues Projekt"
-     [:img {:src "/img/icons/rocket.svg"}]]]
+   [:header.p3
+    [:nav
+     [:a.button {:href (tr/url lang "/")} "← " "Zurück"]
+     [:h1 "Editor"]
+     [:a.button {:href (tr/url lang "/projekt/neu")}
+      "Neues Projekt"
+      [:img {:src "/img/icons/rocket.svg"}]]]]
    [:main#projects-page
     [:h2 "Meine Projekte"]
-    [:.project-list
+    [:.project-list#project-list
      #_new-project-btn
-     (my-projects-list projects lang)]]])
+     (my-projects-list projects lang)]
+    (when-not logged-in?
+      [:script {:src "/js/projects.js"}])]])

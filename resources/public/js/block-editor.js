@@ -79,9 +79,13 @@ const fill_mission_data = (mission, difficulty = "easy") => {
         block_editor_target.classList.remove("hidden")
         block_editor_selection.classList.remove("hidden")
 
-        const wrong_blocks = mission["learning-track-task/wrong-blocks"].split('\n')
+        const wrong_blocks = (mission["learning-track-task/wrong-blocks"] !== "") ? mission["learning-track-task/wrong-blocks"].split('\n') : []
 
         const all_blocks = shuffleArray(solution.split('\n').concat(wrong_blocks))
+
+        console.log(solution.split('\n'))
+        console.log(wrong_blocks)
+        console.log(all_blocks)
 
         selection_list.innerHTML = "";
 
@@ -185,6 +189,7 @@ const update_output = () =>
     `<!doctype HTML>
      <html lang="de">
         <head>
+        <base href="${host}/img/story/" />
         <title>ILE Editor Website</title>
         <style>${input_type === "css" ? generate_css() : hidden_css}</style></head>
         <body>${input_type === "html" ? generate_html() : hidden_html}</body>

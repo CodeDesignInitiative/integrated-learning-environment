@@ -8,12 +8,17 @@
 
 .row {
     display: flex;
+    flex-direction: row;
 }
 
 
 .col {
     display: flex;
     flex-direction: column;
+}
+
+.wrap {
+    flex-wrap: wrap;
 }
 
 .gap-s {
@@ -45,6 +50,14 @@
 
 .m3 {
     margin: var(--d-3);
+}
+
+.p1 {
+    padding: var(--d-1);
+}
+
+.p2 {
+    padding: var(--d-2);
 }
 
 .p3 {
