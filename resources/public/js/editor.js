@@ -112,7 +112,10 @@ const generate_html = () => {
 const updateOutput = () =>
     `<!doctype HTML>
      <html>
-        <head><style>${generate_css()}</style></head>
+        <head>
+            <base href="${host}/img/story/" />
+            <style>${generate_css()}</style>
+        </head>
         <body>${generate_html()}</body>
      </html>`.replace(/#/g, "%23")
 

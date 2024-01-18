@@ -47,26 +47,12 @@ const shuffleArray = (array) => {
 
 
 const fill_mission_data = (mission, difficulty = "easy") => {
-    // switch (difficulty) {
-    //     case "easy":
-    //         content = mission["mission/content"][lang][0];
-    //         break;
-    //     case "medium":
-    //         content = mission["mission/content"][lang][1];
-    //         break;
-    //     case "hard":
-    //         content = mission["mission/content"][lang][2];
-    //         break;
-    //     default:
-    //         content = mission["mission/content"][lang][0];
-    // }
     hidden_css = mission["learning-track-task/hidden-css"]
     hidden_html = mission["learning-track-task/hidden-html"]
     explanation_node.innerHTML = hint_message_to_html(mission["learning-track-task/explanation"])
     const solution = mission["learning-track-task/solution"]
     is_block_mode = mission["learning-track-task/block-mode?"];
     is_story_mode = mission["learning-track/story-mode?"];
-    // input_type = mission["mission.content/input-type"];
     if (!is_block_mode) {
         text_editor.classList.remove("hidden")
         block_editor_target.classList.add("hidden")
