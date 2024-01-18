@@ -20,3 +20,17 @@ Visit http://play.code.design for the live application.
 
 1. Run `docker build -t lms .` to create the latest image
 2. Run `docker-compose up -d` to launch the app with postgres
+
+## Server Setup
+
+###
+
+1. Create server
+2. ssh into it
+3. Clone repo
+4. Run `server-setup.sh`
+
+### Change nginx config
+
+1. Edit config `nano /etc/nginx/sites-available/app`
+2. Reload conifg `service nginx reload`
