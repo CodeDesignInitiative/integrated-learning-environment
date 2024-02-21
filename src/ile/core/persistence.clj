@@ -66,6 +66,11 @@
   (let [puts (vec (map (fn [v] [::xt/delete v]) documents))]
     (xt/submit-tx xtdb/node puts)))
 
+(defn remove-from-db-and-wait
+  [& documents]
+  (let [puts (vec (map (fn [v] [::xt/delete v]) documents))]
+    (xt/await-tx xtdb/node (xt/submit-tx xtdb/node puts))))
+
 (defn with-xt-id
   "Attaches the user-id to a document"
   [document]
@@ -128,11 +133,12 @@
             learning-track-id))
 
 (defn find-active-learning-track-tasks [learning-track-id]
-  (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
-              :where [[?learning-track-task :learning-track-task/learning-track learning-track-id]
-                      [?learning-track-task :learning-track-task/active? true]]
-              :in    [[learning-track-id]]}
-            learning-track-id))
+  (->> (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
+                   :where [[?learning-track-task :learning-track-task/learning-track learning-track-id]
+                           [?learning-track-task :learning-track-task/active? true]]
+                   :in    [[learning-track-id]]}
+                 learning-track-id)
+       (sort-by :learning-track-task/step)))
 
 (defn find-next-learning-track-task [{:learning-track-task/keys [step learning-track]}]
   (find-first '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
