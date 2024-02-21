@@ -9,6 +9,7 @@ services:
       - DB_DATABASE=lms
       - DB_PORT=5432
       - ASSET_STORE_PATH="/home/app/assets"
+      - ADMIN_PASSWORD=supersecretchangeme
     networks:
       - lms
     ports:
