@@ -21,6 +21,11 @@ Visit http://play.code.design for the live application.
 1. Run `docker build -t lms .` to create the latest image
 2. Run `docker-compose up -d` to launch the app with postgres
 
+## Docker Hub
+
+1. Run `docker build -t paulhempel/lms-ile:{$TAG} .` (swap tag)
+2. Run `docker image push paulhempel/lms-ile:{$TAG}` (swap tag)
+
 ## Server Setup
 
 ###
