@@ -99,12 +99,13 @@
 (defn wrap-ile-defaults [handler]
   (ring-defaults/wrap-defaults
     handler
-    (-> (if (:dev env)
+    (->
+      #_(if (:dev env)
           ring-defaults/site-defaults
           (-> ring-defaults/secure-site-defaults
               (assoc :proxy true)
               (assoc [:security :hsts] true)))
-        #_ring-defaults/site-defaults
+      ring-defaults/site-defaults
 
         (assoc-in [:security :anti-forgery] false)
         (assoc-in [:session :store] (ttl-memory-store (* 60 60 2)))
