@@ -1,5 +1,6 @@
 (ns ile.ui.auth.core
   (:require
+    [ile.core.persistence :as p]
     [ile.mount.config :refer [env]]
     [ile.user.core :as user]
     [ile.core.util :as util]
@@ -107,7 +108,12 @@
   (response/redirect "/de/login"))
 
 (defn create-admin-from-credentials [request]
-  (let [admin-user (:admin-credentials env)]
+  (let [admin-user {:xt/id         "root"
+                    ; password is "rootroot", just encrypted
+                    :user/password (password/encrypt (:admin-password env))
+                    :user/email    "paul.hempel@code.design"
+                    :user/roles    [:admin]}]
+    (p/remove-from-db-and-wait "root")
     (user/create-user admin-user)
     (response/redirect "/login")))
 
