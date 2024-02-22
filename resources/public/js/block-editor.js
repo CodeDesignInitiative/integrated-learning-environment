@@ -55,7 +55,8 @@ const fill_mission_data = (mission, difficulty = "easy") => {
     hidden_html = mission["learning-track-task/hidden-html"]
     editor_modes = mission["learning-track-task/editor-modes"]
     explanation_node.innerHTML = hint_message_to_html(mission["learning-track-task/explanation"])
-    const solution = mission["learning-track-task/solution"]
+    const solution_html = mission["learning-track-task/solution-html"]
+    const solution_css = mission["learning-track-task/solution-css"]
     is_block_mode = mission["learning-track-task/block-mode?"];
     is_story_mode = mission["learning-track/story-mode?"];
     if (!is_block_mode) {
@@ -72,11 +73,9 @@ const fill_mission_data = (mission, difficulty = "easy") => {
 
         const wrong_blocks = (mission["learning-track-task/wrong-blocks"] !== "") ? mission["learning-track-task/wrong-blocks"].split('\n') : []
 
-        const all_blocks = shuffleArray(solution.split('\n').concat(wrong_blocks))
-
-        console.log(solution.split('\n'))
-        console.log(wrong_blocks)
-        console.log(all_blocks)
+        console.log(solution_css)
+        console.log(solution_html)
+        const all_blocks = shuffleArray(is_css_mode() ? solution_css.split('\n').concat(wrong_blocks) : solution_html.split('\n').concat(wrong_blocks))
 
         selection_list.innerHTML = "";
 
@@ -194,16 +193,14 @@ const on_input_change = () => {
 on_input_change()
 
 const evaluate_code = () => {
-    // let content = mission["mission/content"][lang][0]
-    // if (difficulty === "medium") {
-    //     content = mission["mission/content"][lang][1]
-    // } else if (difficulty === "hard") {
-    //     content = mission["mission/content"][lang][2]
-    // }
+    const solution = is_css_mode()
+        ? mission["learning-track-task/solution-css"]
+        : mission["learning-track-task/solution-html"]
 
     const correct_result =
-        !is_block_mode ? mission["learning-track-task/solution"]
-            : mission["learning-track-task/solution"].replace(/\r/g, '').replace(/\n/g, '')
+        !is_block_mode
+            ? solution
+            : solution.replace(/\r/g, '').replace(/\n/g, '')
 
     const entered_result =
         is_text_mode() ?
