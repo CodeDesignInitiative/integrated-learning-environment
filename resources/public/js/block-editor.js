@@ -199,12 +199,12 @@ const evaluate_code = () => {
 
     const correct_result =
         !is_block_mode
-            ? solution
+            ? solution.trim()
             : solution.replace(/\r/g, '').replace(/\n/g, '')
 
     const entered_result =
         is_text_mode() ?
-            editor.getValue() :
+            editor.getValue().trim() :
             Array
                 .from(target_list.childNodes)
                 .reduce((acc, child) => acc + child.innerText, "")
