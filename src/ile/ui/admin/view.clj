@@ -306,8 +306,7 @@
     [:h1 "Admin Area"]
     [:a.button {:href "/en/admin/users"} "Users"]
     [:a.button {:href "/en/admin/templates"} "Templates"]
-    [:a.button {:href "/en/admin/learning-tracks"} "Learning Tracks"]
-    #_[:a.button {:href "/en/admin/stories"} "Story (to be deprecated)"]]])
+    [:a.button {:href "/en/admin/learning-tracks"} "Learning Tracks"]]])
 
 (defn learning-track-detail-page [{:learning-track/keys [name description language visible?
                                                          story-mode? concluding-message]}

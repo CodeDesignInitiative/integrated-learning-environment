@@ -1,6 +1,8 @@
 (ns ile.story.view
   (:require [ile.core.persistence :as persistence]
-            [ile.dictonary.translations :as tr]))
+            [ile.dictonary.translations :as tr]
+            [hiccup2.core :as hiccup]
+            [markdown.core :as md]))
 
 (def worlds [{:name     "HTML & CSS"
               :subtitle "Einstieg"
@@ -61,15 +63,20 @@
        [:a.button {:href (tr/url lang "/worlds")} "Zurück"]]
       )]])
 
-(defn finished-world-page [lang]
+(defn finished-world-page [lang {:learning-track/keys [concluding-message]}]
   [:<>
    [:header.p3
     [:nav
-     [:a.button {:href (tr/url lang "/")} "Zurück zum Start"]]]
-   [:main#finished-world-page
+     [:a.button {:href (tr/url lang "/")} "Zurück zum Start"]
+     [:a.button {:href (tr/url lang "/learn")} "Kursübersicht"]]]
+   [:main#finished-world-page.content
     [:h1 "🎉 Fertig 🎉"]
-    [:p "Du hast diese Welt durchgespielt."]
-    [:p "Schaue dir andere Themen und Welten an, oder"]
+
+    (or [:p concluding-message]
+        [:<>
+         [:p "Du hast diese Welt durchgespielt."]
+         [:p "Schaue dir andere Themen und Welten an, oder"]])
+
     [:h2 "Nutze den freien Editor"]
     [:p "Hier kannst du dich austoben und testen was du gelernt hast"]
     [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]]

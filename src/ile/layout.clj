@@ -31,7 +31,7 @@
     [:link {:rel  :stylesheet
             :href "/css/font.css?v=3"}]
     [:link {:rel  :stylesheet
-            :href "/css/layout.css?v=2"}]
+            :href "/css/layout.css?v=3"}]
 
     ; js
     [:script {:src   "/js/htmx.min.js"

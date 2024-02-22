@@ -63,3 +63,8 @@
 .p3 {
     padding: var(--d-3);
 }
+
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+}

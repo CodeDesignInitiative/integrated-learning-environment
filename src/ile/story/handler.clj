@@ -1,5 +1,6 @@
 (ns ile.story.handler
   (:require
+    [ile.core.persistence :as persistence]
     [ring.util.http-response :as http-response]
     [ile.dictonary.translations :as tr]
     [ile.story.view :as view]
@@ -40,8 +41,10 @@
     (view/learning-tracks-page lang :story)))
 
 (defn finished-world-page [request]
-  (let [lang (tr/lang request)]
-    (view/finished-world-page lang)))
+  (let [lang (tr/lang request)
+        learning-track-id (util/get-path-param-as-uuid request :id)
+        learning-track (persistence/find-learning-track learning-track-id)]
+    (view/finished-world-page lang learning-track)))
 
 (defn learn-tracks-page [request]
   (let [lang (tr/lang request)]
