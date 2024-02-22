@@ -309,20 +309,31 @@
     [:a.button {:href "/en/admin/learning-tracks"} "Learning Tracks"]
     #_[:a.button {:href "/en/admin/stories"} "Story (to be deprecated)"]]])
 
-(defn learning-tracks-detail-page [{:learning-track/keys [name description language visible? story-mode?]}
-                                   learning-track-id
-                                   learning-track-tasks]
+(defn learning-track-detail-page [{:learning-track/keys [name description language visible?
+                                                         story-mode? concluding-message]}
+                                  learning-track-id
+                                  learning-track-tasks]
   [:<>
-   [:nav
-    [:a.button {:href "/en/admin/learning-tracks"} "<- Back"]
-    [:a.button {:href (str "/en/admin/learning-track/edit/" learning-track-id)} "Edit"]]
+   [:header.p3
+    [:nav
+     [:a.button {:href "/en/admin/learning-tracks"} "<- Back"]
+     [:a.button {:href (str "/en/admin/learning-track/edit/" learning-track-id)} "Edit"]]]
    [:main#admin-page
     [:section
      [:h1 name]
-     [:p "Story mode: " story-mode?]
-     [:p description]
-     [:p "Language: " (clojure.core/name language)]
-     [:p "Visible: " visible?]]
+     [:dl
+      [:dt [:strong "Story mode?"]]
+      [:dd (if story-mode? "Yes" "No")]
+
+      [:dt [:strong "Description"]]
+      [:dd description]
+
+      [:dt [:strong "Concluding Message"]]
+      [:dd concluding-message]
+      [:dt [:strong "Language"]]
+      [:dd (clojure.core/name language)]
+      [:dt [:strong "Visible?"]]
+      [:dd (if visible? "Yes" "No")]]]
     [:a.button {:href (str "/en/admin/learning-track/" learning-track-id "/tasks/new")}
      "New Task for Learning Track"]
     [:section
@@ -332,11 +343,13 @@
       (map (fn [{:learning-track-task/keys [name step block-mode? editor-modes]
                  :xt/keys                  [id]}]
              [:li
+              [:a {:href (str "/en/admin/learning-track/" learning-track-id "/task/" id)} "Edit"]
+              " | "
               [:strong name]
-              [:p "Step: " step]
-              [:p "Block mode: " (if block-mode? block-mode? false)]
-              [:p "Editor modes: " (str editor-modes)]
-              [:a {:href (str "/en/admin/learning-track/" learning-track-id "/task/" id)} "Edit"]])
+              " | Step: " step
+              " | " (if block-mode? "Block Mode" "Text Mode")
+              " | " (map #(str (clojure.core/name %) "  ") editor-modes)
+              ])
            (get learning-track-tasks true))]
      [:h2 "Tasks"]
      [:h3 "Deactivated Tasks"]

@@ -4,6 +4,7 @@
 (s/def :learning-track/name (s/and string? not-empty))
 (s/def :learning-track/language keyword?)
 (s/def :learning-track/description (s/and string? not-empty))
+(s/def :learning-track/concluding-message string?)
 (s/def :learning-track/visible? boolean?)
 (s/def :learning-track/story-mode? boolean?)
 
@@ -12,6 +13,7 @@
                 :learning-track/language
                 :learning-track/description]
           :opt [:learning-track/visible?
+                :learning-track/concluding-message
                 :learning-track/story-mode?]))
 
 (comment

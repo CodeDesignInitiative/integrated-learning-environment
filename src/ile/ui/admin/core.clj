@@ -264,6 +264,10 @@
                  :required true
                  :name     "learning-track/description"}]
 
+     [:label "Concluding Message"]
+     [:textarea {:id   "learning-track_concluding-message"
+                 :name "learning-track/concluding-message"}]
+
      [:label "Language"]
      [:input {:id       "learning-track_language"
               :required true
@@ -301,6 +305,10 @@
                    :value    description
                    :name     "learning-track/description"}]
 
+       [:label "Concluding Message"]
+       [:textarea {:id   "learning-track_concluding-message"
+                   :name "learning-track/concluding-message"}]
+
        [:label "Language"]
        [:input {:id       "learning-track_language"
                 :required true
@@ -320,7 +328,7 @@
         {:learning-track/keys [name description language visible?] :as learning-track}
         (persistence/find-learning-track learning-track-id)
         learning-track-tasks (group-by :learning-track-task/active? (persistence/find-learning-track-tasks learning-track-id))]
-    (view/learning-tracks-detail-page learning-track learning-track-id learning-track-tasks)))
+    (view/learning-track-detail-page learning-track learning-track-id learning-track-tasks)))
 
 (defn learning-tracks-edit-page-posted [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
