@@ -766,10 +766,10 @@ code {
 #finished-world-page {
     padding: var(--d-3);
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /*align-items: center;*/
+    /*justify-content: center;*/
     flex-direction: column;
-    height: 60%;
+    /*height: 10%;*/
 
 }
 
@@ -967,4 +967,8 @@ form.container {
 
 #images-page img {
     width: 200px;
+}
+
+.vsc-image {
+    max-width: 100%;
 }

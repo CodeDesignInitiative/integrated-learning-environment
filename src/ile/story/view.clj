@@ -68,15 +68,25 @@
     [:nav
      [:a.button {:href (tr/url lang "/")} "Zurück zum Start"]
      [:a.button {:href (tr/url lang "/learn")} "Kursübersicht"]]]
-   [:main#finished-world-page.content
-    [:h1 "🎉 Fertig 🎉"]
+   [:main#finished-world-page.content.gap-2
+    [:section
+     [:h1 "🎉 Fertig 🎉"]
 
-    (or [:div {:dangerouslySetInnerHTML {:__html (md/md-to-html-string concluding-message)}}]
-        [:<>
-         [:p "Du hast diese Welt durchgespielt."]
-         [:p "Schaue dir andere Themen und Welten an, oder"]])
+     (or [:div {:dangerouslySetInnerHTML {:__html (md/md-to-html-string concluding-message)}}]
+         [:<>
+          [:p "Du hast diese Welt durchgespielt."]
+          [:p "Schaue dir andere Themen und Welten an, oder"]])]
 
-    [:h2 "Nutze den freien Editor"]
-    [:p "Hier kannst du dich austoben und testen was du gelernt hast"]
-    [:a.button {:href (tr/url lang "/projekte")} "Freier Editor"]]]
+    [:.row.gap-2.even-size
+     [:a.tile.p3 {:href (tr/url lang "/projekte")}
+      [:h2 "Nutze den freien Editor"]
+      [:p "Hier kannst du dich austoben und testen was du gelernt hast"]
+      [:p "→"]]
+
+     [:a.tile.p3 {:href "/vsc"}
+      [:h2 "Mache auf deinem Computer weiter"]
+      [:p "Diese Webseite ist nur der Anfang. Wir haben hier eine Anleitung, wie du auf deinem Computer weitermachen kannst:"]
+      [:p "→"]]]]
+
+   ]
   )

@@ -17,6 +17,10 @@
     flex-direction: column;
 }
 
+.even-size > * {
+    flex: 1;
+}
+
 .wrap {
     flex-wrap: wrap;
 }
