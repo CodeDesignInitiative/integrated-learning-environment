@@ -1,7 +1,6 @@
 (ns ile.story.view
   (:require [ile.core.persistence :as persistence]
             [ile.dictonary.translations :as tr]
-            [hiccup2.core :as hiccup]
             [markdown.core :as md]))
 
 (def worlds [{:name     "HTML & CSS"
@@ -72,7 +71,7 @@
    [:main#finished-world-page.content
     [:h1 "🎉 Fertig 🎉"]
 
-    (or [:div {:dangerouslySetInnerHTML {:__html (hiccup/raw (md/md-to-html-string concluding-message))}}]
+    (or [:div {:dangerouslySetInnerHTML {:__html (md/md-to-html-string concluding-message)}}]
         [:<>
          [:p "Du hast diese Welt durchgespielt."]
          [:p "Schaue dir andere Themen und Welten an, oder"]])

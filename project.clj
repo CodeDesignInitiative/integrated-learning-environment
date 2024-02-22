@@ -11,7 +11,6 @@
                  [com.xtdb/xtdb-core "1.24.3"]
                  [com.xtdb/xtdb-jdbc "1.24.3"]
                  [com.xtdb/xtdb-rocksdb "1.24.3"]
-                 [hiccup "2.0.0-RC3"]
                  [luminus-http-kit "0.2.0"]
                  [luminus/ring-ttl-session "0.3.3"]
                  [markdown-clj "1.11.4"]
