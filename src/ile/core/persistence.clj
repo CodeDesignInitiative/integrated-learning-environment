@@ -127,10 +127,11 @@
 
 
 (defn find-learning-track-tasks [learning-track-id]
-  (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
-              :where [[?learning-track-task :learning-track-task/learning-track learning-track-id]]
-              :in    [[learning-track-id]]}
-            learning-track-id))
+  (->> (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
+                   :where [[?learning-track-task :learning-track-task/learning-track learning-track-id]]
+                   :in    [[learning-track-id]]}
+                 learning-track-id)
+       (sort-by :learning-track-task/step)))
 
 (defn find-active-learning-track-tasks [learning-track-id]
   (->> (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]

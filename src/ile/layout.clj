@@ -29,7 +29,7 @@
     [:link {:rel  :stylesheet
             :href "/css/color.css?v=2"}]
     [:link {:rel  :stylesheet
-            :href "/css/font.css?v=2"}]
+            :href "/css/font.css?v=3"}]
     [:link {:rel  :stylesheet
             :href "/css/layout.css?v=2"}]
 
