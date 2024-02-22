@@ -431,11 +431,26 @@
                  :required true}]
 
      [:div
-      [:label {:form "learning-track-task/solution"} "Solution*"]
+      [:label {:form "learning-track-task/solution-html"} "Solution HTML (*)"]
       [:p "Important for Block Mode: Each line represents a new block. The line order equals the correct order of the solution"]]
-     [:textarea {:name     "learning-track-task/solution"
-                 :value    (:learning-track-task/solution learning-track-task)
-                 :required true}]
+     [:textarea {:name  "learning-track-task/solution-html"
+                 :value (:learning-track-task/solution-html learning-track-task)
+                 }]
+
+     [:div
+      [:label {:form "learning-track-task/solution-css"} "Solution CSS (*)"]
+      [:p "Important for Block Mode: Each line represents a new block. The line order equals the correct order of the solution"]]
+     [:textarea {:name  "learning-track-task/solution-css"
+                 :value (:learning-track-task/solution-css learning-track-task)
+                 }]
+
+     [:div
+      [:label {:form "learning-track-task/solution-js"} "Solution JS (*)"]
+      [:p "Important for Block Mode: Each line represents a new block. The line order equals the correct order of the solution"]]
+     [:textarea {:name     "learning-track-task/solution-js"
+                 :value    (:learning-track-task/solution-js learning-track-task)
+                 :disabled true
+                 }]
 
      [:div
       [:label {:form "learning-track-task/hint"} "Hint"]

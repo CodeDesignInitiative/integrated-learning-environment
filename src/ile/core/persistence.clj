@@ -163,7 +163,8 @@
 
 (comment
   (find-all-learning-tracks)
-  (find-learning-track #uuid"47a3a22a-f737-404f-b01a-2b2d223449fc")
+  (find-learning-track #uuid"bce63e65-7b46-4231-9135-45bf2c0a6475")
+  (find-learning-track-tasks #uuid"bce63e65-7b46-4231-9135-45bf2c0a6475")
   (->> (find-all-learning-tracks)
        (map #(:xt/id %))
        vec

@@ -345,16 +345,21 @@
     (view/new-learning-track-task-page learning-track)))
 
 (defn new-learning-track-task-page-posted [request]
+  (println "new task posted")
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
         learning-track-task (assoc (util/get-form-params request)
                               :learning-track-task/learning-track learning-track-id)
         new-task (processing/process-learning-track-task learning-track-task)]
+    (println "new task processed")
+    (println "new task valid? " (s/valid? :ile/learning-track-task new-task))
+
+    (clojure.pprint/pprint new-task)
     (if (s/valid? :ile/learning-track-task new-task)
       (do
         (persistence/create-learning-track-task new-task)
         (response/redirect (str "/en/admin/learning-track/" learning-track-id)))
-      (do
-        (view/new-learning-track-task-page (persistence/find-first-by-id learning-track-id))))))
+      (clojure.pprint/pprint (s/explain :ile/learning-track-task new-task))
+      #_(view/new-learning-track-task-page (persistence/find-first-by-id learning-track-id)))))
 
 (defn edit-learning-track-task-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)

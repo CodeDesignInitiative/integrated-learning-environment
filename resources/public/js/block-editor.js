@@ -21,11 +21,15 @@ const selection_list = document.getElementById('selection');
 
 let mission = undefined;
 let is_block_mode = undefined;
-let input_type = "html";
+let input_type = "html"; // to be deprecated
+let editor_modes = [];
 let hidden_css = "";
 let hidden_html = "";
 let difficulty = "easy";
 let is_story_mode = undefined;
+
+const is_css_mode = () => editor_modes.includes("css")
+const is_html_mode = () => !editor_modes.includes("css")
 
 const is_text_mode = () => !is_block_mode
 
@@ -49,6 +53,7 @@ const shuffleArray = (array) => {
 const fill_mission_data = (mission, difficulty = "easy") => {
     hidden_css = mission["learning-track-task/hidden-css"]
     hidden_html = mission["learning-track-task/hidden-html"]
+    editor_modes = mission["learning-track-task/editor-modes"]
     explanation_node.innerHTML = hint_message_to_html(mission["learning-track-task/explanation"])
     const solution = mission["learning-track-task/solution"]
     is_block_mode = mission["learning-track-task/block-mode?"];
@@ -177,8 +182,8 @@ const update_output = () =>
         <head>
         <base href="${host}/img/story/" />
         <title>ILE Editor Website</title>
-        <style>${input_type === "css" ? generate_css() : hidden_css}</style></head>
-        <body>${input_type === "html" ? generate_html() : hidden_html}</body>
+        <style>${is_css_mode() ? generate_css() : hidden_css}</style></head>
+        <body>${is_html_mode() ? generate_html() : hidden_html}</body>
      </html>`.replace(/#/g, "%23")
 
 
