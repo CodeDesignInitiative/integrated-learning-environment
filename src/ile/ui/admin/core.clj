@@ -278,7 +278,8 @@
 
 (defn learning-tracks-edit-page [request]
   (let [learning-track-id (util/get-path-param-as-uuid request :id)
-        {:learning-track/keys [name description language visible? story-mode?] :as learning-track}
+        {:learning-track/keys [name description language
+                               visible? story-mode? concluding-message] :as learning-track}
         (persistence/find-learning-track learning-track-id)]
     [:<>
      [:nav
@@ -307,6 +308,7 @@
 
        [:label "Concluding Message"]
        [:textarea {:id   "learning-track_concluding-message"
+                   :value concluding-message
                    :name "learning-track/concluding-message"}]
 
        [:label "Language"]

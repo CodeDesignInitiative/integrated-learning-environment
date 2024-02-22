@@ -72,7 +72,7 @@
    [:main#finished-world-page.content
     [:h1 "🎉 Fertig 🎉"]
 
-    (or [:p concluding-message]
+    (or [:div {:dangerouslySetInnerHTML {:__html (hiccup/raw (md/md-to-html-string concluding-message))}}]
         [:<>
          [:p "Du hast diese Welt durchgespielt."]
          [:p "Schaue dir andere Themen und Welten an, oder"]])
