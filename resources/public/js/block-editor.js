@@ -21,11 +21,9 @@ const selection_list = document.getElementById('selection');
 
 let mission = undefined;
 let is_block_mode = undefined;
-let input_type = "html"; // to be deprecated
 let editor_modes = [];
 let hidden_css = "";
 let hidden_html = "";
-let difficulty = "easy";
 let is_story_mode = undefined;
 
 const is_css_mode = () => editor_modes.includes("css")
