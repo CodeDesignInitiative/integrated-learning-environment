@@ -50,7 +50,7 @@
 
 /* start page */
 
-#start-screen {
+body {
     height: 100vh;
     /*height: calc(100vh - var(--d-3) * 2);*/
 
@@ -73,11 +73,11 @@
     }
 }
 
-#modes {
+#start-screen {
     flex: 1;
 }
 
-#modes > a {
+#start-screen > a {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -87,12 +87,12 @@
     min-width: 300px;
 }
 
-#modes > a > h2 {
+#start-screen > a > h2 {
     font-size: 5rem;
     margin: 0;
 }
 
-#modes > a > img.icon {
+#start-screen > a > img.icon {
     height: 12em;
 
 }

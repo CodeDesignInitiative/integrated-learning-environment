@@ -4,34 +4,57 @@
 
 
 (defn start-screen [lang logged-in? is-admin? is-teacher?]
-  [:main#start-screen.col.gap-l.p3
-   [:nav.row
-    [:img.logo
-     {:src "/img/logo_play_learn.svg"
-      :alt "App Icon mit Aufschrift: play + learn"}]
-    [:menu.row.gap.wrap
-     (when (or is-teacher? is-admin?)
+  [:<>
+   [:header.p3.pb0
+    [:nav.row.center
+     [:img.logo
+      {:src "/img/logo_play_learn.svg"
+       :alt "App Icon mit Aufschrift: play + learn"}]
+     [:menu.row.gap.wrap
+      (when (or is-teacher? is-admin?)
+        [:a.button
+         {:href "/en/admin"}
+         "Teacher Area"])
+      [:a.button
+       {:href "/ru/"}
+       [:img {:src "/img/icons/language.svg"}]
+       (tr/tr lang :start/language-btn)]
+      (if logged-in?
+        [:a.button
+         {:href "/logout"}
+         (tr/tr lang :login/logout)]
+        [:a.button
+         {:href "/login"}
+         (tr/tr lang :login/login)])
+      [:a.button {:href  "/info"
+                  :title "Info Page"}
+       [:img {:src "/img/icons/info.svg"
+              :alt "Info icon: an i within a circle"}]
+       "Info"]]
+     [:details
+      [:summary]
+      [:menu.row.gap.wrap
+       (when (or is-teacher? is-admin?)
+         [:a.button
+          {:href "/en/admin"}
+          "Teacher Area"])
        [:a.button
-        {:href "/en/admin"}
-        "Teacher Area"])
-     [:a.button
-      {:href "/ru/"}
-      [:img {:src "/img/icons/language.svg"}]
-      (tr/tr lang :start/language-btn)]
-     (if logged-in?
-       [:a.button
-        {:href "/logout"}
-        (tr/tr lang :login/logout)]
-       [:a.button
-        {:href "/login"}
-        (tr/tr lang :login/login)])
-     [:a.button {:href  "/info"
-                 :title "Info Page"}
-      [:img {:src "/img/icons/info.svg"
-             :alt "Info icon: an i within a circle"}]
-      "Info"]]]
-
-   [:#modes.row.gap-l.wrap
+        {:href "/ru/"}
+        [:img {:src "/img/icons/language.svg"}]
+        (tr/tr lang :start/language-btn)]
+       (if logged-in?
+         [:a.button
+          {:href "/logout"}
+          (tr/tr lang :login/logout)]
+         [:a.button
+          {:href "/login"}
+          (tr/tr lang :login/login)])
+       [:a.button {:href  "/info"
+                   :title "Info Page"}
+        [:img {:src "/img/icons/info.svg"
+               :alt "Info icon: an i within a circle"}]
+        "Info"]]]]]
+   [:main#start-screen.row.gap-l.wrap.p3
     [:a.tile#story-area
      {:href (tr/url lang "/worlds")}
      [:img.icon
