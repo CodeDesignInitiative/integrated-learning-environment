@@ -124,7 +124,14 @@
 (defn update-learning-tracks [learning-track]
   (put-in-db-and-wait learning-track))
 
+(defn find-all-learning-track-tasks []
+  (->> (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]
+                   :where [[?learning-track-task :learning-track-task/learning-track any?]]})
+       (sort-by :learning-track-task/step)))
 
+(comment
+  (find-all-learning-track-tasks)
+  )
 
 (defn find-learning-track-tasks [learning-track-id]
   (->> (query-db '{:find  [(pull ?learning-track-task [* :ile/persistable-learning-track-task])]

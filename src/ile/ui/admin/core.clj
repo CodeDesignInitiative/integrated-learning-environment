@@ -201,10 +201,12 @@
     (images-page request)))
 
 (defn backup-page [request]
-  (let [missions (story/find-all-missions)
+  (let [missions (persistence/find-all-learning-tracks)
+        tasks (persistence/find-all-learning-track-tasks)
         templates (templates/find-all-templates)]
     [:div
      [:div (str missions)]
+     [:div (str tasks)]
      [:div (str templates)]]))
 
 (defn learning-tracks-page [request]
